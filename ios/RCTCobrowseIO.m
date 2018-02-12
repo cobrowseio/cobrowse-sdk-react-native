@@ -1,10 +1,11 @@
 #import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 #import "CBIOSession+Bridging.h"
 #import <React/RCTUtils.h>
 
 @import CobrowseIO;
 
-@interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule>
+@interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule, CobrowseIODelegate>
 @end
 
 @implementation RCTCobrowseIO
@@ -12,6 +13,10 @@
 RCT_EXPORT_MODULE();
 
 - (instancetype)init {
+    self = [super init];
+    if (self) {
+        [CobrowseIO.instance setDelegate:self];
+    }
     return self;
 }
 
@@ -20,8 +25,19 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<NSString *> *)supportedEvents {
-    return @[@"activated", "updated", "ended"];
+    return @[@"updated", @"ended"];
 }
+
+-(void)cobrowseSessionDidUpdate:(CBIOSession *)session {
+    NSLog(@"session did update %@", session);
+    [self sendEventWithName:@"updated" body:[session toDict]];
+}
+
+-(void)cobrowseSessionDidEnd:(CBIOSession *)session {
+    NSLog(@"session did end %@", session);
+    [self sendEventWithName:@"ended" body:[session toDict]];
+}
+
 
 RCT_EXPORT_METHOD(createSession: (RCTResponseSenderBlock) callback) {
     [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
