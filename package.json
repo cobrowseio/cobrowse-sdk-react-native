@@ -1,0 +1,30 @@
+{
+  "name": "cobrowse-sdk-react-native",
+  "version": "0.0.1",
+  "description": "Cobrowse SDK for React Native",
+  "main": "./js/index.js",
+  "author": {
+    "name": "Andy Pritchard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cobrowseio/cobrowse-sdk-react-native.git"
+  },
+  "homepage": "https://github.com/cobrowseio/cobrowse-sdk-react-native",
+  "keywords": [
+    "react",
+    "react-native",
+    "react-component",
+    "ios",
+    "android",
+    "cobrowse",
+    "cobrowseio"
+  ],
+  "license": "Proprietary",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "react-native": ">=0.44.0",
+    "prop-types": "15.x.x"
+  }
+}
