@@ -1,17 +1,37 @@
 'use strict';
 
-const CobrowseIO = require('react-native').NativeModules.CobrowseIO;
+const CobrowseIONative = require('react-native').NativeModules.CobrowseIO;
 
-module.exports = {
+const NativeEventEmitter = require('react-native').NativeEventEmitter;
+const emitter = new NativeEventEmitter(CobrowseIONative);
 
-    createSession: function(callback) {
-        CobrowseIO.createSession((err, code) => {
-            callback(err, code);
-        });
-    },
+export default class CobrowseIO {
 
-    getSession: function(code, callback) {
-        callback(null, { code:"123456" });
+    static addListener(event, cb) {
+        emitter.addListener(event, cb);
     }
 
+    static set api(api) {
+        CobrowseIONative.api(api);
+    }
+
+    static set license(license) {
+        CobrowseIONative.license(license);
+    }
+
+    static createSession(cb) {
+        CobrowseIONative.createSession(cb);
+    }
+
+    static activateSession(cb) {
+        CobrowseIONative.activateSession(cb);
+    }
+
+    static loadSession(codeOrId, cb) {
+        CobrowseIONative.loadSession(codeOrId, cb);
+    }
+
+    static endSession(cb) {
+        CobrowseIONative.endSession(cb);
+    }
 }

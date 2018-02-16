@@ -8,7 +8,9 @@
 @interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule, CobrowseIODelegate>
 @end
 
-@implementation RCTCobrowseIO
+@implementation RCTCobrowseIO {
+    bool hasListeners;
+}
 
 RCT_EXPORT_MODULE();
 
@@ -24,30 +26,43 @@ RCT_EXPORT_MODULE();
     return YES;
 }
 
+-(void)startObserving {
+    hasListeners = YES;
+}
+
+-(void)stopObserving {
+    hasListeners = NO;
+}
+
 -(NSArray<NSString *> *)supportedEvents {
-    return @[@"updated", @"ended"];
+    return @[@"session_updated", @"session_ended"];
 }
 
 -(void)cobrowseSessionDidUpdate:(CBIOSession *)session {
-    NSLog(@"session did update %@", session);
-    [self sendEventWithName:@"updated" body:[session toDict]];
+    if (hasListeners) [self sendEventWithName:@"session_updated" body:[session toDict]];
 }
 
 -(void)cobrowseSessionDidEnd:(CBIOSession *)session {
-    NSLog(@"session did end %@", session);
-    [self sendEventWithName:@"ended" body:[session toDict]];
+    if (hasListeners) [self sendEventWithName:@"session_ended" body:[session toDict]];
 }
 
+RCT_EXPORT_METHOD(license: (NSString*) license) {
+    CobrowseIO.instance.license = license;
+}
+
+RCT_EXPORT_METHOD(api: (NSString*) api) {
+    CobrowseIO.instance.api = api;
+}
 
 RCT_EXPORT_METHOD(createSession: (RCTResponseSenderBlock) callback) {
     [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
-        callback(@[err?@"Error":[NSNull null], session ? [session toDict] : [NSNull null]]);
+        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
     }];
 }
 
 RCT_EXPORT_METHOD(loadSession: (NSString*) idOrCode callback: (RCTResponseSenderBlock) callback) {
     [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
-        callback(@[err?@"Error":[NSNull null], session ? [session toDict] : [NSNull null]]);
+        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
     }];
 }
 
@@ -55,7 +70,7 @@ RCT_EXPORT_METHOD(activateSession: (RCTResponseSenderBlock) callback) {
     CBIOSession* current = CobrowseIO.instance.currentSession;
     if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
     [current activate:^(NSError *err, CBIOSession *session) {
-        callback(@[err?@"Error":[NSNull null], session ? [session toDict] : [NSNull null]]);
+        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
     }];
 }
 
@@ -63,7 +78,7 @@ RCT_EXPORT_METHOD(endSession: (RCTResponseSenderBlock) callback) {
     CBIOSession* current = CobrowseIO.instance.currentSession;
     if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
     [current end:^(NSError *err, CBIOSession *session) {
-        callback(@[err?@"Error":[NSNull null], session ? [session toDict] : [NSNull null]]);
+        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
     }];
 }
 

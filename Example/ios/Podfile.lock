@@ -17,10 +17,10 @@ PODS:
   - cobrowse-sdk-react-native (0.0.1):
     - CobrowseIO
     - React
-  - CobrowseIO (0.0.19):
-    - CobrowseIO/Release (= 0.0.19)
+  - CobrowseIO (0.0.20):
+    - CobrowseIO/Release (= 0.0.20)
     - Socket.IO-Client-Swift (~> 13.1.1)
-  - CobrowseIO/Release (0.0.19):
+  - CobrowseIO/Release (0.0.20):
     - Socket.IO-Client-Swift (~> 13.1.1)
   - DoubleConversion (1.1.5)
   - Folly (2016.09.26.00):
@@ -109,7 +109,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 30a15ffb6d9aa4646dd3caffc960753f4cb4ca4e
   cobrowse-sdk-react-native: 0eb43e9a04b7beae27a403011dad2b7b6d3e124e
-  CobrowseIO: 48d8070f12bece0ba5451aed5cb39da10ec1bcf0
+  CobrowseIO: 357e26847e6888727cb963a7bfcf2b1b4344b5e3
   DoubleConversion: ebb6747c5b66026ad4f97b789c3ceac6f18e57a6
   Folly: b7255b29f1d693c375d642d0f04f0592181156d9
   GLog: 3e4e4ae9746ce6bf6e9420c7fc1e08ad59c8ba1a

@@ -3,26 +3,23 @@ import App from './App';
 
 import CobrowseIO from 'cobrowse-sdk-react-native';
 
-const CobrowseIONative = require('react-native').NativeModules.CobrowseIO;
-const NativeEventEmitter = require('react-native').NativeEventEmitter;
+CobrowseIO.api = 'https://api.staging.cobrowse.io';
+CobrowseIO.license = 'trial';
 
-CobrowseIONative.createSession(function(err, session) {
+CobrowseIO.createSession(function(err, session) {
     console.log('create', err, session);
 });
 
-const emitter = new NativeEventEmitter(CobrowseIONative);
-console.log(emitter);
-
-emitter.addListener('updated', function(session) {
+CobrowseIO.addListener('session_updated', function(session) {
     console.log('session updated', arguments);
     if (session.code) {
-        CobrowseIONative.activateSession(function(err, session) {
+        CobrowseIO.activateSession(function(err, session) {
             console.log('activiate', err, session);
         });
     }
 });
 
-emitter.addListener('ended', function() {
+CobrowseIO.addListener('session_ended', function() {
     console.log('session ended', arguments);
 });
 
