@@ -12,6 +12,8 @@ import {
   View
 } from 'react-native';
 
+import { CobrowseView } from 'cobrowse-sdk-react-native';
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -24,6 +26,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
+        <CobrowseView license='trial' api='https://api.staging.cobrowse.io' />
         <Text style={styles.welcome}>
           Welcome to React Native!
         </Text>

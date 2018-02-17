@@ -14,6 +14,14 @@ final class Utility {
         map.putString("state", session.state());
         map.putString("id", session.id());
         map.putBoolean("approved", session.isApproved());
+
+        if (session.hasAgent()) {
+            WritableMap agent = Arguments.createMap();
+            agent.putString("name", session.agent().name);
+            agent.putString("id", session.agent().id);
+            map.putMap("agent", agent);
+        }
+
         return map;
     }
 
