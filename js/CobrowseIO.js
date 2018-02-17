@@ -7,6 +7,14 @@ const emitter = new NativeEventEmitter(CobrowseIONative);
 
 export default class CobrowseIO {
 
+    static get SESSION_UPDATED() {
+        return CobrowseIONative.SESSION_UPDATED;
+    }
+
+    static get SESSION_ENDED() {
+        return CobrowseIONative.SESSION_ENDED;
+    }
+
     static addListener(event, cb) {
         emitter.addListener(event, cb);
     }

@@ -6,12 +6,20 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import io.cobrowse.core.CobrowseIO;
 import io.cobrowse.core.Session;
+import okhttp3.internal.Util;
 
 public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Listener {
+
+    public static final String SESSION_UPDATED = "session_updated";
+    public static final String SESSION_ENDED = "session_ended";
 
     CobrowseIOModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -27,17 +35,25 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     }
 
     @Override
+    public Map<String, Object> getConstants() {
+        final Map<String, Object> constants = new HashMap<>();
+        constants.put("SESSION_UPDATED", SESSION_UPDATED);
+        constants.put("SESSION_ENDED", SESSION_ENDED);
+        return constants;
+    }
+
+    @Override
     public void sessionDidUpdate(Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("session_updated", Utility.convert(session));
+                .emit(SESSION_UPDATED, Utility.convert(session));
     }
 
     @Override
     public void sessionDidEnd(Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("session_ended", Utility.convert(session));
+                .emit(SESSION_ENDED, Utility.convert(session));
     }
 
 
@@ -49,6 +65,11 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     @ReactMethod
     public void license(String license) {
         CobrowseIO.instance().license = license;
+    }
+
+    @ReactMethod
+    public void currentSession(final Callback callback) {
+        callback.invoke(null, Utility.convert(CobrowseIO.instance().currentSession()));
     }
 
     @ReactMethod

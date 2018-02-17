@@ -3,6 +3,9 @@
 #import "CBIOSession+Bridging.h"
 #import <React/RCTUtils.h>
 
+#define SESSION_UPDATED "session_updated"
+#define SESSION_ENDED "session_ended"
+
 @import CobrowseIO;
 
 @interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule, CobrowseIODelegate>
@@ -26,6 +29,13 @@ RCT_EXPORT_MODULE();
     return YES;
 }
 
+-(NSDictionary *)constantsToExport {
+    return @{
+        @"SESSION_UPDATED": @SESSION_UPDATED,
+        @"SESSION_ENDED": @SESSION_ENDED
+    };
+}
+
 -(void)startObserving {
     hasListeners = YES;
 }
@@ -35,15 +45,15 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<NSString *> *)supportedEvents {
-    return @[@"session_updated", @"session_ended"];
+    return self.constantsToExport.allValues;
 }
 
 -(void)cobrowseSessionDidUpdate:(CBIOSession *)session {
-    if (hasListeners) [self sendEventWithName:@"session_updated" body:[session toDict]];
+    if (hasListeners) [self sendEventWithName:@SESSION_UPDATED body:[session toDict]];
 }
 
 -(void)cobrowseSessionDidEnd:(CBIOSession *)session {
-    if (hasListeners) [self sendEventWithName:@"session_ended" body:[session toDict]];
+    if (hasListeners) [self sendEventWithName:@SESSION_ENDED body:[session toDict]];
 }
 
 RCT_EXPORT_METHOD(license: (NSString*) license) {

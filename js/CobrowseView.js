@@ -23,12 +23,18 @@ export default class CobrowseView extends Component {
                 this.setState({ error: err, session });
             });
         } else {
-            CobrowseIO.createSession((err, session) => {
-                this.setState({ error: err, session });
+            CobrowseIO.currentSession((err, current) => {
+                if (current) {
+                    this.setState({error:err, session:current});
+                } else {
+                    CobrowseIO.createSession((err, session) => {
+                        this.setState({ error: err, session });
+                    });
+                }
             });
         }
 
-        this.listener = CobrowseIO.addListener('session_updated', (session) => {
+        this.listener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
            this.setState({ session });
        });
     }
