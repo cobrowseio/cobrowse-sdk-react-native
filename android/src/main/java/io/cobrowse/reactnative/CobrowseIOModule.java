@@ -1,59 +1,107 @@
 package io.cobrowse.reactnative;
 
-/**
- * This is a {@link NativeModule} that allows JS to use AcessToken in Facebook Android SDK.
- */
-public class FBAccessTokenModule extends ReactContextBaseJavaModule{
+import android.util.Log;
 
-    public FBAccessTokenModule(ReactApplicationContext reactContext) {
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+import io.cobrowse.core.CobrowseIO;
+import io.cobrowse.core.Session;
+
+public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Listener {
+
+    CobrowseIOModule(ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
+    private void init() {
+        if (getReactApplicationContext().getCurrentActivity() != null)
+            CobrowseIO.instance().start(getReactApplicationContext().getCurrentActivity()).setListener(this);
+    }
+
     public String getName() {
-        return "FBAccessToken";
+        return "CobrowseIO";
     }
 
-    /**
-     * Get {@link AccessToken} of the current session.
-     * @param callback Use callback to pass the current access token back to JS.
-     */
-    @ReactMethod
-    public void getCurrentAccessToken(Callback callback) {
-        //Return the accessToken object as a ReactMap.
-        callback.invoke(AccessToken.getCurrentAccessToken() == null
-                ? null
-                : Utility.accessTokenToReactMap(AccessToken.getCurrentAccessToken()));
+    @Override
+    public void sessionDidUpdate(Session session) {
+        getReactApplicationContext()
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("session_updated", Utility.convert(session));
     }
 
-    /**
-     * Set {@link AccessToken} for the current session.
-     * @param accessTokenMap must satisfy the requirements in
-     *                       <a href="https://developers.facebook.com/docs/reference/android/current/class/AccessToken/">
-     *                       Facebook AccessToken</a>
-     */
-    @ReactMethod
-    public void setCurrentAccessToken(ReadableMap accessTokenMap) {
-        AccessToken accessToken = Utility.buildAccessToken(accessTokenMap);
-        AccessToken.setCurrentAccessToken(accessToken);
+    @Override
+    public void sessionDidEnd(Session session) {
+        getReactApplicationContext()
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("session_ended", Utility.convert(session));
     }
 
-    /**
-     * Updates the current access token with up to date permissions, and extends the expiration
-     * date, if extension is possible.
-     * @param promise use promise to pass result back to JS.
-     */
+
     @ReactMethod
-    public void refreshCurrentAccessTokenAsync(final Promise promise) {
-        AccessToken.refreshCurrentAccessTokenAsync(new AccessToken.AccessTokenRefreshCallback() {
+    public void api(String api) {
+        CobrowseIO.instance().api = api;
+    }
+
+    @ReactMethod
+    public void license(String license) {
+        CobrowseIO.instance().license = license;
+    }
+
+    @ReactMethod
+    public void createSession(final Callback callback) {
+        init();
+        CobrowseIO.instance().createSession(new io.cobrowse.core.Callback<Error, Session>() {
             @Override
-            public void OnTokenRefreshed(AccessToken accessToken) {
-                promise.resolve(Utility.accessTokenToReactMap(accessToken));
-            }
-
-            @Override
-            public void OnTokenRefreshFailed(FacebookException exception) {
-                promise.reject(exception);
+            public void call(Error error, Session session) {
+                callback.invoke(Utility.convert(error), Utility.convert(session));
             }
         });
     }
+
+    @ReactMethod
+    public void loadSession(String idOrCode, final Callback callback) {
+        init();
+        CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.core.Callback<Error, Session>() {
+            @Override
+            public void call(Error error, Session session) {
+                callback.invoke(Utility.convert(error), Utility.convert(session));
+            }
+        });
+    }
+
+    @ReactMethod
+    public void activateSession(final Callback callback) {
+        Session current = CobrowseIO.instance().currentSession();
+        if (current == null) {
+            callback.invoke("no current session");
+            return;
+        }
+        current.activate(new io.cobrowse.core.Callback<Error, Session>() {
+            @Override
+            public void call(Error error, Session session) {
+                callback.invoke(Utility.convert(error), Utility.convert(session));
+            }
+        });
+    }
+
+
+    @ReactMethod
+    public void endSession(final Callback callback) {
+        Session current = CobrowseIO.instance().currentSession();
+        if (current == null) {
+            callback.invoke("no current session");
+            return;
+        }
+        current.end(new io.cobrowse.core.Callback<Error, Session>() {
+            @Override
+            public void call(Error error, Session session) {
+                callback.invoke(Utility.convert(error), Utility.convert(session));
+            }
+        });
+    }
+
 }
