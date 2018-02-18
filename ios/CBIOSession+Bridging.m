@@ -9,8 +9,8 @@
         @"state": self.state ? self.state : NSNull.null,
         @"approved": [NSNumber numberWithBool: self.isApproved],
         @"agent": self.hasAgent ? @{
-            name: self.agent.name,
-            id: self.agent.id
+            @"name": self.agent.name,
+            @"id": self.agent.id
         } : NSNull.null
     };
 }
