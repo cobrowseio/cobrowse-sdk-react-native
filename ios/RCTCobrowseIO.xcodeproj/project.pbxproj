@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A114D585203A2D1A00B297FA /* CBIOSession+Bridging.m in Sources */ = {isa = PBXBuildFile; fileRef = A114D584203A2D1900B297FA /* CBIOSession+Bridging.m */; };
 		A1BD99C6203105EA007F5AE5 /* RCTCobrowseIO.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BD99C5203105E9007F5AE5 /* RCTCobrowseIO.m */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A114D583203A2D1900B297FA /* CBIOSession+Bridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBIOSession+Bridging.h"; sourceTree = "<group>"; };
+		A114D584203A2D1900B297FA /* CBIOSession+Bridging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CBIOSession+Bridging.m"; sourceTree = "<group>"; };
 		A19B6E3B2030F3FE00F6CF3B /* libRCTCobrowseIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTCobrowseIO.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1BD99C5203105E9007F5AE5 /* RCTCobrowseIO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTCobrowseIO.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -42,6 +45,8 @@
 			isa = PBXGroup;
 			children = (
 				A1BD99C5203105E9007F5AE5 /* RCTCobrowseIO.m */,
+				A114D583203A2D1900B297FA /* CBIOSession+Bridging.h */,
+				A114D584203A2D1900B297FA /* CBIOSession+Bridging.m */,
 				A19B6E3C2030F3FE00F6CF3B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1BD99C6203105EA007F5AE5 /* RCTCobrowseIO.m in Sources */,
+				A114D585203A2D1A00B297FA /* CBIOSession+Bridging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
