@@ -1,6 +1,6 @@
 {
   "name": "cobrowse-sdk-react-native",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Cobrowse SDK for React Native",
   "main": "./js/index.js",
   "author": {
@@ -21,8 +21,7 @@
     "cobrowseio"
   ],
   "license": "Proprietary",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react-native": ">=0.44.0",
     "prop-types": "15.x.x"
