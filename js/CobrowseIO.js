@@ -16,7 +16,7 @@ export default class CobrowseIO {
     }
 
     static addListener(event, cb) {
-        emitter.addListener(event, cb);
+        return emitter.addListener(event, cb);
     }
 
     static set api(api) {

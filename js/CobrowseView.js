@@ -3,9 +3,40 @@ import {
     View,
     Text,
     ActivityIndicator,
-    TouchableOpacity
+    TouchableOpacity,
+    StyleSheet,
+    Linking
 } from 'react-native';
 import CobrowseIO from './CobrowseIO';
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-end'
+    },
+    text: {
+        textAlign: 'center',
+        margin: 15,
+        fontSize: 15,
+        lineHeight: 20
+    },
+    code: {
+        fontSize: 29,
+        padding: 20,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    },
+    poweredby: {
+        color: '#444',
+        marginTop: 40,
+        marginBottom: 25
+    },
+    button: {
+        color: 'rgb(0, 122, 255)',
+        fontSize: 18,
+        margin: 10
+    }
+});
 
 export default class CobrowseView extends Component {
 
@@ -34,13 +65,17 @@ export default class CobrowseView extends Component {
             });
         }
 
-        this.listener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
+        this.updateListener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
            this.setState({ session });
-       });
+        });
+        this.endListener = CobrowseIO.addListener(CobrowseIO.SESSION_ENDED, (session) => {
+            if (this.props.onEnded) this.props.onEnded();
+        });
     }
 
     componentWillUnmount() {
-        if (this.listener) this.listener.remove();
+        if (this.updateListener) this.updateListener.remove();
+        if (this.endListener) this.endListener.remove();
     }
 
     approveSession() {
@@ -57,15 +92,17 @@ export default class CobrowseView extends Component {
 
     renderError() {
         return (
-            <Text>{this.state.error}</Text>
+            <Text style={[styles.text]}>{this.state.error}</Text>
         );
     }
 
     renderCode() {
+        let code = this.state.session && this.state.session.code;
+        if (code) code = code.substr(0, 3) + '-' + code.substr(3);
         return (
             <View>
-                <Text>{this.state.session && this.state.session.code}</Text>
-                <Text>Provide this code to your support agent to begin screen sharing.</Text>
+                <Text style={[styles.code, {opacity:code?1:0.2}]}>{code || '000-000'}</Text>
+                <Text style={[styles.text]}>Provide this code to your support agent to begin screen sharing.</Text>
                 <ActivityIndicator/>
             </View>
         );
@@ -74,9 +111,13 @@ export default class CobrowseView extends Component {
     renderApproval() {
         return (
             <View>
-                <Text>A support agent would like to use this app with you. If you accept, they will only be able to see screens from this app.</Text>
-                <TouchableOpacity onPress={()=>this.approveSession()}><Text>Approve</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.endSession()}><Text>Decline</Text></TouchableOpacity>
+                <Text style={[styles.text]}>A support agent would like to use this app with you. If you accept, they will only be able to see screens from this app.</Text>
+                <TouchableOpacity onPress={()=>this.approveSession()}>
+                    <Text style={[styles.text, styles.button]}>Approve</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.endSession()}>
+                    <Text style={[styles.text, styles.button]}>Decline</Text>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -84,13 +125,15 @@ export default class CobrowseView extends Component {
     renderManageSession() {
         return (
             <View>
-                <Text>You{"'"}re sharing screens from this app with a support agent.</Text>
-                <TouchableOpacity onPress={()=>this.endSession()}><Text>End Session</Text></TouchableOpacity>
+                <Text style={[styles.text]}>You{"'"}re sharing screens from this app with a support agent.</Text>
+                <TouchableOpacity onPress={()=>this.endSession()}>
+                    <Text style={[styles.text, styles.button]}>End Session</Text>
+                </TouchableOpacity>
             </View>
         );
     }
 
-    render() {
+    renderContent() {
         const { error, session } = this.state;
         if (error) {
             return this.renderError();
@@ -101,5 +144,17 @@ export default class CobrowseView extends Component {
         } else {
             return this.renderManageSession();
         }
+    }
+
+    render() {
+        return (
+            <View style={styles.container}>
+                {this.renderContent()}
+                <TouchableOpacity
+                    onPress={()=>Linking.openURL('https://cobrowse.io/sdk-powered-by')} >
+                    <Text style={[styles.text, styles.poweredby]}>Powered by Cobrowse.io</Text>
+                </TouchableOpacity>
+            </View>
+        );
     }
 }
