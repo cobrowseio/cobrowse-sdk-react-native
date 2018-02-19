@@ -13,7 +13,7 @@ npm install --save cobrowse-sdk-react-native
 react-native link
 ```
 
-**Note:** For iOS you need to be using Pods to manage dependencies. If you're not using pods you'll need to manually add the Frameworks for CobrowseIO and SocketIO.
+**Note:** For iOS you need to be using Pods to manage dependencies for `react-native link` to work out of the box. If you're not using pods you'll need to manually add the Frameworks for CobrowseIO, SocketIO (and it's dependencies) to your Xcode project.
 
 ## Usage from Javascript
 
