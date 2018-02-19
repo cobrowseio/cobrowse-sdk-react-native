@@ -54,6 +54,9 @@ It's likely you'll want to customise the UI for starting or managing an active s
 `CobrowseIO.endSession(callback)`
 
 
+`CobrowseIO.addListener(event, callback)`
+
+
 
 ### Properties
 
