@@ -17,6 +17,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.facebook.react:react-native:+' // support react-native-v0.22-rc+
-    implementation 'io.cobrowse:cobrowse-sdk-android:0.+'
+    compile 'com.facebook.react:react-native:+' // support react-native-v0.22-rc+
+    compile 'io.cobrowse:cobrowse-sdk-android:0.+'
 }

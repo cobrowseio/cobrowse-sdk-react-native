@@ -41,27 +41,19 @@ It's likely you'll want to customise the UI for starting or managing an active s
 
 `CobrowseIO.createSession(callback)`
 
-
 `CobrowseIO.loadSession(code, callback)`
-
 
 `CobrowseIO.currentSession(callback)`
 
-
 `CobrowseIO.activateSession(callback)`
-
 
 `CobrowseIO.endSession(callback)`
 
-
 `CobrowseIO.addListener(event, callback)`
-
-
 
 ### Properties
 
 `CobrowseIO.license`
-
 
 ### Constants
 
