@@ -20,6 +20,6 @@
     "cobrowse",
     "cobrowseio"
   ],
-  "license": "Proprietary",
+  "license": "Apache-2.0",
   "dependencies": {}
 }
