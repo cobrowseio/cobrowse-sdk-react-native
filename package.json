@@ -1,6 +1,6 @@
 {
   "name": "cobrowse-sdk-react-native",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Cobrowse SDK for React Native",
   "main": "./js/index.js",
   "author": {
