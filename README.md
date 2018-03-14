@@ -77,3 +77,18 @@ Alternatively, you can pass this as the `license` prop to the `CobrowseView` if 
 ## Requirements
 
 * iOS 9.0, Android API 21 or above.
+
+## Troubleshooting
+
+**Issue: Could not find any matches for io.cobrowse:cobrowse-sdk-android:0.+ as no versions of io.cobrowse:cobrowse-sdk-android are available.**
+
+Cobrowse uses a maven distribution on Android. Add these lines to your Project gradle.build file:
+
+**In your project build.gradle**
+Esnure that JCenter is added to your list of repositories:
+```gradle
+repositories {
+    jcenter()
+}
+```
+
