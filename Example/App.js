@@ -23,7 +23,6 @@ class CobrowseScreen extends React.Component {
             <CobrowseView
                 license='trial'
                 onEnded={() => this.props.navigation.pop()}
-                api='https://api.staging.cobrowse.io' 
             />
         );
     }
