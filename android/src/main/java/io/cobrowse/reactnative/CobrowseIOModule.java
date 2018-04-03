@@ -6,7 +6,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.util.HashMap;
@@ -14,7 +14,6 @@ import java.util.Map;
 
 import io.cobrowse.core.CobrowseIO;
 import io.cobrowse.core.Session;
-import okhttp3.internal.Util;
 
 public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Listener {
 
@@ -56,7 +55,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
                 .emit(SESSION_ENDED, Utility.convert(session));
     }
 
-
     @ReactMethod
     public void api(String api) {
         CobrowseIO.instance().api(api);
@@ -68,8 +66,11 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     }
 
     @ReactMethod
-    public void customData(String customData) {
-        CobrowseIO.instance().customData(customData);
+    public void customData(ReadableMap customData) {
+        if (getReactApplicationContext().getCurrentActivity() != null)
+            CobrowseIO.instance().customData(
+                getReactApplicationContext().getCurrentActivity().getApplication(),
+                customData.toHashMap());
     }
 
     @ReactMethod
@@ -113,7 +114,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
             }
         });
     }
-
 
     @ReactMethod
     public void endSession(final Callback callback) {
