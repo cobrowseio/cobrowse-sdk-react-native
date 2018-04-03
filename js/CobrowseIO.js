@@ -27,6 +27,10 @@ export default class CobrowseIO {
         CobrowseIONative.license(license);
     }
 
+    static set customData(customData) {
+        CobrowseIONative.customData(customData);
+    }
+
     static currentSession(cb) {
         CobrowseIONative.currentSession(cb);
     }

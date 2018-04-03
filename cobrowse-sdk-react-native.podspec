@@ -12,6 +12,6 @@ Pod::Spec.new do |s|
   s.source        = { :git => 'https://github.com/cobrowseio/cobrowse-sdk-react-native.git' }
   s.platform      = :ios, '9.0'
 
-  s.dependency      'CobrowseIO'
+  s.dependency      'CobrowseIO', '~> 1.0'
   s.source_files =  'ios/*.{h,m}'
 end

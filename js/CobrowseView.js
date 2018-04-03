@@ -46,8 +46,10 @@ export default class CobrowseView extends Component {
     }
 
     componentDidMount() {
-        if (this.props.api) CobrowseIO.api = this.props.api;
-        if (this.props.license) CobrowseIO.license = this.props.license;
+        if (this.props.license) {
+            console.warn('Passing license to view is deprecated. Use CobrowseIO.license = "..." instead');
+            CobrowseIO.license = this.props.license;
+        }
 
         if (this.props.code) {
             CobrowseIO.loadSession(this.props.code, (err, session) => {

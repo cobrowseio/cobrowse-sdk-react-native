@@ -64,6 +64,15 @@ RCT_EXPORT_METHOD(api: (NSString*) api) {
     CobrowseIO.instance.api = api;
 }
 
+RCT_EXPORT_METHOD(customData: (NSDictionary*) customData) {
+    CobrowseIO.instance.customData = customData;
+}
+
+RCT_EXPORT_METHOD(currentSession: (RCTResponseSenderBlock) callback) {
+    CBIOSession* session = CobrowseIO.instance.currentSession;
+    callback(@[[NSNull null], session ? [session toDict] : [NSNull null]]);
+}
+
 RCT_EXPORT_METHOD(createSession: (RCTResponseSenderBlock) callback) {
     [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
         callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);

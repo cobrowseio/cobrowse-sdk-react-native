@@ -1,7 +1,12 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { CobrowseView } from 'cobrowse-sdk-react-native';
+import CobrowseIO, { CobrowseView } from 'cobrowse-sdk-react-native';
+
+CobrowseIO.license = "trial";
+CobrowseIO.customData = {
+    user_email: "react-native@example.com"
+};
 
 class HomeScreen extends React.Component {
     render() {
@@ -20,10 +25,7 @@ class HomeScreen extends React.Component {
 class CobrowseScreen extends React.Component {
     render() {
         return (
-            <CobrowseView
-                license='trial'
-                onEnded={() => this.props.navigation.pop()}
-            />
+            <CobrowseView onEnded={() => this.props.navigation.pop()} />
         );
     }
 }

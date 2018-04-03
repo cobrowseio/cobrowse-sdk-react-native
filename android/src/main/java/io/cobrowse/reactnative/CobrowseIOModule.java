@@ -59,12 +59,17 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void api(String api) {
-        CobrowseIO.instance().api = api;
+        CobrowseIO.instance().api(api);
     }
 
     @ReactMethod
     public void license(String license) {
-        CobrowseIO.instance().license = license;
+        CobrowseIO.instance().license(license);
+    }
+
+    @ReactMethod
+    public void customData(String customData) {
+        CobrowseIO.instance().customData(customData);
     }
 
     @ReactMethod
