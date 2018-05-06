@@ -68,6 +68,10 @@ RCT_EXPORT_METHOD(customData: (NSDictionary*) customData) {
     CobrowseIO.instance.customData = customData;
 }
 
+RCT_EXPORT_METHOD(deviceToken: (NSString*) token) {
+    CobrowseIO.instance.device.token = token;
+}
+
 RCT_EXPORT_METHOD(currentSession: (RCTResponseSenderBlock) callback) {
     CBIOSession* session = CobrowseIO.instance.currentSession;
     callback(@[[NSNull null], session ? [session toDict] : [NSNull null]]);

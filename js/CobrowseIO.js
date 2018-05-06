@@ -31,6 +31,10 @@ export default class CobrowseIO {
         CobrowseIONative.customData(customData);
     }
 
+    static set deviceToken(token) {
+        CobrowseIONative.deviceToken(token);
+    }
+
     static currentSession(cb) {
         CobrowseIONative.currentSession(cb);
     }

@@ -67,10 +67,15 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void customData(ReadableMap customData) {
+        CobrowseIO.instance().customData(customData.toHashMap());
+    }
+
+    @ReactMethod
+    public void deviceToken(String token) {
         if (getReactApplicationContext().getCurrentActivity() != null)
-            CobrowseIO.instance().customData(
+            CobrowseIO.instance().setDeviceToken(
                 getReactApplicationContext().getCurrentActivity().getApplication(),
-                customData.toHashMap());
+                token);
     }
 
     @ReactMethod
