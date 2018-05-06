@@ -4,7 +4,7 @@ use_frameworks!
 target 'Example' do
   react_native_path = '../node_modules/react-native'
   pod 'DoubleConversion', :podspec => react_native_path + '/third-party-podspecs/DoubleConversion.podspec'
-  pod 'GLog', :podspec => react_native_path + '/third-party-podspecs/GLog.podspec'
+  pod 'glog', :podspec => react_native_path + '/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => react_native_path + '/third-party-podspecs/Folly.podspec'
   pod 'yoga', path: react_native_path + '/ReactCommon/yoga/yoga.podspec'
   pod 'React', path: react_native_path, subspecs: [
