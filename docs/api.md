@@ -1,5 +1,3 @@
-# CobrowseIO SDK - Remote Screenshare Service
-
 ## API
 
 We've provided an API as a part of this SDK that allows you to bypass the default UI we provide and create your own:
@@ -33,4 +31,4 @@ We've provided an API as a part of this SDK that allows you to bypass the defaul
 `CobrowseIO.SESSION_ENDED`
 
 
-See the [CobrowseView](./js/CobrowseView.js) code for an example of how to use these APIs.
+See the [CobrowseView](../js/CobrowseView.js) code for an example of how to use these APIs.
