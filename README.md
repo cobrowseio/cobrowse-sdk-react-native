@@ -1,4 +1,4 @@
-# CobrowseIO SDK - Remote Screenshare Service
+# Cobrowse.io SDK for React Native
 
 With [Cobrowse.io](https://cobrowse.io)'s screen sharing technology for mobile apps you can see *exactly* what your customer sees on their mobile device, and provide realtime annotations to help solve customer support queries quickly.
 
