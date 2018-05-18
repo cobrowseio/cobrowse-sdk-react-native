@@ -1,10 +1,10 @@
-# CobrowseIO SDK - Remote Screenshare Service
+# Cobrowse.io - React Native SDK
 
-With [Cobrowse.io](https://cobrowse.io)'s screen sharing technology for mobile apps you can see *exactly* what your customer sees on their mobile device, and provide realtime annotations to help solve customer support queries quickly.
+Cobrowse.io is 100% free and easy to try out in your own apps. Please see full documentation at [https://cobrowse.io/docs](https://cobrowse.io/docs).
 
-## Try it out
+Try our **online demo** at the bottom of our homepage at <https://cobrowse.io/#tryit>.
 
-You can try the Cobrowse.io service for **free** and **without signing up for an account**. Just follow the installation instructions below, then head to <https://cobrowse.io/trial> to use the trial dashboard.
+*Clients may access and integrate full source code for our SDKs directly upon request.*
 
 ## Installation
 
@@ -66,7 +66,9 @@ See the [CobrowseView](./js/CobrowseView.js) code for an example of how to use t
 
 
 ### Add your license key
-Once you've signed up for a free account at [cobrowse.io](https://cobrowse.io), you'll be able to find your license key at <https://cobrowse.io/dashboard/settings>. Add this to your SDK setup:
+Please register an account and generate your free License Key at <https://cobrowse.io/dashboard/settings>.
+
+This will associate sessions from your mobile app with your Cobrowse.io account. Add this to your SDK setup:
 
 ```javascript
 CobrowseIO.license = "<your license key here>";
@@ -74,6 +76,17 @@ CobrowseIO.license = "<your license key here>";
 
 Alternatively, you can pass this as the `license` prop to the `CobrowseView` if you're using the default UI.
 
+## Optional features
+
+[Initiate sessions with push](https://cobrowse.io/docs#initiate-with-push)
+
+[Use 6-digit codes](https://cobrowse.io/docs#user-generated-codes)
+
+[Redact sensitive data](https://cobrowse.io/docs#redact-sensitive-data)
+
+## Questions?
+Any questions at all? Please email us directly at [hello@cobrowse.io](mailto:hello@cobrowse.io).
+
 ## Requirements
 
-* iOS 9.0, Android API 21 or above.
+* iOS 9.0, Android API 19 or above.
