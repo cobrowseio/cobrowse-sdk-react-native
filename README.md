@@ -23,8 +23,6 @@ CobrowseIO.license = "<your license key here>";
 
 ### Further Reading
 
-[User Initiated Sessions](./docs/user-initiated-sessions.md)
-
 [API Documentation](./docs/api.md)
 
 ## Optional features
