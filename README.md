@@ -1,8 +1,10 @@
-# Cobrowse.io SDK for React Native
+# Cobrowse.io - React Native SDK
 
-With [Cobrowse.io](https://cobrowse.io)'s screen sharing technology for mobile apps you can see *exactly* what your customer sees on their mobile device, and provide realtime annotations to help solve customer support queries quickly.
+Cobrowse.io is 100% free and easy to try out in your own apps. Please see full documentation at [https://cobrowse.io/docs](https://cobrowse.io/docs).
 
-You can try the Cobrowse.io service for **free** and **without signing up for an account**. Just follow the installation instructions below using the license key `trial`, then head to <https://cobrowse.io/trial> to use the trial dashboard.
+Try our **online demo** at the bottom of our homepage at <https://cobrowse.io/#tryit>.
+
+*Clients may access and integrate full source code for our SDKs directly upon request.*
 
 ## Installation
 
@@ -37,11 +39,25 @@ CobrowseIO.deviceToken = "<your FCM token>";
 
 ```
 
-## Further Reading
+### Add your license key
+Please register an account and generate your free License Key at <https://cobrowse.io/dashboard/settings>.
+
+This will associate sessions from your mobile app with your Cobrowse.io account. Add this to your SDK setup:
 
 [User Initiated Sessions](./docs/user-initiated-sessions.md)
 
 [API Documentation](./docs/api.md)
+
+## Optional features
+
+[Initiate sessions with push](https://cobrowse.io/docs#initiate-with-push)
+
+[Use 6-digit codes](https://cobrowse.io/docs#user-generated-codes)
+
+[Redact sensitive data](https://cobrowse.io/docs#redact-sensitive-data)
+
+## Questions?
+Any questions at all? Please email us directly at [hello@cobrowse.io](mailto:hello@cobrowse.io).
 
 ## Requirements
 
