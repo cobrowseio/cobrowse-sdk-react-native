@@ -18,6 +18,7 @@ Once you've signed up for a free account at [cobrowse.io](https://cobrowse.io), 
 import CobrowseIO from 'cobrowse-sdk-react-native';
 
 CobrowseIO.license = "<your license key here>";
+CobrowseIO.start();
 
 ```
 

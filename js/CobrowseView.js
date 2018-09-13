@@ -141,7 +141,7 @@ export default class CobrowseView extends Component {
             return this.renderError();
         } else if ((!session) || ((session.state === 'pending') && !session.agent)) {
             return this.renderCode();
-        } else if (!this.state.session.approved) {
+        } else if ((session.state === 'pending') && this.state.session.agent) {
             return this.renderApproval();
         } else {
             return this.renderManageSession();

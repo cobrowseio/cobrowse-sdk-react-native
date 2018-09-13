@@ -9,7 +9,7 @@
 @import CobrowseIO;
 
 @interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule, CobrowseIODelegate>
-@end 
+@end
 
 @implementation RCTCobrowseIO {
     bool hasListeners;
@@ -54,6 +54,14 @@ RCT_EXPORT_MODULE();
 
 -(void)cobrowseSessionDidEnd:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_ENDED body:[session toDict]];
+}
+
+RCT_EXPORT_METHOD(start) {
+    [CobrowseIO.instance start];
+}
+
+RCT_EXPORT_METHOD(stop) {
+    [CobrowseIO.instance stop];
 }
 
 RCT_EXPORT_METHOD(license: (NSString*) license) {

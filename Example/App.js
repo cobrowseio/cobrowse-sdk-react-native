@@ -7,6 +7,7 @@ CobrowseIO.license = "trial";
 CobrowseIO.customData = {
     user_email: "react-native@example.com"
 };
+CobrowseIO.start();
 
 class HomeScreen extends React.Component {
     render() {

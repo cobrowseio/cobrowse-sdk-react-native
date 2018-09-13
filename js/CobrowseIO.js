@@ -19,6 +19,14 @@ export default class CobrowseIO {
         return emitter.addListener(event, cb);
     }
 
+    static start() {
+        CobrowseIONative.start();
+    }
+
+    static stop() {
+        CobrowseIONative.stop();
+    }
+
     static set api(api) {
         CobrowseIONative.api(api);
     }

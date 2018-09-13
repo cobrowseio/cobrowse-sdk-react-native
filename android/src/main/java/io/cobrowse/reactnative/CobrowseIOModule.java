@@ -27,8 +27,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     }
 
     private void init() {
-        if (getReactApplicationContext().getCurrentActivity() != null)
-            CobrowseIO.instance().start(getReactApplicationContext().getCurrentActivity()).setDelegate(this);
+        CobrowseIO.instance().setDelegate(this);
     }
 
     public String getName() {
@@ -65,6 +64,16 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     @Override
     public boolean shouldAllowTouch(Touch event, Session session) {
         return true;
+    }
+
+    @ReactMethod
+    public void start() {
+        CobrowseIO.instance().start(getReactApplicationContext().getCurrentActivity());
+    }
+
+    @ReactMethod
+    public void stop() {
+        CobrowseIO.instance().stop();
     }
 
     @ReactMethod
