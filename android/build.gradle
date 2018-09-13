@@ -1,13 +1,14 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -17,6 +18,6 @@ android {
 }
 
 dependencies {
-    compile 'com.facebook.react:react-native:+' // support react-native-v0.22-rc+
-    compile 'io.cobrowse:cobrowse-sdk-android:1.+'
+    implementation 'com.facebook.react:react-native:+' // support react-native-v0.22-rc+
+    implementation 'io.cobrowse:cobrowse-sdk-android:1.4.0'
 }

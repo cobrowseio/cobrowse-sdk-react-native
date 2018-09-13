@@ -22,7 +22,7 @@ target 'Example' do
       'RCTWebSocket',
   ]
 
-  pod 'cobrowse-sdk-react-native', :path => '../node_modules/cobrowse-sdk-react-native'
+  pod 'cobrowse-sdk-react-native', :path => '../../'
 
 end
 

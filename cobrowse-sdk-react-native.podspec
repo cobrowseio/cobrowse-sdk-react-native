@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
   s.platform      = :ios, '9.0'
 
   s.dependency      'CobrowseIO', '~> 1.0'
+  s.dependency      'React'
   s.source_files =  'ios/*.{h,m}'
 end

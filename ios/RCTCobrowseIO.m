@@ -9,7 +9,7 @@
 @import CobrowseIO;
 
 @interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule, CobrowseIODelegate>
-@end
+@end 
 
 @implementation RCTCobrowseIO {
     bool hasListeners;

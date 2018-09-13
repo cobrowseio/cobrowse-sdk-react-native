@@ -14,8 +14,10 @@ import java.util.Map;
 
 import io.cobrowse.core.CobrowseIO;
 import io.cobrowse.core.Session;
+import io.cobrowse.core.KeyEvent;
+import io.cobrowse.core.Touch;
 
-public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Listener {
+public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Delegate {
 
     public static final String SESSION_UPDATED = "session_updated";
     public static final String SESSION_ENDED = "session_ended";
@@ -26,7 +28,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     private void init() {
         if (getReactApplicationContext().getCurrentActivity() != null)
-            CobrowseIO.instance().start(getReactApplicationContext().getCurrentActivity()).setListener(this);
+            CobrowseIO.instance().start(getReactApplicationContext().getCurrentActivity()).setDelegate(this);
     }
 
     public String getName() {
@@ -53,6 +55,16 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(SESSION_ENDED, Utility.convert(session));
+    }
+
+    @Override
+    public boolean shouldAllowKeyEvent(KeyEvent event, Session session) {
+        return true;
+    }
+
+    @Override
+    public boolean shouldAllowTouch(Touch event, Session session) {
+        return true;
     }
 
     @ReactMethod
