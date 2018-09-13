@@ -57,60 +57,82 @@ RCT_EXPORT_MODULE();
 }
 
 RCT_EXPORT_METHOD(start) {
-    [CobrowseIO.instance start];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [CobrowseIO.instance start];
+    });
 }
 
 RCT_EXPORT_METHOD(stop) {
-    [CobrowseIO.instance stop];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [CobrowseIO.instance stop];
+    });
 }
 
 RCT_EXPORT_METHOD(license: (NSString*) license) {
-    CobrowseIO.instance.license = license;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CobrowseIO.instance.license = license;
+    });
 }
 
 RCT_EXPORT_METHOD(api: (NSString*) api) {
-    CobrowseIO.instance.api = api;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CobrowseIO.instance.api = api;
+    });
 }
 
 RCT_EXPORT_METHOD(customData: (NSDictionary*) customData) {
-    CobrowseIO.instance.customData = customData;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CobrowseIO.instance.customData = customData;
+    });
 }
 
 RCT_EXPORT_METHOD(deviceToken: (NSString*) token) {
-    CobrowseIO.instance.device.token = token;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CobrowseIO.instance.device.token = [token dataUsingEncoding:NSUTF16StringEncoding];
+    });
 }
 
 RCT_EXPORT_METHOD(currentSession: (RCTResponseSenderBlock) callback) {
-    CBIOSession* session = CobrowseIO.instance.currentSession;
-    callback(@[[NSNull null], session ? [session toDict] : [NSNull null]]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CBIOSession* session = CobrowseIO.instance.currentSession;
+        callback(@[[NSNull null], session ? [session toDict] : [NSNull null]]);
+    });
 }
 
 RCT_EXPORT_METHOD(createSession: (RCTResponseSenderBlock) callback) {
-    [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
-        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
+            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
+        }];
+    });
 }
 
 RCT_EXPORT_METHOD(loadSession: (NSString*) idOrCode callback: (RCTResponseSenderBlock) callback) {
-    [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
-        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
+            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
+        }];
+    });
 }
 
 RCT_EXPORT_METHOD(activateSession: (RCTResponseSenderBlock) callback) {
-    CBIOSession* current = CobrowseIO.instance.currentSession;
-    if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
-    [current activate:^(NSError *err, CBIOSession *session) {
-        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CBIOSession* current = CobrowseIO.instance.currentSession;
+        if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
+        [current activate:^(NSError *err, CBIOSession *session) {
+            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
+        }];
+    });
 }
 
 RCT_EXPORT_METHOD(endSession: (RCTResponseSenderBlock) callback) {
-    CBIOSession* current = CobrowseIO.instance.currentSession;
-    if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
-    [current end:^(NSError *err, CBIOSession *session) {
-        callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        CBIOSession* current = CobrowseIO.instance.currentSession;
+        if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
+        [current end:^(NSError *err, CBIOSession *session) {
+            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
+        }];
+    });
 }
 
 @end
