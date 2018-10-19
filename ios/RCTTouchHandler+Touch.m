@@ -41,11 +41,12 @@
     reactTouch[@"locationY"] = @(RCTSanitizeNaNValue(roundf(viewCoords.y), @"touchEvent.locationY"));
     reactTouch[@"timestamp"] =  @([NSProcessInfo.processInfo systemUptime] * 1000); // in ms, for JS
     
+    static uint16_t _coalescingKey = 0;
     RCTTouchEvent* reactEvent = [[RCTTouchEvent alloc] initWithEventName:eventName
                                                          reactTag:reactTag
                                                      reactTouches:@[reactTouch]
                                                    changedIndexes:@[@(0)]
-                                                    coalescingKey:1];
+                                                    coalescingKey:_coalescingKey++];
     
     RCTEventDispatcher* dispatcher = [[RCTBridge currentBridge] moduleForClass:[RCTEventDispatcher class]];
     [dispatcher sendEvent: reactEvent];
