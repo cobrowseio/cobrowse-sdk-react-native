@@ -2,14 +2,14 @@
 #import <React/RCTEventEmitter.h>
 #import "CBIOSession+Bridging.h"
 #import <React/RCTUtils.h>
+#import <React/RCTView.h>
+#import <React/RCTBridge.h>
+#import "RCTCobrowseIO.h"
 
 #define SESSION_UPDATED "session_updated"
 #define SESSION_ENDED "session_ended"
 
 @import CobrowseIO;
-
-@interface RCTCobrowseIO: RCTEventEmitter <RCTBridgeModule, CobrowseIODelegate>
-@end
 
 @implementation RCTCobrowseIO {
     bool hasListeners;
