@@ -12,7 +12,11 @@ react-native link
 ```
 **Note:** For iOS you need to be using Pods to manage dependencies for `react-native link` to work out of the box (and also remember to run `pod install` after the link step).
 
-Once you've signed up for a free account at [cobrowse.io](https://cobrowse.io), you'll be able to find your license key at <https://cobrowse.io/dashboard/settings>. You can add this to your SDK setup:
+### Add your License Key
+
+Please register an account and generate your free License Key at <https://cobrowse.io/dashboard/settings>.
+
+This will associate sessions from your mobile app with your Cobrowse account.
 
 ```javascript
 import CobrowseIO from 'cobrowse-sdk-react-native';
@@ -22,15 +26,27 @@ CobrowseIO.start();
 
 ```
 
-### Further Reading
+### Add device metadata
 
-[API Documentation](./docs/api.md)
+To help you identify, search, and filter devices in your Cobrowse dashboard, it's helpful to specify any meaningful metadata. We recommend specifying the end-user's email if available.
+
+You may add any custom key/value pairs you'd like, and they will all be searchable and filterable in your online dashboard. We've added a few placeholders for convenience only - all fields are optional.
+
+```javascript
+CobrowseIO.customData = {
+    user_email: "react-native@example.com"
+};
+```
+
+## Try it out
+
+Once you have your app running in the iOS Simulator or on a physical device, navigate to <https://cobrowse.io/dashboard> to see your device listed. You can click the "Connect" button to initiate a Cobrowse session!
 
 ## Optional features
 
-[Initiate sessions with push](https://cobrowse.io/docs#initiate-with-push)
+[Initiate sessions with push](./docs/initiate-with-push.md)
 
-[Use 6-digit codes](https://cobrowse.io/docs#user-generated-codes)
+[Use 6-digit codes](./docs/user-initiated-codes.md)
 
 [Redact sensitive data](https://cobrowse.io/docs#redact-sensitive-data)
 
