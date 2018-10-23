@@ -1,6 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - cobrowse-sdk-react-native (1.1.4):
+  - cobrowse-sdk-react-native (1.1.5):
     - CobrowseIO (~> 1.0)
     - React
   - CobrowseIO (1.6.1):
@@ -104,6 +104,6 @@ SPEC CHECKSUMS:
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: d5f0dca80605270c46163e57d0d54c1b493ebfbc
+PODFILE CHECKSUM: ab5045069acce81480fcd1248cb5615104eeb676
 
 COCOAPODS: 1.4.0
