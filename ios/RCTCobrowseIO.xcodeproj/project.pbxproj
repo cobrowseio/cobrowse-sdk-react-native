@@ -233,6 +233,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 794R7987DQ;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../../ios";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -245,6 +246,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 794R7987DQ;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../../../ios";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
