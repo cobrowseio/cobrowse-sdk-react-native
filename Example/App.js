@@ -1,51 +1,51 @@
-import React from 'react';
-import { Button, View, Text } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import CobrowseIO, { CobrowseView } from 'cobrowse-sdk-react-native';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-CobrowseIO.license = "trial";
-CobrowseIO.customData = {
-    user_email: "react-native@example.com"
-};
-CobrowseIO.start();
+import React, {Component} from 'react';
+import {Platform, StyleSheet, Text, View} from 'react-native';
+import { CobrowseView } from 'cobrowse-sdk-react-native';
 
-class HomeScreen extends React.Component {
-    render() {
-        return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Text>Home Screen</Text>
-                <Button
-                    title="Start Cobrowse"
-                    onPress={() => this.props.navigation.navigate('Cobrowse')}
-                />
-            </View>
-        );
-    }
-}
-
-class CobrowseScreen extends React.Component {
-    render() {
-        return (
-            <CobrowseView onEnded={() => this.props.navigation.pop()} />
-        );
-    }
-}
-
-
-const RootStack = StackNavigator({
-    Home: {
-        screen: HomeScreen,
-    },
-    Cobrowse: {
-        screen: CobrowseScreen,
-    },
-},{
-    initialRouteName: 'Home',
+const instructions = Platform.select({
+  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
+  android:
+    'Double tap R on your keyboard to reload,\n' +
+    'Shake or press menu button for dev menu',
 });
 
-
-export default class App extends React.Component {
-    render() {
-        return <RootStack />;
-    }
+type Props = {};
+export default class App extends Component<Props> {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.instructions}>To get started, edit App.js</Text>
+        <Text style={styles.instructions}>{instructions}</Text>
+        <CobrowseView onEnded={() => {}} />
+      </View>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
