@@ -20,11 +20,11 @@ export default class CobrowseIO {
     }
 
     static start() {
-        CobrowseIONative.start();
+        return CobrowseIONative.start();
     }
 
     static stop() {
-        CobrowseIONative.stop();
+        return CobrowseIONative.stop();
     }
 
     static set api(api) {
@@ -43,23 +43,23 @@ export default class CobrowseIO {
         CobrowseIONative.deviceToken(token);
     }
 
-    static currentSession(cb) {
-        CobrowseIONative.currentSession(cb);
+    static currentSession() {
+        return CobrowseIONative.currentSession();
     }
 
-    static createSession(cb) {
-        CobrowseIONative.createSession(cb);
+    static createSession() {
+        return CobrowseIONative.createSession();
     }
 
-    static activateSession(cb) {
-        CobrowseIONative.activateSession(cb);
+    static activateSession() {
+        return CobrowseIONative.activateSession();
     }
 
-    static loadSession(codeOrId, cb) {
-        CobrowseIONative.loadSession(codeOrId, cb);
+    static loadSession(codeOrId) {
+        return CobrowseIONative.loadSession(codeOrId);
     }
 
-    static endSession(cb) {
-        CobrowseIONative.endSession(cb);
+    static endSession() {
+        return CobrowseIONative.endSession();
     }
 }

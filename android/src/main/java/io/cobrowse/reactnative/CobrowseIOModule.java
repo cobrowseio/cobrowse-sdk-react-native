@@ -3,6 +3,7 @@ package io.cobrowse.reactnative;
 import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -100,58 +101,62 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     }
 
     @ReactMethod
-    public void currentSession(final Callback callback) {
-        callback.invoke(null, Utility.convert(CobrowseIO.instance().currentSession()));
+    public void currentSession(final Promise promise) {
+        promise.resolve(Utility.convert(CobrowseIO.instance().currentSession()));
     }
 
     @ReactMethod
-    public void createSession(final Callback callback) {
+    public void createSession(final Promise promise) {
         init();
         CobrowseIO.instance().createSession(new io.cobrowse.core.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
-                callback.invoke(Utility.convert(error), Utility.convert(session));
+                if (error != null) promise.reject("cbio_create_session_failed", error);
+                else promise.resolve(Utility.convert(session));
             }
         });
     }
 
     @ReactMethod
-    public void loadSession(String idOrCode, final Callback callback) {
+    public void loadSession(String idOrCode, final Promise promise) {
         init();
         CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.core.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
-                callback.invoke(Utility.convert(error), Utility.convert(session));
+                if (error != null) promise.reject("cbio_load_session_failed", error);
+                else promise.resolve(Utility.convert(session));
             }
         });
     }
 
     @ReactMethod
-    public void activateSession(final Callback callback) {
+    public void activateSession(final Promise promise) {
         Session current = CobrowseIO.instance().currentSession();
         if (current == null) {
-            callback.invoke("no current session");
+            promise.reject("no current session", new Error("No session"));
             return;
         }
         current.activate(new io.cobrowse.core.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
-                callback.invoke(Utility.convert(error), Utility.convert(session));
+                if (error != null) promise.reject("cbio_activate_session_failed", error);
+                else promise.resolve(Utility.convert(session));
             }
         });
     }
 
     @ReactMethod
-    public void endSession(final Callback callback) {
+    public void endSession(final Promise promise) {
         Session current = CobrowseIO.instance().currentSession();
         if (current == null) {
-            callback.invoke("no current session");
+            promise.reject("no current session", new Error("No session"));
             return;
         }
         current.end(new io.cobrowse.core.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
-                callback.invoke(Utility.convert(error), Utility.convert(session));
+                if (error != null) promise.reject("cbio_end_session_failed", error);
+                else promise.resolve(null);
             }
         });
     }

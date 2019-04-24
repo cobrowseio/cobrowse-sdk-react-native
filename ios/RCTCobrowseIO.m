@@ -29,6 +29,10 @@ RCT_EXPORT_MODULE();
     return YES;
 }
 
+-(dispatch_queue_t) methodQueue {
+  return dispatch_get_main_queue();
+}
+
 -(NSDictionary *)constantsToExport {
     return @{
         @"SESSION_UPDATED": @SESSION_UPDATED,
@@ -57,82 +61,81 @@ RCT_EXPORT_MODULE();
 }
 
 RCT_EXPORT_METHOD(start) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [CobrowseIO.instance start];
-    });
+    [CobrowseIO.instance start];
 }
 
-RCT_EXPORT_METHOD(stop) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [CobrowseIO.instance stop];
-    });
+RCT_REMAP_METHOD(stop,
+                 stopWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    [CobrowseIO.instance stop:^(NSError *err) {
+        if (err) return reject(@"cbio_stop_failed", err.localizedDescription, err);
+        else resolve(NSNull.null);
+    }];
 }
 
 RCT_EXPORT_METHOD(license: (NSString*) license) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CobrowseIO.instance.license = license;
-    });
+    CobrowseIO.instance.license = license;
 }
 
 RCT_EXPORT_METHOD(api: (NSString*) api) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CobrowseIO.instance.api = api;
-    });
+    CobrowseIO.instance.api = api;
 }
 
 RCT_EXPORT_METHOD(customData: (NSDictionary*) customData) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CobrowseIO.instance.customData = customData;
-    });
+    CobrowseIO.instance.customData = customData;
 }
 
 RCT_EXPORT_METHOD(deviceToken: (NSString*) token) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CobrowseIO.instance.device.token = [token dataUsingEncoding:NSUTF16StringEncoding];
-    });
+    CobrowseIO.instance.device.token = [token dataUsingEncoding:NSUTF16StringEncoding];
 }
 
-RCT_EXPORT_METHOD(currentSession: (RCTResponseSenderBlock) callback) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CBIOSession* session = CobrowseIO.instance.currentSession;
-        callback(@[[NSNull null], session ? [session toDict] : [NSNull null]]);
-    });
+RCT_REMAP_METHOD(currentSession,
+                 currentSessionWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    CBIOSession* session = CobrowseIO.instance.currentSession;
+    NSDictionary* dict = [session toDict];
+    resolve(dict);
 }
 
-RCT_EXPORT_METHOD(createSession: (RCTResponseSenderBlock) callback) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
-            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-        }];
-    });
+RCT_REMAP_METHOD(createSession,
+                 createSessionWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    [CobrowseIO.instance createSession:^(NSError *err, CBIOSession *session) {
+        if (err) return reject(@"cbio_create_session_failed", err.localizedDescription, err);
+        return resolve([session toDict]);
+    }];
 }
 
-RCT_EXPORT_METHOD(loadSession: (NSString*) idOrCode callback: (RCTResponseSenderBlock) callback) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
-            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-        }];
-    });
+RCT_REMAP_METHOD(loadSession,
+                 loadSessionWithIdOrCode: (NSString*) idOrCode
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
+        if (err) return reject(@"cbio_load_session_failed", err.localizedDescription, err);
+        return resolve([session toDict]);
+    }];
 }
 
-RCT_EXPORT_METHOD(activateSession: (RCTResponseSenderBlock) callback) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CBIOSession* current = CobrowseIO.instance.currentSession;
-        if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
-        [current activate:^(NSError *err, CBIOSession *session) {
-            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-        }];
-    });
+RCT_REMAP_METHOD(activateSession,
+                 activateSessionWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    CBIOSession* current = CobrowseIO.instance.currentSession;
+    if (!current) return reject(@"cbio_activate_session_failed", @"There is no active session to activate", nil);
+    [current activate:^(NSError *err, CBIOSession *session) {
+        if (err) return reject(@"cbio_activate_session_failed", err.localizedDescription, err);
+        return resolve([session toDict]);
+    }];
 }
 
-RCT_EXPORT_METHOD(endSession: (RCTResponseSenderBlock) callback) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CBIOSession* current = CobrowseIO.instance.currentSession;
-        if (!current) callback(@[RCTMakeError(@"no current session", nil, nil)]);
-        [current end:^(NSError *err, CBIOSession *session) {
-            callback(@[err?err.localizedDescription:[NSNull null], session ? [session toDict] : [NSNull null]]);
-        }];
-    });
+RCT_REMAP_METHOD(endSession,
+                 endSessionWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    CBIOSession* current = CobrowseIO.instance.currentSession;
+    if (!current) return reject(@"cbio_end_session_failed", @"There is no active session to end", nil);
+    [current end:^(NSError *err, CBIOSession *session) {
+        if (err) return reject(@"cbio_end_session_failed", err.localizedDescription, err);
+        return resolve([session toDict]);
+    }];
 }
 
 @end

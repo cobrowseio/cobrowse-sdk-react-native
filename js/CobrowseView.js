@@ -45,26 +45,26 @@ export default class CobrowseView extends Component {
         this.state = { error: null, session: null };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (this.props.license) {
             console.warn('Passing license to view is deprecated. Use CobrowseIO.license = "..." instead');
             CobrowseIO.license = this.props.license;
         }
 
-        if (this.props.code) {
-            CobrowseIO.loadSession(this.props.code, (err, session) => {
-                this.setState({ error: err, session });
-            });
-        } else {
-            CobrowseIO.currentSession((err, current) => {
-                if (current) {
-                    this.setState({error:err, session:current});
-                } else {
-                    CobrowseIO.createSession((err, session) => {
-                        this.setState({ error: err, session });
-                    });
+        try {
+            if (this.props.code) {
+                const session = await CobrowseIO.loadSession(this.props.code);
+                this.setState({ session });
+            } else {
+                const current = await CobrowseIO.currentSession();
+                if (current) this.setState({ session:current });
+                else {
+                    const session = await CobrowseIO.createSession();
+                    this.setState({ session });
                 }
-            });
+            }
+        } catch (error) {
+            this.setState({ error })
         }
 
         this.updateListener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
@@ -80,16 +80,22 @@ export default class CobrowseView extends Component {
         if (this.endListener) this.endListener.remove();
     }
 
-    approveSession() {
-        CobrowseIO.activateSession((err, session) => {
-            this.setState({ error: err, session });
-        });
+    async approveSession() {
+        try {
+            const session = await CobrowseIO.activateSession();
+            this.setState({session});
+        } catch(error) {
+            this.setState({error});
+        }
     }
 
-    endSession() {
-        CobrowseIO.endSession((err, session) => {
-            this.setState({ error: err, session: null });
-        });
+    async endSession() {
+        try {
+            await CobrowseIO.endSession();
+            this.setState({session: null});
+        } catch(error) {
+            this.setState({error});
+        }
     }
 
     renderError() {

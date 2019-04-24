@@ -6,9 +6,7 @@
 #import <React/RCTTouchEvent.h>
 #import <React/RCTUtils.h>
 #import <React/UIView+React.h>
-@import CobrowseIO;
-
-@import CobrowseIO;
+#import "RCTTouchHandler+Touch.h"
 
 static uint16_t _coalescingKey = 0;
 
