@@ -1,5 +1,6 @@
 package io.cobrowse.reactnative;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
@@ -69,7 +70,11 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void start() {
-        CobrowseIO.instance().start(getReactApplicationContext().getCurrentActivity());
+        Activity activity = getReactApplicationContext().getCurrentActivity();
+        if (activity != null)
+            CobrowseIO.instance().start(activity);
+        else
+            Log.w("CobrowseIO", "Activity was null during start() call.");
     }
 
     @ReactMethod
