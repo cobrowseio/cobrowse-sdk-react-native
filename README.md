@@ -48,6 +48,8 @@ Once you have your app running in the iOS Simulator or on a physical device, nav
 
 [Use 6-digit codes](./docs/user-generated-codes.md)
 
+[Requiring acceptance from the user](./docs/require-user-consent.md)
+
 [Redact sensitive data](https://cobrowse.io/docs#redact-sensitive-data)
 
 ## Questions?
