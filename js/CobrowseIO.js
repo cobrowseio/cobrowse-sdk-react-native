@@ -73,5 +73,5 @@ export default class CobrowseIO {
 }
 
 CobrowseIO.addListener(CobrowseIO.SESSION_REQUESTED, (session) => {
-    CobrowseIO.onSessionRequest(session);
+    CobrowseIO.handleSessionRequest(session);
 });
