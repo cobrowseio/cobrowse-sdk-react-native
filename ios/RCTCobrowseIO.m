@@ -8,6 +8,7 @@
 
 #define SESSION_UPDATED "session_updated"
 #define SESSION_ENDED "session_ended"
+#define SESSION_REQUESTED "session_requested"
 
 @import CobrowseIO;
 
@@ -36,7 +37,8 @@ RCT_EXPORT_MODULE();
 -(NSDictionary *)constantsToExport {
     return @{
         @"SESSION_UPDATED": @SESSION_UPDATED,
-        @"SESSION_ENDED": @SESSION_ENDED
+        @"SESSION_ENDED": @SESSION_ENDED,
+        @"SESSION_REQUESTED": @SESSION_REQUESTED
     };
 }
 
@@ -58,6 +60,10 @@ RCT_EXPORT_MODULE();
 
 -(void)cobrowseSessionDidEnd:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_ENDED body:[session toDict]];
+}
+
+-(void)cobrowseHandleSessionRequest:(CBIOSession *)session {
+    if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
 }
 
 RCT_EXPORT_METHOD(start) {
@@ -106,8 +112,8 @@ RCT_REMAP_METHOD(createSession,
     }];
 }
 
-RCT_REMAP_METHOD(loadSession,
-                 loadSessionWithIdOrCode: (NSString*) idOrCode
+RCT_REMAP_METHOD(getSession,
+                 getSessionWithIdOrCode: (NSString*) idOrCode
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject) {
     [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {

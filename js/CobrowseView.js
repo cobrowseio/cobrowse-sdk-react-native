@@ -52,16 +52,11 @@ export default class CobrowseView extends Component {
         }
 
         try {
-            if (this.props.code) {
-                const session = await CobrowseIO.loadSession(this.props.code);
+            const current = await CobrowseIO.currentSession();
+            if (current) this.setState({ session:current });
+            else {
+                const session = await CobrowseIO.createSession();
                 this.setState({ session });
-            } else {
-                const current = await CobrowseIO.currentSession();
-                if (current) this.setState({ session:current });
-                else {
-                    const session = await CobrowseIO.createSession();
-                    this.setState({ session });
-                }
             }
         } catch (error) {
             this.setState({ error })

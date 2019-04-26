@@ -15,6 +15,14 @@ export default class CobrowseIO {
         return CobrowseIONative.SESSION_ENDED;
     }
 
+    static get SESSION_REQUESTED() {
+        return CobrowseIONative.SESSION_REQUESTED;
+    }
+
+    static handleSessionRequest(session) {
+        this.activateSession();
+    }
+
     static addListener(event, cb) {
         return emitter.addListener(event, cb);
     }
@@ -55,11 +63,15 @@ export default class CobrowseIO {
         return CobrowseIONative.activateSession();
     }
 
-    static loadSession(codeOrId) {
-        return CobrowseIONative.loadSession(codeOrId);
+    static getSession(codeOrId) {
+        return CobrowseIONative.getSession(codeOrId);
     }
 
     static endSession() {
         return CobrowseIONative.endSession();
     }
 }
+
+CobrowseIO.addListener(CobrowseIO.SESSION_REQUESTED, (session) => {
+    CobrowseIO.onSessionRequest(session);
+});

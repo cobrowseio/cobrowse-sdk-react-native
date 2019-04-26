@@ -1,9 +1,9 @@
 package io.cobrowse.reactnative;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -16,22 +16,19 @@ import java.util.Map;
 
 import io.cobrowse.core.CobrowseIO;
 import io.cobrowse.core.Session;
-import io.cobrowse.core.KeyEvent;
-import io.cobrowse.core.Touch;
 
-public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Delegate {
+public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Delegate, Session.RequestDelegate {
 
-    public static final String SESSION_UPDATED = "session_updated";
-    public static final String SESSION_ENDED = "session_ended";
+    private static final String SESSION_UPDATED = "session_updated";
+    private static final String SESSION_ENDED = "session_ended";
+    private static final String SESSION_REQUESTED = "session_requested";
 
     CobrowseIOModule(ReactApplicationContext reactContext) {
         super(reactContext);
-    }
-
-    private void init() {
         CobrowseIO.instance().setDelegate(this);
     }
 
+    @NonNull
     public String getName() {
         return "CobrowseIO";
     }
@@ -41,6 +38,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
         final Map<String, Object> constants = new HashMap<>();
         constants.put("SESSION_UPDATED", SESSION_UPDATED);
         constants.put("SESSION_ENDED", SESSION_ENDED);
+        constants.put("SESSION_REQUESTED", SESSION_REQUESTED);
         return constants;
     }
 
@@ -59,13 +57,10 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
     }
 
     @Override
-    public boolean shouldAllowKeyEvent(KeyEvent event, Session session) {
-        return true;
-    }
-
-    @Override
-    public boolean shouldAllowTouch(Touch event, Session session) {
-        return true;
+    public void handleSessionRequest(Session session) {
+        getReactApplicationContext()
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(SESSION_REQUESTED, Utility.convert(session));
     }
 
     @ReactMethod
@@ -112,7 +107,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void createSession(final Promise promise) {
-        init();
         CobrowseIO.instance().createSession(new io.cobrowse.core.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
@@ -124,7 +118,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void loadSession(String idOrCode, final Promise promise) {
-        init();
         CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.core.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
