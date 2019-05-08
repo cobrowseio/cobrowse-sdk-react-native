@@ -50,7 +50,7 @@ Once you have your app running in the iOS Simulator or on a physical device, nav
 
 [Requiring acceptance from the user](./docs/require-user-consent.md)
 
-[Redact sensitive data](https://cobrowse.io/docs#redact-sensitive-data)
+[Redact sensitive data](./docs/redact-sensitive-data.md)
 
 ## Questions?
 Any questions at all? Please email us directly at [hello@cobrowse.io](mailto:hello@cobrowse.io).
