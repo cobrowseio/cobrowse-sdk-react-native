@@ -1,8 +1,10 @@
 package io.cobrowse.reactnative;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -11,13 +13,17 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import io.cobrowse.core.CobrowseIO;
+import io.cobrowse.core.Redaction;
 import io.cobrowse.core.Session;
 
-public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Delegate, Session.RequestDelegate {
+public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Delegate, Session.RequestDelegate, Redaction.Delegate {
 
     private static final String SESSION_UPDATED = "session_updated";
     private static final String SESSION_ENDED = "session_ended";
@@ -63,11 +69,21 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
                 .emit(SESSION_REQUESTED, Utility.convert(session));
     }
 
+    @Override
+    public List<View> redactedViews(final Activity activity) {
+        return new ArrayList<>(Redacted.redactedViews.keySet());
+    }
+
     @ReactMethod
     public void start() {
-        Activity activity = getReactApplicationContext().getCurrentActivity();
+        final Activity activity = getReactApplicationContext().getCurrentActivity();
         if (activity != null)
-            CobrowseIO.instance().start(activity);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    CobrowseIO.instance().start(activity);
+                }
+            });
         else
             Log.w("CobrowseIO", "Activity was null during start() call.");
     }

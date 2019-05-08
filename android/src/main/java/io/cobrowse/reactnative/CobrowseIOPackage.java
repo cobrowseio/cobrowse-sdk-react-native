@@ -1,26 +1,31 @@
 package io.cobrowse.reactnative;
 
+import android.support.annotation.NonNull;
+
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class CobrowseIOPackage implements ReactPackage {
 
+    @NonNull
     @Override
-    public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Arrays.<NativeModule>asList(
-            new CobrowseIOModule(reactContext)
+    public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
+        return Collections.<NativeModule>singletonList(
+                new CobrowseIOModule(reactContext)
         );
     }
 
+    @NonNull
     @Override
-    public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return Collections.emptyList();
+    public List<ViewManager> createViewManagers(@NonNull ReactApplicationContext reactContext) {
+        return Collections.<ViewManager>singletonList(
+                new Redacted()
+        );
     }
 
 }
