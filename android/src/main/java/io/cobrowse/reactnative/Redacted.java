@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
@@ -26,7 +27,7 @@ public class Redacted extends ViewGroupManager<ViewGroup> {
     @Nonnull
     @Override
     protected ViewGroup createViewInstance(@Nonnull ThemedReactContext reactContext) {
-        ViewGroup view = new ReactViewGroup(reactContext);
+        ViewGroup view = new LinearLayout(reactContext.getBaseContext());
         view.setAlpha(1);
         redactedViews.put(view, null);
         return view;
