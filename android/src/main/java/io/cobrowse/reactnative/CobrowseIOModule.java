@@ -19,11 +19,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import io.cobrowse.core.CobrowseIO;
-import io.cobrowse.core.Redaction;
-import io.cobrowse.core.Session;
+import io.cobrowse.CobrowseIO;
+import io.cobrowse.Session;
 
-public class CobrowseIOModule extends ReactContextBaseJavaModule implements Session.Delegate, Session.RequestDelegate, Redaction.Delegate {
+public class CobrowseIOModule extends ReactContextBaseJavaModule implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate, CobrowseIO.RedactionDelegate {
 
     private static final String SESSION_UPDATED = "session_updated";
     private static final String SESSION_ENDED = "session_ended";
@@ -123,7 +122,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void createSession(final Promise promise) {
-        CobrowseIO.instance().createSession(new io.cobrowse.core.Callback<Error, Session>() {
+        CobrowseIO.instance().createSession(new io.cobrowse.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
                 if (error != null) promise.reject("cbio_create_session_failed", error);
@@ -134,7 +133,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
 
     @ReactMethod
     public void loadSession(String idOrCode, final Promise promise) {
-        CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.core.Callback<Error, Session>() {
+        CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
                 if (error != null) promise.reject("cbio_load_session_failed", error);
@@ -150,7 +149,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
             promise.reject("no current session", new Error("No session"));
             return;
         }
-        current.activate(new io.cobrowse.core.Callback<Error, Session>() {
+        current.activate(new io.cobrowse.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
                 if (error != null) promise.reject("cbio_activate_session_failed", error);
@@ -166,7 +165,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Sess
             promise.reject("no current session", new Error("No session"));
             return;
         }
-        current.end(new io.cobrowse.core.Callback<Error, Session>() {
+        current.end(new io.cobrowse.Callback<Error, Session>() {
             @Override
             public void call(Error error, Session session) {
                 if (error != null) promise.reject("cbio_end_session_failed", error);

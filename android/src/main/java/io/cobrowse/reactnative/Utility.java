@@ -3,7 +3,7 @@ package io.cobrowse.reactnative;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 
-import io.cobrowse.core.Session;
+import io.cobrowse.Session;
 
 final class Utility {
 
