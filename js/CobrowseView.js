@@ -95,7 +95,7 @@ export default class CobrowseView extends Component {
 
     renderError() {
         return (
-            <Text style={[styles.text]}>{this.state.error}</Text>
+            <Text style={[styles.text]}>{this.state.error.message}</Text>
         );
     }
 
