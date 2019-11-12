@@ -1,8 +1,9 @@
 'use strict';
 
+import { Alert } from 'react-native';
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO;
-
 const NativeEventEmitter = require('react-native').NativeEventEmitter;
+
 const emitter = new NativeEventEmitter(CobrowseIONative);
 
 export default class CobrowseIO {
@@ -20,7 +21,22 @@ export default class CobrowseIO {
     }
 
     static handleSessionRequest(session) {
-        this.activateSession();
+        Alert.alert(
+            'Support Request',
+            'A support agent would like to use this app with you. Do you accept?',
+            [
+                {
+                    text: 'Reject',
+                    onPress: () => this.endSession(),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Accept',
+                    onPress: () => this.activateSession()
+                },
+            ],
+            {cancelable: true},
+        );
     }
 
     static addListener(event, cb) {

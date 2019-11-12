@@ -26,11 +26,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
-    poweredby: {
-        color: '#444',
-        marginTop: 40,
-        marginBottom: 25
-    },
     button: {
         color: 'rgb(0, 122, 255)',
         fontSize: 18,
@@ -75,15 +70,6 @@ export default class CobrowseView extends Component {
         if (this.endListener) this.endListener.remove();
     }
 
-    async approveSession() {
-        try {
-            const session = await CobrowseIO.activateSession();
-            this.setState({session});
-        } catch(error) {
-            this.setState({error});
-        }
-    }
-
     async endSession() {
         try {
             await CobrowseIO.endSession();
@@ -111,20 +97,6 @@ export default class CobrowseView extends Component {
         );
     }
 
-    renderApproval() {
-        return (
-            <View>
-                <Text style={[styles.text]}>A support agent would like to use this app with you. If you accept, they will only be able to see screens from this app.</Text>
-                <TouchableOpacity onPress={()=>this.approveSession()}>
-                    <Text style={[styles.text, styles.button]}>Approve</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={()=>this.endSession()}>
-                    <Text style={[styles.text, styles.button]}>Decline</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
     renderManageSession() {
         return (
             <View>
@@ -140,10 +112,8 @@ export default class CobrowseView extends Component {
         const { error, session } = this.state;
         if (error) {
             return this.renderError();
-        } else if ((!session) || ((session.state === 'pending') && !session.agent)) {
+        } else if ((!session) || ((session.state === 'pending' || session.state === 'authorizing')) {
             return this.renderCode();
-        } else if ((session.state === 'pending') && this.state.session.agent) {
-            return this.renderApproval();
         } else {
             return this.renderManageSession();
         }
@@ -153,10 +123,6 @@ export default class CobrowseView extends Component {
         return (
             <View style={styles.container}>
                 {this.renderContent()}
-                <TouchableOpacity
-                    onPress={()=>Linking.openURL('https://cobrowse.io/sdk-powered-by')} >
-                    <Text style={[styles.text, styles.poweredby]}>Powered by Cobrowse.io</Text>
-                </TouchableOpacity>
             </View>
         );
     }
