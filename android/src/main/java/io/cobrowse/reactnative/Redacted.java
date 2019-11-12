@@ -1,18 +1,17 @@
 package io.cobrowse.reactnative;
 
-import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
-import com.facebook.react.views.view.ReactViewGroup;
 
 import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
+
+import androidx.annotation.NonNull;
 
 public class Redacted extends ViewGroupManager<ViewGroup> {
 

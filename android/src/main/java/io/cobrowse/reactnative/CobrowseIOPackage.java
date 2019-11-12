@@ -1,7 +1,5 @@
 package io.cobrowse.reactnative;
 
-import android.support.annotation.NonNull;
-
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -9,6 +7,8 @@ import com.facebook.react.uimanager.ViewManager;
 
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 public class CobrowseIOPackage implements ReactPackage {
 

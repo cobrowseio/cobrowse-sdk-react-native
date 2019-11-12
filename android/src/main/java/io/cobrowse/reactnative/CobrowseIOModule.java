@@ -1,8 +1,6 @@
 package io.cobrowse.reactnative;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
@@ -17,8 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
+import androidx.annotation.NonNull;
 import io.cobrowse.CobrowseIO;
 import io.cobrowse.Session;
 
@@ -48,28 +46,28 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @Override
-    public void sessionDidUpdate(Session session) {
+    public void sessionDidUpdate(@NonNull Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(SESSION_UPDATED, Utility.convert(session));
     }
 
     @Override
-    public void sessionDidEnd(Session session) {
+    public void sessionDidEnd(@NonNull Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(SESSION_ENDED, Utility.convert(session));
     }
 
     @Override
-    public void handleSessionRequest(Session session) {
+    public void handleSessionRequest(@NonNull Activity activity, @NonNull Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(SESSION_REQUESTED, Utility.convert(session));
     }
 
     @Override
-    public List<View> redactedViews(final Activity activity) {
+    public List<View> redactedViews(@NonNull final Activity activity) {
         return new ArrayList<>(Redacted.redactedViews.keySet());
     }
 
