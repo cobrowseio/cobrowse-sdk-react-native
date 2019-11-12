@@ -38,8 +38,8 @@
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		58AF5CD1BD754A66AD519833 /* libRCTCobrowseIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 431DE9D46F0A47C188E95C02 /* libRCTCobrowseIO.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		A1930ED42270057E0011DF45 /* SocketIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1930ED12270057E0011DF45 /* SocketIO.framework */; };
-		A1930ED52270057E0011DF45 /* SocketIO.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1930ED12270057E0011DF45 /* SocketIO.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A1368CD4237A344100728E42 /* SwiftCBOR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1368CD2237A343B00728E42 /* SwiftCBOR.framework */; };
+		A1368CD5237A344100728E42 /* SwiftCBOR.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1368CD2237A343B00728E42 /* SwiftCBOR.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A1930ED62270057E0011DF45 /* CobrowseIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1930ED22270057E0011DF45 /* CobrowseIO.framework */; };
 		A1930ED72270057E0011DF45 /* CobrowseIO.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1930ED22270057E0011DF45 /* CobrowseIO.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A1930ED82270057E0011DF45 /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1930ED32270057E0011DF45 /* Starscream.framework */; };
@@ -340,8 +340,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				A1930ED72270057E0011DF45 /* CobrowseIO.framework in Embed Frameworks */,
+				A1368CD5237A344100728E42 /* SwiftCBOR.framework in Embed Frameworks */,
 				A1930ED92270057E0011DF45 /* Starscream.framework in Embed Frameworks */,
-				A1930ED52270057E0011DF45 /* SocketIO.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,7 +375,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		A1930ED12270057E0011DF45 /* SocketIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketIO.framework; path = Carthage/Build/iOS/SocketIO.framework; sourceTree = "<group>"; };
+		A1368CD2237A343B00728E42 /* SwiftCBOR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCBOR.framework; path = Carthage/Build/iOS/SwiftCBOR.framework; sourceTree = "<group>"; };
 		A1930ED22270057E0011DF45 /* CobrowseIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CobrowseIO.framework; path = Carthage/Build/iOS/CobrowseIO.framework; sourceTree = "<group>"; };
 		A1930ED32270057E0011DF45 /* Starscream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Starscream.framework; path = Carthage/Build/iOS/Starscream.framework; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -400,7 +400,6 @@
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
-				A1930ED42270057E0011DF45 /* SocketIO.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -409,6 +408,7 @@
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
+				A1368CD4237A344100728E42 /* SwiftCBOR.framework in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				A1930ED62270057E0011DF45 /* CobrowseIO.framework in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
@@ -620,8 +620,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A1368CD2237A343B00728E42 /* SwiftCBOR.framework */,
 				A1930ED22270057E0011DF45 /* CobrowseIO.framework */,
-				A1930ED12270057E0011DF45 /* SocketIO.framework */,
 				A1930ED32270057E0011DF45 /* Starscream.framework */,
 				13B07FAE1A68108700A75B9A /* Example */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1163,7 +1163,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;

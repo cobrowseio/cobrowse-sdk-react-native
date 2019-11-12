@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A114D585203A2D1A00B297FA /* CBIOSession+Bridging.m in Sources */ = {isa = PBXBuildFile; fileRef = A114D584203A2D1900B297FA /* CBIOSession+Bridging.m */; };
+		A1368C9C237A2C7600728E42 /* CBIOCobrowseRedacted.m in Sources */ = {isa = PBXBuildFile; fileRef = A1368C9B237A2C7600728E42 /* CBIOCobrowseRedacted.m */; };
 		A1930DDD226FF9990011DF45 /* RCTTouchHandler+Touch.m in Sources */ = {isa = PBXBuildFile; fileRef = A1930DDC226FF9990011DF45 /* RCTTouchHandler+Touch.m */; };
 		A1BD99C6203105EA007F5AE5 /* RCTCobrowseIO.m in Sources */ = {isa = PBXBuildFile; fileRef = A1BD99C5203105E9007F5AE5 /* RCTCobrowseIO.m */; };
 /* End PBXBuildFile section */
@@ -27,6 +28,9 @@
 /* Begin PBXFileReference section */
 		A114D583203A2D1900B297FA /* CBIOSession+Bridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CBIOSession+Bridging.h"; sourceTree = "<group>"; };
 		A114D584203A2D1900B297FA /* CBIOSession+Bridging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CBIOSession+Bridging.m"; sourceTree = "<group>"; };
+		A1368C9B237A2C7600728E42 /* CBIOCobrowseRedacted.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBIOCobrowseRedacted.m; sourceTree = "<group>"; };
+		A1368C9D237A2C7F00728E42 /* CBIOCobrowseRedacted.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CBIOCobrowseRedacted.h; sourceTree = "<group>"; };
+		A1368C9E237A2C8E00728E42 /* RCTCobrowseIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTCobrowseIO.h; sourceTree = "<group>"; };
 		A1930DDB226FF9990011DF45 /* RCTTouchHandler+Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RCTTouchHandler+Touch.h"; sourceTree = "<group>"; };
 		A1930DDC226FF9990011DF45 /* RCTTouchHandler+Touch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RCTTouchHandler+Touch.m"; sourceTree = "<group>"; };
 		A19B6E3B2030F3FE00F6CF3B /* libRCTCobrowseIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTCobrowseIO.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,7 +51,10 @@
 		A19B6E322030F3FE00F6CF3B = {
 			isa = PBXGroup;
 			children = (
+				A1368C9E237A2C8E00728E42 /* RCTCobrowseIO.h */,
 				A1BD99C5203105E9007F5AE5 /* RCTCobrowseIO.m */,
+				A1368C9D237A2C7F00728E42 /* CBIOCobrowseRedacted.h */,
+				A1368C9B237A2C7600728E42 /* CBIOCobrowseRedacted.m */,
 				A114D583203A2D1900B297FA /* CBIOSession+Bridging.h */,
 				A114D584203A2D1900B297FA /* CBIOSession+Bridging.m */,
 				A1930DDB226FF9990011DF45 /* RCTTouchHandler+Touch.h */,
@@ -123,6 +130,7 @@
 			files = (
 				A1930DDD226FF9990011DF45 /* RCTTouchHandler+Touch.m in Sources */,
 				A1BD99C6203105EA007F5AE5 /* RCTCobrowseIO.m in Sources */,
+				A1368C9C237A2C7600728E42 /* CBIOCobrowseRedacted.m in Sources */,
 				A114D585203A2D1A00B297FA /* CBIOSession+Bridging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
