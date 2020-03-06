@@ -112,7 +112,7 @@ export default class CobrowseView extends Component {
         const { error, session } = this.state;
         if (error) {
             return this.renderError();
-        } else if ((!session) || ((session.state === 'pending' || session.state === 'authorizing')) {
+        } else if ((!session) || (session.state === 'pending' || session.state === 'authorizing')) {
             return this.renderCode();
         } else {
             return this.renderManageSession();
