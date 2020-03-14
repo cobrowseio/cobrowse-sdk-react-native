@@ -1,6 +1,7 @@
 #import <React/RCTBridgeModule.h>
 #import <React/RCTEventEmitter.h>
 #import "CBIOSession+Bridging.h"
+#import "CBIOCobrowseRedacted.h"
 #import <React/RCTUtils.h>
 #import <React/RCTView.h>
 #import <React/RCTBridge.h>
@@ -64,6 +65,10 @@ RCT_EXPORT_MODULE();
 
 -(void)cobrowseHandleSessionRequest:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
+}
+
+-(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
+    return [CBIOCobrowseRedactedManager.redactedViews allObjects];
 }
 
 RCT_EXPORT_METHOD(start) {
