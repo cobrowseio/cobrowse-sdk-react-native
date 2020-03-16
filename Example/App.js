@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { CobrowseView, Redacted } from 'cobrowse-sdk-react-native';
+import { CobrowseView, Redacted, SessionControl } from 'cobrowse-sdk-react-native';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -25,6 +25,7 @@ export default class App extends Component<Props> {
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Redacted><Text style={styles.instructions}>To get started, edit App.js</Text></Redacted>
         <Text style={styles.instructions}>{instructions}</Text>
+        <SessionControl><Text>Session is active</Text></SessionControl>
         <CobrowseView onEnded={() => {}} />
       </View>
     );

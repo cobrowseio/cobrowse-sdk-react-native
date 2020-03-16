@@ -17,15 +17,15 @@ import { Text, View } from 'react-native';
 import { Redacted } from 'cobrowse-sdk-react-native';
 
 export default class MyComponent extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Redacted>
-            <Text style={styles.instructions}>This text should be secret</Text>
-        </Redacted>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Redacted>
+                    <Text style={styles.instructions}>This text should be secret</Text>
+                </Redacted>
+            </View>
+        );
+    }
 }
 
 // ... stylesheets etc...

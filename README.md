@@ -44,6 +44,8 @@ Once you have your app running in the iOS Simulator or on a physical device, nav
 
 ## Optional features
 
+[Customizing the interface](./docs/customizing-the-interface.md)
+
 [Initiate sessions with push](./docs/initiate-with-push.md)
 
 [Use 6-digit codes](./docs/user-generated-codes.md)
