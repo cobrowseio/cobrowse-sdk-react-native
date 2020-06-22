@@ -1,6 +1,6 @@
 # Cobrowse.io - React Native SDK
 
-Cobrowse.io is 100% free and easy to try out in your own apps. Please see full documentation at [https://cobrowse.io/docs](https://cobrowse.io/docs).
+Cobrowse.io is 100% free and easy to try out in your own apps. Please see full documentation at [https://docs.cobrowse.io](https://docs.cobrowse.io).
 
 Try our **online demo** at the bottom of our homepage at <https://cobrowse.io/#tryit>.
 
@@ -26,37 +26,30 @@ CobrowseIO.start();
 
 ```
 
-### Add device metadata
-
-To help you identify, search, and filter devices in your Cobrowse dashboard, it's helpful to specify any meaningful metadata. We recommend specifying the end-user's email if available.
-
-You may add any custom key/value pairs you'd like, and they will all be searchable and filterable in your online dashboard. We've added a few placeholders for convenience only - all fields are optional.
-
-```javascript
-CobrowseIO.customData = {
-    user_email: "react-native@example.com"
-};
-```
-
 ## Try it out
 
 Once you have your app running in the iOS Simulator or on a physical device, navigate to <https://cobrowse.io/dashboard> to see your device listed. You can click the "Connect" button to initiate a Cobrowse session!
 
 ## Optional features
 
-[Customizing the interface](./docs/customizing-the-interface.md)
+[Identify your devices](https://docs.cobrowse.io/sdk-features/identify-your-devices)
 
-[Initiate sessions with push](./docs/initiate-with-push.md)
+[Use 6-digit codes](https://docs.cobrowse.io/sdk-features/6-digit-codes)
 
-[Use 6-digit codes](./docs/user-generated-codes.md)
+[Redact sensitive data](https://docs.cobrowse.io/sdk-features/redact-sensitive-data)
 
-[Requiring acceptance from the user](./docs/require-user-consent.md)
+[Customize the interface](https://docs.cobrowse.io/sdk-features/customize-the-interface)
 
-[Redact sensitive data](./docs/redact-sensitive-data.md)
+[Initiate sessions with push](https://docs.cobrowse.io/sdk-features/initiate-sessions-with-push)
+
+[Full device capabilities](https://docs.cobrowse.io/sdk-features/full-device-capabilities)
+
+[Advanced features](https://docs.cobrowse.io/sdk-features/advanced-features)
 
 ## Questions?
 Any questions at all? Please email us directly at [hello@cobrowse.io](mailto:hello@cobrowse.io).
 
 ## Requirements
 
-* iOS 9.0, Android API 19 or above.
+* iOS 9.0 or later
+* Android API version 19 (4.4 KitKat) or later
