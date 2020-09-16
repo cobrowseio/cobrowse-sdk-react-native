@@ -1,6 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - cobrowse-sdk-react-native (2.3.0):
+  - cobrowse-sdk-react-native (2.4.1):
     - CobrowseIO/Framework (~> 2.0)
     - React
   - CobrowseIO/Framework (2.8.2):
@@ -321,7 +321,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  cobrowse-sdk-react-native: c60186e98af4171bcc75ade23d5a487edba9f2e1
+  cobrowse-sdk-react-native: ca6c2f70f1c58c6bfe6a5d25c192109a19d099f2
   CobrowseIO: 56607e24a43ad88cb26b00344881f903e1816989
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
