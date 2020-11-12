@@ -6,7 +6,7 @@ android {
     buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.ext.buildToolsVersion : "27.0.3"
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 27
     }
 
