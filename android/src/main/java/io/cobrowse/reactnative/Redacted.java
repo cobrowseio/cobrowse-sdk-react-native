@@ -3,7 +3,6 @@ package io.cobrowse.reactnative;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.facebook.react.uimanager.ThemedReactContext;
