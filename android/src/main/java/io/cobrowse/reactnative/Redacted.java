@@ -1,8 +1,6 @@
 package io.cobrowse.reactnative;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import com.facebook.react.uimanager.ThemedReactContext;
@@ -18,14 +16,8 @@ import androidx.annotation.NonNull;
 public class Redacted extends ViewGroupManager<ReactViewGroup> {
 
     static class RedactedView extends ReactViewGroup {
-
         RedactedView(Context context) {
             super(context);
-        }
-
-        @Override
-        public void setBackground(Drawable drawable) {
-            setBackgroundColor(Color.TRANSPARENT);
         }
     }
 
