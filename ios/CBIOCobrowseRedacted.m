@@ -1,4 +1,11 @@
 #import "CBIOCobrowseRedacted.h"
+@import React;
+
+@interface CBIORedactedView : RCTView
+@end
+@implementation CBIORedactedView
+@end
+
 
 @implementation CBIOCobrowseRedactedManager
 
@@ -11,7 +18,7 @@ RCT_EXPORT_MODULE(CBIOCobrowseRedacted)
 }
 
 - (UIView *)view {
-    UIView* view =  [[UIView alloc] init];
+    UIView* view = [[CBIORedactedView alloc] init];
     [CBIOCobrowseRedactedManager.redactedViews addObject:view];
     return view;
 }

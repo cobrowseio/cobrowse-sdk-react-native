@@ -68,7 +68,11 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
-    return [CBIOCobrowseRedactedManager.redactedViews allObjects];
+    NSMutableArray* views = [NSMutableArray array];
+    for (UIView* v in CBIOCobrowseRedactedManager.redactedViews.allObjects) {
+        if ([v isDescendantOfView:vc.view]) [views addObject:v];
+    }
+    return views;
 }
 
 RCT_EXPORT_METHOD(start) {
