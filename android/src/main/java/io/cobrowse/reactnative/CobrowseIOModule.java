@@ -68,7 +68,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
 
     @Override
     public List<View> redactedViews(@NonNull final Activity activity) {
-        return new ArrayList<>(Redacted.redactedViews.keySet());
+        return new ArrayList<>(RedactedViewManager.redactedViews.keySet());
     }
 
     @ReactMethod
