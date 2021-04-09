@@ -146,7 +146,7 @@ RCT_REMAP_METHOD(endSession,
                  endSessionWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject) {
     CBIOSession* current = CobrowseIO.instance.currentSession;
-    if (!current) return reject(@"cbio_end_session_failed", @"There is no active session to end", nil);
+    if (!current) return resolve(nil);
     [current end:^(NSError *err, CBIOSession *session) {
         if (err) return reject(@"cbio_end_session_failed", err.localizedDescription, err);
         return resolve([session toDict]);
