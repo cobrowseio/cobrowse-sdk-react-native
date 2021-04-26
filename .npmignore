@@ -1,1 +1,9 @@
 Example/
+.idea
+*/build/*
+android/.gradle
+android/gradle*
+android/local.properties
+CHANGELOG.md
+README.md
+*.xcuserdata*
