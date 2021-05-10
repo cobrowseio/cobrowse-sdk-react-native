@@ -27,6 +27,7 @@ export default class App extends Component<Props> {
         <TextInput value={'Hello!'} onChange={() => {}} />
         <Text style={styles.instructions}>{instructions}</Text>
         <SessionControl><Text>Session is active</Text></SessionControl>
+        <SessionControl><View style={styles.floating}><Text>Overlay</Text></View></SessionControl>
         <CobrowseView onEnded={() => {}} />
       </View>
     );
@@ -49,5 +50,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  floating: {
+    zIndex: 500,
+    top: 155,
+    position: 'absolute',
+    left: 10,
+    right: 10,
+    height: 60,
+    backgroundColor: '#00ff00',
   },
 });
