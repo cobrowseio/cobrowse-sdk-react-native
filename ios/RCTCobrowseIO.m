@@ -75,6 +75,14 @@ RCT_EXPORT_MODULE();
     return views;
 }
 
+- (bool) cobrowseShouldCaptureWindow:(UIWindow *)window {
+    if ([NSStringFromClass(window.class) containsString:@"RemoteKeyboard"]) {
+        return false;
+    } else  {
+        return true;
+    }
+}
+
 RCT_EXPORT_METHOD(start) {
     [CobrowseIO.instance start];
 }
