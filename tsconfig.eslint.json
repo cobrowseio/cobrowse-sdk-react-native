@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "types": [
+      "react",
+      "react-native"
+    ]
+  },
+  "include": [
+    "./ts/**/*.d.ts"
+  ]
+}

@@ -2,7 +2,8 @@
   "name": "cobrowse-sdk-react-native",
   "version": "2.5.2",
   "description": "Cobrowse SDK for React Native",
-  "main": "./js/index.js",
+  "main": "js/index.js",
+  "types": "ts/index.d.ts",
   "author": {
     "name": "Andy Pritchard"
   },
@@ -21,5 +22,9 @@
     "cobrowseio"
   ],
   "license": "Apache-2.0",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "^17.0.5",
+    "@types/react-native": "^0.64.5"
+  }
 }
