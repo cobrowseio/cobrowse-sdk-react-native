@@ -2,13 +2,11 @@ import type { Component } from 'react'
 import type { View, Text } from 'react-native'
 
 export default class CobrowseView extends Component {
-  constructor (): CobrowseView
-
-  async componentDidMount (): Promise<void>
+  componentDidMount (): Promise<void>
 
   componentWillUnmount (): void
 
-  async endSession (): Promise<void>
+  endSession (): Promise<void>
 
   renderError (): Text
 
