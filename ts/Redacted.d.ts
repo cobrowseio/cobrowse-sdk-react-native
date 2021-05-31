@@ -1,7 +1,7 @@
-import type { Provider } from 'react'
+import type { Provider, ReactNode } from 'react'
 
 type Props = Readonly<{}> & Readonly<{
-  children?: React.ReactNode
+  children?: ReactNode
 }>
 
 export default function (props: Props): Provider<boolean>
