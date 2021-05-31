@@ -1,8 +1,18 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,accessor-pairs */
 import type { EmitterSubscription } from 'react-native'
 
-// TODO: find out what this interface is in 'io.cobrowse' jar.
-export type Session = any
+interface Agent {
+  id: string
+  name: string
+}
+
+export interface Session {
+  id: string | null
+  code: string | null
+  state: string | null
+  full_device: boolean
+  agent: Agent | null
+}
 
 export default class CobrowseIO {
   static get SESSION_UPDATED (): 'session_updated'
@@ -11,9 +21,9 @@ export default class CobrowseIO {
 
   static get SESSION_REQUESTED (): 'session_requested'
 
-  static handleSessionRequest (session?: any): void
+  static handleSessionRequest (session?: Session): void
 
-  static addListener (eventType: string, listener: (event: any) => void, context?: Object): EmitterSubscription
+  static addListener (eventType: string, listener: (event: any) => void, context?: any): EmitterSubscription
 
   static start (): void
 
