@@ -25,6 +25,10 @@
     "cobrowseio"
   ],
   "license": "Apache-2.0",
+  "optionalDependencies": {
+    "@types/react": "^17.0.5",
+    "@types/react-native": "^0.64.5"
+  },
   "dependencies": {},
   "devDependencies": {
     "@types/react": "^17.0.5",
