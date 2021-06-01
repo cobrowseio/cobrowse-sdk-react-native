@@ -35,3 +35,4 @@ Pods/
 node_modules/
 npm-debug.log
 Example/ios/Carthage
+*.tgz
