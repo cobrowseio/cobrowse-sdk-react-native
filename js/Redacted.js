@@ -8,7 +8,7 @@ module.exports = function(props) {
     const alreadyRedacted = useContext(RedactionContext);
     if (!alreadyRedacted) return (
         <RedactionContext.Provider value={true}>
-            <CBIOCobrowseRedacted>
+            <CBIOCobrowseRedacted style={props.style}>
                 <View>{props.children}</View>
             </CBIOCobrowseRedacted>
         </RedactionContext.Provider>
