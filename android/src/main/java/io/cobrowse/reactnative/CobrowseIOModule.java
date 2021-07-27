@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -89,22 +90,26 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
 
     @ReactMethod(isBlockingSynchronousMethod = true)
     public void setRedactedTags(final ReadableArray reactTags) {
-        redactedTags.clear();
-        for (int i = 0; i < reactTags.size(); i++)
-            redactedTags.add(reactTags.getInt(i));
+        synchronized (redactedTags) {
+            redactedTags.clear();
+            for (int i = 0; i < reactTags.size(); i++)
+                redactedTags.add(reactTags.getInt(i));
+        }
     }
 
     @Override
     public List<View> redactedViews(@NonNull final Activity activity) {
-        ArrayList<View> views = new ArrayList<>();
-        for (Integer i : redactedTags) {
-            try {
-                views.add(nodeManager.resolveView(i));
-            } catch (Exception e) {
-                Log.i("CobrowseIO", "Failed to find redacted view for tag " + i + ", error = " + e.getMessage());
+        synchronized (redactedTags) {
+            List<View> views = new ArrayList<>();
+            for (Integer i : redactedTags) {
+                try {
+                    views.add(nodeManager.resolveView(i));
+                } catch (Exception e) {
+                    Log.i("CobrowseIO", "Failed to find redacted view for tag " + i + ", error = " + e.getMessage());
+                }
             }
+            return views;
         }
-        return views;
     }
 
     @ReactMethod
