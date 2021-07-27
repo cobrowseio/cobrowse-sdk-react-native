@@ -30,10 +30,10 @@ export function redact (Component) {
       return () => {
         redactedTags.delete(view)
         // delay removal of redaction as a basic debounce
-        setTimeout(sendRedactionUpdates, 5000)
+        setTimeout(sendRedactionUpdates, 1000)
       }
     }, [])
-    return <Component {...props} collapsable={false} ref={mergeRefs([localRef, ref])} />
+    return <Component nativeID='cobrowse-redacted' {...props} collapsable={false} ref={mergeRefs([localRef, ref])} />
   })
 }
 
