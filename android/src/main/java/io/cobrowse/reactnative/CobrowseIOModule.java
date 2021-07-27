@@ -9,11 +9,16 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.uimanager.NativeViewHierarchyManager;
+import com.facebook.react.uimanager.UIBlock;
+import com.facebook.react.uimanager.UIManagerModule;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +32,24 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     private static final String SESSION_ENDED = "session_ended";
     private static final String SESSION_REQUESTED = "session_requested";
 
+    private final HashSet<Integer> redactedTags = new HashSet<>();
+    private NativeViewHierarchyManager nodeManager;
+
     CobrowseIOModule(ReactApplicationContext reactContext) {
         super(reactContext);
         CobrowseIO.instance().setDelegate(this);
+    }
+
+    private void findNodeManager() {
+        if (nodeManager != null) return;
+        final UIManagerModule uiManager = getReactApplicationContext().getNativeModule(UIManagerModule.class);
+        assert uiManager != null;
+        uiManager.prependUIBlock(new UIBlock() {
+            @Override
+            public void execute(NativeViewHierarchyManager nativeViewHierarchyManager) {
+                nodeManager = nativeViewHierarchyManager;
+            }
+        });
     }
 
     @NonNull
@@ -67,13 +87,29 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
                 .emit(SESSION_REQUESTED, Utility.convert(session));
     }
 
+    @ReactMethod(isBlockingSynchronousMethod = true)
+    public void setRedactedTags(final ReadableArray reactTags) {
+        redactedTags.clear();
+        for (int i = 0; i < reactTags.size(); i++)
+            redactedTags.add(reactTags.getInt(i));
+    }
+
     @Override
     public List<View> redactedViews(@NonNull final Activity activity) {
-        return new ArrayList<>(RedactedViewManager.redactedViews.keySet());
+        ArrayList<View> views = new ArrayList<>();
+        for (Integer i : redactedTags) {
+            try {
+                views.add(nodeManager.resolveView(i));
+            } catch (Exception e) {
+                Log.i("CobrowseIO", "Failed to find redacted view for tag " + i + ", error = " + e.getMessage());
+            }
+        }
+        return views;
     }
 
     @ReactMethod
     public void start() {
+        findNodeManager();
         final Activity activity = getReactApplicationContext().getCurrentActivity();
         if (activity != null)
             activity.runOnUiThread(new Runnable() {
@@ -110,8 +146,8 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     public void deviceToken(String token) {
         if (getReactApplicationContext().getCurrentActivity() != null)
             CobrowseIO.instance().setDeviceToken(
-                getReactApplicationContext().getCurrentActivity().getApplication(),
-                token);
+                    getReactApplicationContext().getCurrentActivity().getApplication(),
+                    token);
     }
 
     @ReactMethod
