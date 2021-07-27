@@ -32,6 +32,13 @@ export default class App extends Component<Props> {
                 <Text>This is the parent text</Text>
                 <Redacted style={{fontWeight: 'bold'}}><Text>This is the child text</Text></Redacted>
             </Text>
+            <Redacted style={{
+                position: 'absolute',
+                top: 0,
+                left: 20
+            }}>
+                <Text>Floating</Text>
+            </Redacted>
             <TextInput defaultValue={'Hello!'} onChange={() => {}} />
             <Text style={styles.instructions}>{instructions}</Text>
             <SessionControl><Text>Session is active</Text></SessionControl>

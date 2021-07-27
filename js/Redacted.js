@@ -16,7 +16,16 @@ function mergeRefs (refs) {
 
 const redactedTags = new Set()
 function sendRedactionUpdates () {
-  CobrowseIONative.setRedactedTags([...redactedTags])
+  // We provide both a sync and async method to set the redacted
+  // tags as when RN is running in a debugger (e.g. Chrome) calling
+  // sync methods is not supported. You know... why not encourage
+  // people to use different logic when running in debug mode through
+  // poor design decisions? Well done RN devs...
+  // For discussion of a similar issue:
+  // https://github.com/react-native-device-info/react-native-device-info/issues/776#issuecomment-533410011
+  const isDebuggingEnabled = (typeof atob !== 'undefined')
+  if (isDebuggingEnabled) CobrowseIONative.setRedactedTags([...redactedTags])
+  else CobrowseIONative.setRedactedTagsSync([...redactedTags])
 }
 
 // HOC for adding redaction to a whole component class

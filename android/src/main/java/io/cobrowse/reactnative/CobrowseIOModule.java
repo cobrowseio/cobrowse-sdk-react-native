@@ -89,12 +89,17 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @ReactMethod(isBlockingSynchronousMethod = true)
-    public void setRedactedTags(final ReadableArray reactTags) {
+    public void setRedactedTagsSync(final ReadableArray reactTags) {
         synchronized (redactedTags) {
             redactedTags.clear();
             for (int i = 0; i < reactTags.size(); i++)
                 redactedTags.add(reactTags.getInt(i));
         }
+    }
+
+    @ReactMethod
+    public void setRedactedTags(final ReadableArray reactTags) {
+        setRedactedTagsSync(reactTags);
     }
 
     private static String getNativeId(View view) {
