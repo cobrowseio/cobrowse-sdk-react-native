@@ -108,16 +108,16 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
         return tag instanceof String ? (String) tag : null;
     }
 
-    private static void findAllViews(View root, String nativeId, List<View> collector) {
+    private static void findAllViews(View root, String nativeIdPrefix, List<View> collector) {
         String tag = getNativeId(root);
-        if (tag != null && tag.equals(nativeId)) {
+        if (tag != null && tag.startsWith(nativeIdPrefix)) {
             collector.add(root);
         }
 
         if (root instanceof ViewGroup) {
             ViewGroup viewGroup = (ViewGroup) root;
             for (int i = 0; i < viewGroup.getChildCount(); i++) {
-                findAllViews(viewGroup.getChildAt(i), nativeId, collector);
+                findAllViews(viewGroup.getChildAt(i), nativeIdPrefix, collector);
             }
         }
     }
@@ -128,7 +128,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
             List<View> views = new ArrayList<>();
 
             // try out nativeID method of redaction
-            // findAllViews(activity.getWindow().getDecorView().getRootView(), "cobrowse-redacted", views);
+            findAllViews(activity.getWindow().getDecorView().getRootView(), "cobrowse-redacted", views);
 
             // try out _nativeTag method of redaction
             for (Integer i : redactedTags) {

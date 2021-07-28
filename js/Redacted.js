@@ -48,7 +48,7 @@ export function redact (Component) {
       }
     }, [])
     const newProps = redactionReady ? props : { ...props, style: { ...props.style, opacity: 0 } }
-    return <Component redactionReady={redactionReady} {...newProps} collapsable={false} ref={mergeRefs([localRef, ref])} />
+    return <Component nativeID='cobrowse-redacted' redactionReady={redactionReady} {...newProps} collapsable={false} ref={mergeRefs([localRef, ref])} />
   })
 }
 
