@@ -128,7 +128,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
             List<View> views = new ArrayList<>();
 
             // try out nativeID method of redaction
-            findAllViews(activity.getWindow().getDecorView().getRootView(), "cobrowse-redacted", views);
+            // findAllViews(activity.getWindow().getDecorView().getRootView(), "cobrowse-redacted", views);
 
             // try out _nativeTag method of redaction
             for (Integer i : redactedTags) {
