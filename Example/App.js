@@ -52,6 +52,7 @@ export default class App extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 50,
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',

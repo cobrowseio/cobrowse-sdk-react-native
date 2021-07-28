@@ -98,8 +98,9 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @ReactMethod
-    public void setRedactedTags(final ReadableArray reactTags) {
+    public void setRedactedTags(final ReadableArray reactTags, final Promise promise) {
         setRedactedTagsSync(reactTags);
+        promise.resolve(null);
     }
 
     private static String getNativeId(View view) {

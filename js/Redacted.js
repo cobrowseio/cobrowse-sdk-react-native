@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect } from 'react'
+import React, { useRef, useLayoutEffect, useState } from 'react'
 import { View, findNodeHandle } from 'react-native'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 
@@ -24,25 +24,31 @@ function sendRedactionUpdates () {
   // For discussion of a similar issue:
   // https://github.com/react-native-device-info/react-native-device-info/issues/776#issuecomment-533410011
   const isDebuggingEnabled = (typeof atob !== 'undefined')
-  if (isDebuggingEnabled) CobrowseIONative.setRedactedTags([...redactedTags])
-  else CobrowseIONative.setRedactedTagsSync([...redactedTags])
+  if (isDebuggingEnabled) return CobrowseIONative.setRedactedTags([...redactedTags])
+  else return CobrowseIONative.setRedactedTagsSync([...redactedTags])
 }
 
 // HOC for adding redaction to a whole component class
 export function redact (Component) {
   return React.forwardRef(function Redacted (props, ref) {
     const localRef = useRef()
+    const [redactionApplied, setRedactionApplied] = useState(false)
     useLayoutEffect(() => {
       const view = findNodeHandle(localRef.current)
       redactedTags.add(view)
-      sendRedactionUpdates()
+      ;(async () => {
+        await sendRedactionUpdates()
+        setRedactionApplied(true)
+      })()
       return () => {
         redactedTags.delete(view)
+        setRedactionApplied(false)
         // delay removal of redaction as a basic debounce
         setTimeout(sendRedactionUpdates, 1000)
       }
     }, [])
-    return <Component nativeID='cobrowse-redacted' {...props} collapsable={false} ref={mergeRefs([localRef, ref])} />
+    const newProps = redactionApplied ? props : { ...props, style: { ...props.style, opacity: 0 } }
+    return <Component nativeID='cobrowse-redacted' {...newProps} collapsable={false} ref={mergeRefs([localRef, ref])} />
   })
 }
 

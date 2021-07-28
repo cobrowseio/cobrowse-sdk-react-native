@@ -5,6 +5,7 @@
 #import <React/RCTUtils.h>
 #import <React/RCTView.h>
 #import <React/RCTBridge.h>
+#import <React/RCTUIManager.h>
 #import "RCTCobrowseIO.h"
 
 #define SESSION_UPDATED "session_updated"
@@ -15,6 +16,7 @@
 
 @implementation RCTCobrowseIO {
     bool hasListeners;
+    NSMutableSet* redactedTags;
 }
 
 RCT_EXPORT_MODULE();
@@ -22,6 +24,7 @@ RCT_EXPORT_MODULE();
 - (instancetype)init {
     self = [super init];
     if (self) {
+        redactedTags = [NSMutableSet set];
         [CobrowseIO.instance setDelegate:self];
     }
     return self;
@@ -67,10 +70,29 @@ RCT_EXPORT_MODULE();
     if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
 }
 
+RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(setRedactedTagsSync: (NSArray*) reactTags) {
+    @synchronized(redactedTags) {
+        [redactedTags removeAllObjects];
+        [redactedTags addObjectsFromArray:reactTags];
+    }
+    return nil;
+}
+
+RCT_REMAP_METHOD(setRedactedTags,
+                 setRedactedTags: (NSArray*) reactTags
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    [self setRedactedTagsSync:reactTags];
+    resolve(nil);
+}
+
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
     NSMutableArray* views = [NSMutableArray array];
-    for (UIView* v in CBIOCobrowseRedactedManager.redactedViews.allObjects) {
-        if ([v isDescendantOfView:vc.view]) [views addObject:v];
+    @synchronized(redactedTags) {
+        for (id tag in redactedTags) {
+            UIView* v = [self.bridge.uiManager viewForReactTag: tag];
+            if (v != nil) [views addObject:v];
+        }
     }
     return views;
 }
