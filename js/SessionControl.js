@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-import CobrowseIO from './CobrowseIO';
+import React from 'react'
+import CobrowseIO from './CobrowseIO'
 
-export default class SessionControl extends Component {
+export default class SessionControl extends React.Component {
+  constructor () {
+    super()
+    this.state = { session: null }
+  }
 
-    constructor() {
-        super();
-        this.state = { session: null };
-    }
+  componentDidMount () {
+    this.updateListener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
+      this.setState({ session })
+    })
+  }
 
-    componentDidMount() {
-        this.updateListener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
-           this.setState({ session });
-        });
-    }
+  componentWillUnmount () {
+    if (this.updateListener) this.updateListener.remove()
+  }
 
-    componentWillUnmount() {
-        if (this.updateListener) this.updateListener.remove();
-    }
-
-    render() {
-        if (this.state.session && this.state.session.state === 'active') return this.props.children;
-        else return null;
-    }
+  render () {
+    if (this.state.session && this.state.session.state === 'active') return this.props.children
+    else return null
+  }
 }
