@@ -3,6 +3,8 @@ import { TouchableOpacity, Platform, StyleSheet, Text, View, TextInput } from 'r
 import { CobrowseView, Redacted, SessionControl, redact } from 'cobrowse-sdk-react-native'
 import MyComponent from './MyComponent'
 
+const RedactedText = redact(Text)
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -44,6 +46,7 @@ export default class App extends Component<Props> {
           }}>
             <Text>Floating</Text>
           </Redacted>
+          <RedactedText>A Text component with redact() applied</RedactedText>
           <TextInput defaultValue={'Hello!'} onChange={() => {}} />
           <Text style={styles.instructions}>{instructions}</Text>
           <SessionControl><Text>Session is active</Text></SessionControl>
