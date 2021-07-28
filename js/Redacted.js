@@ -32,23 +32,23 @@ function sendRedactionUpdates () {
 export function redact (Component) {
   return React.forwardRef(function Redacted (props, ref) {
     const localRef = useRef()
-    const [redactionApplied, setRedactionApplied] = useState(false)
+    const [redactionReady, setRedactionReady] = useState(false)
     useLayoutEffect(() => {
       const view = findNodeHandle(localRef.current)
       redactedTags.add(view)
       ;(async () => {
         await sendRedactionUpdates()
-        setRedactionApplied(true)
+        setRedactionReady(true)
       })()
       return () => {
         redactedTags.delete(view)
-        setRedactionApplied(false)
+        setRedactionReady(false)
         // delay removal of redaction as a basic debounce
         setTimeout(sendRedactionUpdates, 1000)
       }
     }, [])
-    const newProps = redactionApplied ? props : { ...props, style: { ...props.style, opacity: 0 } }
-    return <Component nativeID='cobrowse-redacted' {...newProps} collapsable={false} ref={mergeRefs([localRef, ref])} />
+    const newProps = redactionReady ? props : { ...props, style: { ...props.style, opacity: 0 } }
+    return <Component redactionReady={redactionReady} {...newProps} collapsable={false} ref={mergeRefs([localRef, ref])} />
   })
 }
 

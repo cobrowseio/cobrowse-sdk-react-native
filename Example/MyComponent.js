@@ -10,7 +10,7 @@ class MyComponent extends Component {
 
   render() {
     return (
-      <View style={{ margin: 10, padding: 40, backgroundColor: 'green' }}>
+      <View {...this.props} style={{ margin: 10, padding: 40, backgroundColor: 'green', ...this.props.style }}>
         <Text>This is a custom component</Text>
         { this.props.children }
       </View>
