@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { View, findNodeHandle } from 'react-native'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 
