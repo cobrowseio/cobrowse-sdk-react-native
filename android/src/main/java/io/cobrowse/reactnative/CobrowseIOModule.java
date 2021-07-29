@@ -99,15 +99,17 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     private Set<View> unredactedViews() {
-        HashSet<View> unredacted = new HashSet<>();
-        for (Integer i : unredactedTags) {
-            try {
-                unredacted.add(nodeManager.resolveView(i));
-            } catch (Exception e) {
-                Log.i("CobrowseIO", "Failed to find unredacted view for tag " + i + ", error = " + e.getMessage());
+        synchronized (unredactedTags) {
+            HashSet<View> unredacted = new HashSet<>();
+            for (Integer i : unredactedTags) {
+                try {
+                   unredacted.add(nodeManager.resolveView(i));
+                } catch (Exception e) {
+                   Log.i("CobrowseIO", "Failed to find unredacted view for tag " + i + ", error = " + e.getMessage());
+                }
             }
+            return unredacted;
         }
-        return unredacted;
     }
 
     @Override
