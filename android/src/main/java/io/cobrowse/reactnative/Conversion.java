@@ -6,7 +6,7 @@ import com.facebook.react.bridge.WritableMap;
 import io.cobrowse.Agent;
 import io.cobrowse.Session;
 
-final class Utility {
+final class Conversion {
 
     static WritableMap convert(Session session) {
         WritableMap map = Arguments.createMap();

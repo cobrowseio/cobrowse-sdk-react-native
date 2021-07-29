@@ -30,7 +30,7 @@ export default class App extends Component<Props> {
           </Redacted>
           <Text style={styles.welcome}>
             <Text>This is the parent text</Text>
-            <Redacted style={{fontWeight: 'bold'}}><Text>This is the child text</Text></Redacted>
+            <View><Redacted style={{fontWeight: 'bold'}}><Text>This is the child text</Text></Redacted></View>
           </Text>
           <MyComponent>
             <Redacted><Text>Redacted inner text</Text></Redacted>
@@ -43,7 +43,7 @@ export default class App extends Component<Props> {
           }}>
             <Text>Floating</Text>
           </Redacted>
-          <TextInput defaultValue={'Hello!'} onChange={() => {}} />
+          <TextInput style={{width: 100}} defaultValue={'Hello!'} onChange={() => {}} />
           <Text style={styles.instructions}>{instructions}</Text>
           <SessionControl><Text>Session is active</Text></SessionControl>
           <SessionControl><View style={styles.floating}><Text>Overlay</Text></View></SessionControl>
@@ -57,7 +57,7 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   floating: {
     zIndex: 500,
-    top: 155,
+    bottom: 155,
     position: 'absolute',
     left: 10,
     right: 10,
