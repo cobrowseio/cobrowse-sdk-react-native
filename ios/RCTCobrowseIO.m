@@ -5,7 +5,9 @@
 #import <React/RCTUtils.h>
 #import <React/RCTView.h>
 #import <React/RCTBridge.h>
+#import <React/RCTUIManager.h>
 #import "RCTCobrowseIO.h"
+#import "RCTCBIOTreeUtils.h"
 
 #define SESSION_UPDATED "session_updated"
 #define SESSION_ENDED "session_ended"
@@ -15,6 +17,7 @@
 
 @implementation RCTCobrowseIO {
     bool hasListeners;
+    NSMutableSet* unredactedTags;
 }
 
 RCT_EXPORT_MODULE();
@@ -23,6 +26,7 @@ RCT_EXPORT_MODULE();
     self = [super init];
     if (self) {
         [CobrowseIO.instance setDelegate:self];
+        unredactedTags = [NSMutableSet set];
     }
     return self;
 }
@@ -55,6 +59,17 @@ RCT_EXPORT_MODULE();
     return self.constantsToExport.allValues;
 }
 
+-(NSSet<UIView*>*) unredactedViews {
+    NSMutableSet* views = [NSMutableSet set];
+    @synchronized(unredactedTags) {
+        for (id tag in unredactedTags) {
+            UIView* v = [self.bridge.uiManager viewForReactTag: tag];
+            if (v != nil) [views addObject:v];
+        }
+    }
+    return views;
+}
+
 -(void)cobrowseSessionDidUpdate:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_UPDATED body:[session toDict]];
 }
@@ -68,11 +83,44 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
-    NSMutableArray* views = [NSMutableArray array];
-    for (UIView* v in CBIOCobrowseRedactedManager.redactedViews.allObjects) {
-        if ([v isDescendantOfView:vc.view]) [views addObject:v];
-    }
-    return views;
+    NSMutableSet* redacted = [NSMutableSet set];
+    NSSet* unredacted = self.unredactedViews;
+    
+    // By default everything is redacted for view controllers that contain a
+    // react root view. We look for a RCTRootView as if we were to always
+    // redact vc.view this would lead to isntances where windows not managed by
+    // react native could not be unredacted. A simple example of this is the
+    // overlay window that cobrowse adds to render its annotations. This window
+    // sits on top of all the other windows and would always be redacted,
+    // effecivley redacting the entire screen all the time.
+    // TODO: is this broad enough? What if RCTRootView is a child of vc.view?
+    if ([vc.view isKindOfClass:RCTRootView.class]) [redacted addObject: vc.view];
+
+    // Now we can actually start working out what should be unredacted
+    // First work out the set of all parents of unredact()'ed nodes
+    NSMutableSet* unredactedParents = [NSMutableSet set];
+    for (id view in unredacted)
+        [unredactedParents addObjectsFromArray: [RCTCBIOTreeUtils allParents: view]];
+
+    // Then work out the set of all direct children of any unredacted parents
+    // This should give us the set including unredacted nodes, their siblings,
+    // and all their parents.
+    for (UIView* parent in unredactedParents) [redacted addObjectsFromArray: parent.subviews];
+
+    // Then we can subtract the set of unredacted parents to find just the
+    // set of unredacted nodes that are leaves of the parent subtree
+    for (id v in unredactedParents) [redacted removeObject:v];
+
+    // Finally we can subtract the set of unredacted views to get the minimal
+    // set of redactions that will redact everything that's not explicitly unredacted
+    // whilst allowing the unredacted views to be visible
+    for (id v in unredacted) [redacted removeObject:v];
+
+    // Any explicitly redacted views surroudned by <Redacted> tags take precedence, so
+    // re-add any tagged as such that the process above might have removed
+    for (id v in CBIOCobrowseRedactedManager.redactedViews.allObjects) [redacted addObject: v];
+    
+    return redacted.allObjects;;
 }
 
 - (bool) cobrowseShouldCaptureWindow:(UIWindow *)window {
@@ -102,6 +150,18 @@ RCT_EXPORT_METHOD(license: (NSString*) license) {
 
 RCT_EXPORT_METHOD(api: (NSString*) api) {
     CobrowseIO.instance.api = api;
+}
+
+RCT_REMAP_METHOD(setUnredactedTags,
+                 setUnredactedTags: (NSArray*) reactTags
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    @synchronized(unredactedTags) {
+        [unredactedTags removeAllObjects];
+        [unredactedTags addObjectsFromArray:reactTags];
+    }
+    [UIApplication.sharedApplication.keyWindow setNeedsDisplay];
+    resolve(nil);
 }
 
 RCT_EXPORT_METHOD(customData: (NSDictionary*) customData) {
