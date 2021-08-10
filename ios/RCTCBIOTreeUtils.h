@@ -2,6 +2,6 @@
 
 @interface RCTCBIOTreeUtils : NSObject
 
-+(nonnull NSArray*) allParents: (nonnull UIView*) root;
++(NSArray*) allParents: (UIView*) root;
 
 @end
