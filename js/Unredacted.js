@@ -29,7 +29,7 @@ export function unredact (Component) {
         unredactedTags.add(view)
         sendUnredactionUpdates()
       } else {
-        console.warn('Failed to apply unredact() to null node handle')
+        console.warn(`Failed to apply unredact() to ${Component?.name} due to null node handle – make sure you are forwarding refs`)
       }
       return () => {
         if (view) {
