@@ -25,11 +25,17 @@ export function unredact (Component) {
     const localRef = useRef()
     useEffect(() => {
       const view = findNodeHandle(localRef.current)
-      unredactedTags.add(view)
-      sendUnredactionUpdates()
-      return () => {
-        unredactedTags.delete(view)
+      if (view) {
+        unredactedTags.add(view)
         sendUnredactionUpdates()
+      } else {
+        console.warn('Failed to apply unredact() to null node handle')
+      }
+      return () => {
+        if (view) {
+          unredactedTags.delete(view)
+          sendUnredactionUpdates()
+        }
       }
     }, [])
     return <Component {...props} collapsable={false} ref={mergeRefs([localRef, ref])} />
