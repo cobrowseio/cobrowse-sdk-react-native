@@ -7,7 +7,8 @@ export default class SessionControl extends React.Component {
     this.state = { session: null }
   }
 
-  componentDidMount () {
+  async componentDidMount () {
+    this.setState({ session: await CobrowseIO.currentSession() })
     this.updateListener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
       this.setState({ session })
     })
