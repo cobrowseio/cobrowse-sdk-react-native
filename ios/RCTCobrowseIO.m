@@ -86,15 +86,18 @@ RCT_EXPORT_MODULE();
     NSMutableSet* redacted = [NSMutableSet set];
     NSSet* unredacted = self.unredactedViews;
     
-    // By default everything is redacted for view controllers that contain a
-    // react root view. We look for a RCTRootView as if we were to always
-    // redact vc.view this would lead to isntances where windows not managed by
+    // By default everything is redacted for view controllers that contain
+    // and RCTRootView. We look for an RCTRootView as if we were to always
+    // redact vc.view this would lead to instances where windows not managed by
     // react native could not be unredacted. A simple example of this is the
     // overlay window that cobrowse adds to render its annotations. This window
     // sits on top of all the other windows and would always be redacted,
     // effecivley redacting the entire screen all the time.
-    // TODO: is this broad enough? What if RCTRootView is a child of vc.view?
-    if ([vc.view isKindOfClass:RCTRootView.class]) [redacted addObject: vc.view];
+    // To get around this, we only redact views from RCTRootViews downwards, as
+    // then it's always possible to add an unredact()'ed component around the
+    // view.
+    NSSet* rootViews = [RCTCBIOTreeUtils findAllClosest:RCTRootView.class under:vc.view];
+    [redacted addObjectsFromArray: rootViews.allObjects];
 
     // Now we can actually start working out what should be unredacted
     // First work out the set of all parents of unredact()'ed nodes
