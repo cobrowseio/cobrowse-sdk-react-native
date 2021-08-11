@@ -87,15 +87,16 @@ RCT_EXPORT_MODULE();
     NSSet* unredacted = self.unredactedViews;
     
     // By default everything is redacted for view controllers that contain
-    // and RCTRootView. We look for an RCTRootView as if we were to always
-    // redact vc.view this would lead to instances where windows not managed by
-    // react native could not be unredacted. A simple example of this is the
-    // overlay window that cobrowse adds to render its annotations. This window
-    // sits on top of all the other windows and would always be redacted,
-    // effecivley redacting the entire screen all the time.
+    // an RCTRootView. If we were to always redact vc.view this would lead
+    // to instances where windows that do not contain a RN context could
+    // not be unredacted.
+    // A simple example of this is the overlay window that cobrowse adds to
+    // render its annotations. This window sits on top of all the other windows
+    // and would always be redacted, effecivley redacting the entire screen all
+    // the time.
     // To get around this, we only redact views from RCTRootViews downwards, as
-    // then it's always possible to add an unredact()'ed component around the
-    // view.
+    // then it's always possible to add an unredact()'ed component around a
+    // subview in the react tree to make parent visible.
     NSSet* rootViews = [RCTCBIOTreeUtils findAllClosest:RCTRootView.class under:vc.view];
     [redacted addObjectsFromArray: rootViews.allObjects];
 
