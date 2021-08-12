@@ -4,7 +4,7 @@ const CBIOCobrowseRedacted = requireNativeComponent('CBIOCobrowseRedacted')
 
 const RedactionContext = React.createContext(false)
 
-module.exports = function (props) {
+export default function (props) {
   const alreadyRedacted = useContext(RedactionContext)
   if (!alreadyRedacted) {
     return (
