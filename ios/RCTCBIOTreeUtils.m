@@ -3,10 +3,10 @@
 
 @implementation RCTCBIOTreeUtils
 
-+(NSArray*) allParents: (UIView*) root {
++(NSArray*) allParents: (UIView*) root until: (Class) type {
     NSMutableArray* parents = [NSMutableArray array];
     UIView* target = root;
-    while (target.superview) {
+    while (target.superview && ![target.superview isKindOfClass:type]) {
         [parents addObject:target.superview];
         target = target.superview;
     }

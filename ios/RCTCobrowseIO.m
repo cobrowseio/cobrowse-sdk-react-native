@@ -94,17 +94,20 @@ RCT_EXPORT_MODULE();
     // render its annotations. This window sits on top of all the other windows
     // and would always be redacted, effecivley redacting the entire screen all
     // the time.
-    // To get around this, we only redact views from RCTRootViews downwards, as
-    // then it's always possible to add an unredact()'ed component around a
+    // To get around this, we only redact views below RCTRootViews (not inclusive),
+    // as then it's always possible to add an unredact()'ed component around a
     // subview in the react tree to make parent visible.
     NSSet* rootViews = [RCTCBIOTreeUtils findAllClosest:RCTRootView.class under:vc.view];
-    [redacted addObjectsFromArray: rootViews.allObjects];
+    for (UIView* v in rootViews) [redacted addObjectsFromArray: v.subviews];
 
     // Now we can actually start working out what should be unredacted
     // First work out the set of all parents of unredact()'ed nodes
+    // that are inside an RCTRootView (not including the RCTRootView)
     NSMutableSet* unredactedParents = [NSMutableSet set];
-    for (id view in unredacted)
-        [unredactedParents addObjectsFromArray: [RCTCBIOTreeUtils allParents: view]];
+    for (id view in unredacted) {
+        NSArray* reactParents = [RCTCBIOTreeUtils allParents: view until: RCTRootView.class];
+        [unredactedParents addObjectsFromArray: reactParents];
+    }
 
     // Then work out the set of all direct children of any unredacted parents
     // This should give us the set including unredacted nodes, their siblings,
