@@ -21,7 +21,7 @@ This will associate sessions from your mobile app with your Cobrowse account.
 ```javascript
 import CobrowseIO from 'cobrowse-sdk-react-native';
 
-CobrowseIO.license = "<your license key here>";
+CobrowseIO.license = "put your license key here";
 CobrowseIO.start();
 
 ```
