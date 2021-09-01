@@ -148,6 +148,14 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
         // whilst allowing the unredacted views to be visible
         redacted.removeAll(unredactedViews());
 
+        // Remove any empty ReactViewGroup from the redacted set, they're often used for wrapping
+        // or sizing other elements, and do not usually need to be redacted
+        // If it's absolutely necessary they are redacted, they can always be replaced with
+        // a <Redacted> tag instead
+        for (View v : new HashSet<>(redacted))
+            if (v instanceof ReactViewGroup && ((ReactViewGroup) v).getChildCount() == 0)
+                redacted.remove(v);
+
         // Any explicitly redacted views surrounded by <Redacted> tags take precedence, so
         // re-add any tagged as such that the process above might have removed
         redacted.addAll(RedactedViewManager.redactedViews.keySet());

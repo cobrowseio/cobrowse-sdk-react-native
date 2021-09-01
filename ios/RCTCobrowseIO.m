@@ -122,6 +122,13 @@ RCT_EXPORT_MODULE();
     // set of redactions that will redact everything that's not explicitly unredacted
     // whilst allowing the unredacted views to be visible
     for (id v in unredacted) [redacted removeObject:v];
+    
+    // Remove any empty RCTViews from the redacted set, they're often used for wrapping
+    // or sizing other elements, and do not usually need to be redacted
+    // If it's absolutely necessary they are redacted, they can always be replaced with
+    // a <Redacted> tag instead
+    for (UIView* v in [redacted copy])
+        if ([v isKindOfClass:RCTView.class] && v.subviews.count == 0) [redacted removeObject: v];
 
     // Any explicitly redacted views surroudned by <Redacted> tags take precedence, so
     // re-add any tagged as such that the process above might have removed
