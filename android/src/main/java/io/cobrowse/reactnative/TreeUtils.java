@@ -20,16 +20,24 @@ class TreeUtils {
         return children;
     }
 
-    public static Set<View> allParents(View root) {
+    public static <T> Set<View> allParentsUntil(View root, Class<T> cls) {
         HashSet<View> parents = new HashSet<>();
-        if (root instanceof ViewParent) {
-          ViewParent target = (ViewParent) root;
-          while ((target = target.getParent()) != null) {
-            if (target instanceof View)
-              parents.add((View) target);
-          }
+        ViewParent target = root.getParent();
+        while (target != null && (!cls.isInstance(target))) {
+            if (target instanceof View) parents.add((View) target);
+            target = target.getParent();
         }
         return parents;
     }
 
+    public static <T> Set<T> findAllClosest(View root, Class<T> cls) {
+        HashSet<T> found = new HashSet<>();
+        if (cls.isInstance(root)) found.add((T)root);
+        else {
+            for (View v : directChildren(root)) {
+               found.addAll(findAllClosest(v, cls));
+           }
+       }
+       return found;
+    }
 }

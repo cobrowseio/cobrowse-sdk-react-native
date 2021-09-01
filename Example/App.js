@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, Platform, StyleSheet, Text, View, TextInput } from 'react-native'
-import { CobrowseView, Redacted, SessionControl } from 'cobrowse-sdk-react-native'
+import { CobrowseView, Redacted, SessionControl, unredact } from 'cobrowse-sdk-react-native'
 import MyComponent from './MyComponent'
+
+const UnredactedText = unredact(Text)
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -43,6 +45,7 @@ export default class App extends Component<Props> {
           }}>
             <Text>Floating</Text>
           </Redacted>
+          <UnredactedText>An unredacted text component</UnredactedText>
           <TextInput style={{width: 100}} defaultValue={'Hello!'} onChange={() => {}} />
           <Text style={styles.instructions}>{instructions}</Text>
           <SessionControl><Text>Session is active</Text></SessionControl>
