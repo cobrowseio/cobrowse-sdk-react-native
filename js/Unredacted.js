@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { View, findNodeHandle } from 'react-native'
+import { throttle } from 'lodash'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 
 function mergeRefs (refs) {
@@ -15,9 +16,9 @@ function mergeRefs (refs) {
 }
 
 const unredactedTags = new Set()
-function sendUnredactionUpdates () {
-  return CobrowseIONative.setUnredactedTags([...unredactedTags])
-}
+const sendUnredactionUpdates = throttle(() => {
+  CobrowseIONative.setUnredactedTags([...unredactedTags])
+}, 50, { leading: false })
 
 // HOC for adding unredaction to a whole component class
 export function unredact (Component) {

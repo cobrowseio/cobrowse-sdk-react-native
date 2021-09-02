@@ -29,7 +29,9 @@
     "@types/react": "^17.0.5",
     "@types/react-native": "^0.64.5"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "devDependencies": {
     "@types/react": "^17.0.5",
     "@types/react-native": "^0.64.5",
