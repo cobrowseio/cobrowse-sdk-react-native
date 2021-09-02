@@ -145,6 +145,14 @@ RCT_EXPORT_MODULE();
     }
 }
 
+-(void) forceRedactionUpdate {
+    // TODO: expose an API for forcing redaction updates?
+    static UIView* v;
+    if (!v) v = [[UIView alloc] init];
+    [UIApplication.sharedApplication.keyWindow addSubview: v];
+    [v removeFromSuperview];
+}
+
 RCT_EXPORT_METHOD(start) {
     [CobrowseIO.instance start];
 }
@@ -174,7 +182,7 @@ RCT_REMAP_METHOD(setUnredactedTags,
         [unredactedTags removeAllObjects];
         [unredactedTags addObjectsFromArray:reactTags];
     }
-    [UIApplication.sharedApplication.keyWindow setNeedsDisplay];
+    [self forceRedactionUpdate];
     resolve(nil);
 }
 
