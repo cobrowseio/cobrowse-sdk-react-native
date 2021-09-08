@@ -98,7 +98,7 @@ RCT_EXPORT_MODULE();
     // (not inclusive), as then it's always possible to add an unredact()'ed component
     // around a subview in the react tree to make parent visible.
     NSSet* rootViews = [RCTCBIOTreeUtils findAllClosest:^BOOL(UIView *view) {
-        return [view isKindOfClass:RCTRootView.class] || [view isKindOfClass: RCTView.class];
+        return [RCTCBIOTreeUtils isReactView: view];
     } under: vc.view];
     for (UIView* v in rootViews) [redacted addObjectsFromArray: v.subviews];
 
@@ -106,15 +106,7 @@ RCT_EXPORT_MODULE();
     // First work out the set of all parents of unredact()'ed nodes
     // that are inside a react view
     NSMutableSet* unredactedParents = [NSMutableSet set];
-    for (id view in unredacted) {
-        NSArray* allParents = [RCTCBIOTreeUtils allParents: view];
-        NSMutableArray* reactParents = [allParents mutableCopy];
-        for (id v in allParents) {
-            [reactParents removeObject: v];
-            if ([v isKindOfClass: RCTRootView.class] || [v isKindOfClass: RCTView.class]) break;
-        }
-        [unredactedParents addObjectsFromArray: reactParents];
-    }
+    for (id view in unredacted) [unredactedParents addObjectsFromArray: [RCTCBIOTreeUtils reactParents: view]];
 
     // Then work out the set of all direct children of any unredacted parents
     // This should give us the set including unredacted nodes, their siblings,

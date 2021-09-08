@@ -1,4 +1,6 @@
 #import "RCTCBIOTreeUtils.h"
+#import <React/RCTRootView.h>
+#import <React/RCTView.h>
 
 @implementation RCTCBIOTreeUtils
 
@@ -12,6 +14,16 @@
     return parents;
 }
 
++(NSArray*) reactParents: (UIView*) root {
+    NSArray* allParents = [self allParents: root];
+    NSMutableArray* reactParents = [allParents mutableCopy];
+    for (id view in allParents) {
+        if ([self isReactView:view]) break;
+        [reactParents removeObject: view];
+    }
+    return reactParents;
+}
+
 +(NSMutableSet*) findAllClosest: (BOOL (^)(UIView* view))predicate under: (UIView*) root {
     NSMutableSet* found = [NSMutableSet set];
     if (predicate(root)) [found addObject:root];
@@ -21,6 +33,10 @@
         }
     }
     return found;
+}
+
++(bool) isReactView: (UIView*) view {
+    return [view isKindOfClass:RCTRootView.class] || [view isKindOfClass: RCTView.class];
 }
 
 @end
