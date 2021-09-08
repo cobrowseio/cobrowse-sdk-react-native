@@ -1,24 +1,23 @@
 #import "RCTCBIOTreeUtils.h"
-#import <React/RCTRootView.h>
 
 @implementation RCTCBIOTreeUtils
 
-+(NSArray*) allParents: (UIView*) root until: (Class) type {
++(NSArray*) allParents: (UIView*) root {
     NSMutableArray* parents = [NSMutableArray array];
-    UIView* target = root;
-    while (target.superview && ![target.superview isKindOfClass:type]) {
-        [parents addObject:target.superview];
+    UIView* target = root.superview;
+    while (target) {
+        [parents insertObject:target atIndex:0];
         target = target.superview;
     }
     return parents;
 }
 
-+(NSMutableSet*) findAllClosest: (Class) type under: (UIView*) root {
++(NSMutableSet*) findAllClosest: (BOOL (^)(UIView* view))predicate under: (UIView*) root {
     NSMutableSet* found = [NSMutableSet set];
-    if ([root isKindOfClass: type]) [found addObject:root];
+    if (predicate(root)) [found addObject:root];
     else {
         for (UIView* child in root.subviews) {
-            [found addObjectsFromArray: [self findAllClosest:type under:child].allObjects];
+            [found addObjectsFromArray: [self findAllClosest:predicate under:child].allObjects];
         }
     }
     return found;

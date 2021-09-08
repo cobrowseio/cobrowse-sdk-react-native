@@ -2,8 +2,8 @@
 
 @interface RCTCBIOTreeUtils : NSObject
 
-+(NSArray*) allParents: (UIView*) root until: (Class) type;
++(NSArray*) allParents: (UIView*) root;
 
-+(NSMutableSet*) findAllClosest: (Class) type under: (UIView*) root;
++(NSMutableSet*) findAllClosest: (BOOL (^)(UIView* view))predicate under: (UIView*) root;
 
 @end

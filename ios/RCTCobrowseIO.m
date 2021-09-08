@@ -86,26 +86,33 @@ RCT_EXPORT_MODULE();
     NSMutableSet* redacted = [NSMutableSet set];
     NSSet* unredacted = self.unredactedViews;
     
-    // By default everything is redacted for view controllers that contain
-    // an RCTRootView. If we were to always redact vc.view this would lead
+    // By default everything managed by react is redacted for view controllers
+    // that contain react views. If we were to always redact vc.view this would lead
     // to instances where windows that do not contain a RN context could
     // not be unredacted.
     // A simple example of this is the overlay window that cobrowse adds to
     // render its annotations. This window sits on top of all the other windows
     // and would always be redacted, effecivley redacting the entire screen all
     // the time.
-    // To get around this, we only redact views below RCTRootViews (not inclusive),
-    // as then it's always possible to add an unredact()'ed component around a
-    // subview in the react tree to make parent visible.
-    NSSet* rootViews = [RCTCBIOTreeUtils findAllClosest:RCTRootView.class under:vc.view];
+    // To get around this, we only redact views below RCTViews or RCTRootViews
+    // (not inclusive), as then it's always possible to add an unredact()'ed component
+    // around a subview in the react tree to make parent visible.
+    NSSet* rootViews = [RCTCBIOTreeUtils findAllClosest:^BOOL(UIView *view) {
+        return [view isKindOfClass:RCTRootView.class] || [view isKindOfClass: RCTView.class];
+    } under: vc.view];
     for (UIView* v in rootViews) [redacted addObjectsFromArray: v.subviews];
 
     // Now we can actually start working out what should be unredacted
     // First work out the set of all parents of unredact()'ed nodes
-    // that are inside an RCTRootView (not including the RCTRootView)
+    // that are inside a react view
     NSMutableSet* unredactedParents = [NSMutableSet set];
     for (id view in unredacted) {
-        NSArray* reactParents = [RCTCBIOTreeUtils allParents: view until: RCTRootView.class];
+        NSArray* allParents = [RCTCBIOTreeUtils allParents: view];
+        NSMutableArray* reactParents = [allParents mutableCopy];
+        for (id v in allParents) {
+            [reactParents removeObject: v];
+            if ([v isKindOfClass: RCTRootView.class] || [v isKindOfClass: RCTView.class]) break;
+        }
         [unredactedParents addObjectsFromArray: reactParents];
     }
 
