@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
-import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -14,7 +13,6 @@ import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
-import com.facebook.react.uimanager.ReactRoot;
 import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.views.view.ReactViewGroup;
@@ -27,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
+import androidx.core.util.Predicate;
 import io.cobrowse.CobrowseIO;
 import io.cobrowse.Session;
 
@@ -120,16 +119,21 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
         HashSet<View> redacted = new HashSet<>();
         // By default everything is redacted for Activities that contain
         // a ReactRootView.
-        Set<ReactRootView> rootViews = TreeUtils.findAllClosest(
-            activity.getWindow().getDecorView().getRootView(),
-            ReactRootView.class);
-        for (ReactRootView root : rootViews) redacted.addAll(TreeUtils.directChildren(root));
+        Set<View> rootViews = TreeUtils.findAllClosest(
+          activity.getWindow().getDecorView().getRootView(),
+          new Predicate<View>() {
+            @Override
+            public boolean test(View view) {
+              return TreeUtils.isReactView(view);
+            }
+          });
+        for (View root : rootViews) redacted.addAll(TreeUtils.directChildren(root));
 
         // Now we can actually start working out what should be unredacted
         // First work out the set of all parents of unredact()'ed nodes
         HashSet<View> unredactedParents = new HashSet<>();
         for (View unredacted : unredactedViews()) {
-            unredactedParents.addAll(TreeUtils.allParentsUntil(unredacted, ReactRootView.class));
+            unredactedParents.addAll(TreeUtils.reactParents(unredacted));
         }
 
         // Then work out the set of all direct children of any unredacted parents
