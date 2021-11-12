@@ -9,21 +9,6 @@ import io.cobrowse.Session.RemoteControlState;
 
 final class Utility {
 
-    static String remoteControl (RemoteControlState state) {
-        switch (state) {
-            case RemoteControlState.On:
-                return "on";
-            case RemoteControlState.Requested:
-                return "requested";
-            case RemoteControlState.Rejected:
-                return "rejected";
-            case RemoteControlState.Off:
-                return "off";
-        }
-
-        return "off";
-    }
-
     static WritableMap convert(Session session) {
         WritableMap map = Arguments.createMap();
         if (session == null) return null;
@@ -47,6 +32,36 @@ final class Utility {
     static String convert(Error error) {
         if (error == null) return null;
         return error.getMessage();
+    }
+
+    static String remoteControl (RemoteControlState state) {
+        switch (state) {
+            case RemoteControlState.On:
+                return "on";
+            case RemoteControlState.Requested:
+                return "requested";
+            case RemoteControlState.Rejected:
+                return "rejected";
+            case RemoteControlState.Off:
+                return "off";
+        }
+
+        return "off";
+    }
+
+    static RemoteControlState remoteControl (String state) {
+        switch (state) {
+            case "on":
+                return RemoteControlState.On;
+            case "requested":
+                return RemoteControlState.Requested;
+            case "rejected":
+                return RemoteControlState.Rejected;
+            case "off":
+                return RemoteControlState.Off;
+        }
+
+        return RemoteControlState.Off;
     }
 
 }
