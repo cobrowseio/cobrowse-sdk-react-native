@@ -4,6 +4,74 @@ const NativeEventEmitter = require('react-native').NativeEventEmitter
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
 
+class Session {
+  constructor (session) {
+    this._session = session || {}
+  }
+
+  get id () {
+    return this._session.id
+  }
+
+  get code () {
+    return this._session.code
+  }
+
+  get state () {
+    return this._session.state
+  }
+
+  get full_device () {
+    return this._session.full_device
+  }
+
+  get remote_control () {
+    return this._session.remote_control
+  }
+
+  get agent () {
+    return this._session.agent
+  }
+
+  activate () {
+    return CobrowseIONative.activateSession().then((session) => {
+      this._session = session
+    })
+  }
+
+  end () {
+    return CobrowseIONative.endSession()
+  }
+
+  hasAgent () {
+    return CobrowseIONative.sessionHasAgent()
+  }
+
+  isActive () {
+    return CobrowseIONative.sessionIsActive()
+  }
+
+  isAuthorizing () {
+    return CobrowseIONative.sessionIsAuthorizing()
+  }
+
+  isPending () {
+    return CobrowseIONative.sessionIsPending()
+  }
+
+  isEnded () {
+    return CobrowseIONative.sessionIsEnded()
+  }
+
+  setFullDevice (state) {
+    return CobrowseIONative.sessionSetFullDevice(state)
+  }
+
+  setRemoteControl (state) {
+    return CobrowseIONative.sessionSetRemoteControl(state)
+  }
+}
+
 class CobrowseAccessibilityService {
   static showSetup () {
     CobrowseIONative.accessibilityServiceShowSetup()
@@ -46,7 +114,7 @@ export default class CobrowseIO {
   }
 
   static addListener (event, cb) {
-    return emitter.addListener(event, cb)
+    return emitter.addListener(event, (session) => cb(new Session(session)))
   }
 
   static start () {
@@ -74,21 +142,23 @@ export default class CobrowseIO {
   }
 
   static currentSession () {
-    return CobrowseIONative.currentSession()
-  }
-
-  static createSession () {
-    return CobrowseIONative.createSession()
-  }
-
-  static activateSession () {
-    return CobrowseIONative.activateSession()
+    return CobrowseIONative.currentSession().then((session) => session ? new Session(session) : null)
   }
 
   static getSession (codeOrId) {
-    return CobrowseIONative.getSession(codeOrId)
+    return CobrowseIONative.getSession(codeOrId).then((session) => session ? new Session(session) : null)
   }
 
+  static createSession () {
+    return CobrowseIONative.createSession().then((session) => session ? new Session(session) : null)
+  }
+
+  /** @deprecated */
+  static activateSession () {
+    return CobrowseIONative.activateSession().then((session) => session ? new Session(session) : null)
+  }
+
+  /** @deprecated */
   static endSession () {
     return CobrowseIONative.endSession()
   }
