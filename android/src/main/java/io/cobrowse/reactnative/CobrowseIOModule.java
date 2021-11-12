@@ -137,7 +137,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @ReactMethod
-    public void loadSession(final String idOrCode, final Promise promise) {
+    public void getSession(final String idOrCode, final Promise promise) {
         Handler handler = new Handler(getReactApplicationContext().getMainLooper());
         handler.post(new Runnable() {
             public void run() {
