@@ -1,12 +1,37 @@
-import { Alert } from 'react-native'
+import { Alert, EventEmitter } from 'react-native'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
 
-class Session {
+class Session extends EventEmitter {
   constructor (session) {
     this._session = session || {}
+    this._listen()
+  }
+
+  _listen () {
+    const requests = emitter.addListener(CobrowseIONative.SESSION_REQUESTED, (session) => {
+      if (this._session.id === undefined || (session && this._session.id === session.id)) {
+        this._session = session
+        this.emit(CobrowseIONative.SESSION_REQUESTED, this)
+      }
+    })
+    const updates = emitter.addListener(CobrowseIONative.SESSION_UPDATED, (session) => {
+      if (this._session.id === undefined || (session && this._session.id === session.id)) {
+        this._session = session
+        this.emit(CobrowseIONative.SESSION_UPDATED, this)
+      }
+    })
+    const ended = emitter.addListener(CobrowseIONative.SESSION_ENDED, (session) => {
+      if (this._session.id === undefined || (session && this._session.id === session.id)) {
+        this._session = session
+        requests.remove()
+        updates.remove()
+        ended.remove()
+        this.emit(CobrowseIONative.SESSION_ENDED, this)
+      }
+    })
   }
 
   get id () {
@@ -44,31 +69,31 @@ class Session {
   }
 
   hasAgent () {
-    return CobrowseIONative.sessionHasAgent()
+    return !!(this._session.agent)
   }
 
   isActive () {
-    return CobrowseIONative.sessionIsActive()
+    return this._session.state === 'active'
   }
 
   isAuthorizing () {
-    return CobrowseIONative.sessionIsAuthorizing()
+    return this._session.state === 'authorizing'
   }
 
   isPending () {
-    return CobrowseIONative.sessionIsPending()
+    return this._session.state === 'pending'
   }
 
   isEnded () {
-    return CobrowseIONative.sessionIsEnded()
+    return this._session.state === 'ended'
   }
 
   setFullDevice (state) {
-    return CobrowseIONative.sessionSetFullDevice(state)
+    return CobrowseIONative.updateSession({ full_device: state })
   }
 
   setRemoteControl (state) {
-    return CobrowseIONative.sessionSetRemoteControl(state)
+    return CobrowseIONative.updateSession({ remote_control: state })
   }
 }
 
