@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,accessor-pairs */
-import type { EmitterSubscription } from 'react-native'
+import type { EmitterSubscription, EventEmitter } from 'react-native'
 
 export interface Agent {
   id: string
@@ -44,10 +44,10 @@ export interface Session extends EventEmitter {
   setRemoteControl (state: RemoteControlState): Promise<void>
 }
 
-class CobrowseAccessibilityService {
-  static showSetup (): Promise<void>
+interface CobrowseAccessibilityService {
+  showSetup (): Promise<void>
 
-  static isRunning (): Promise<boolean>
+  isRunning (): Promise<boolean>
 }
 
 export default class CobrowseIO {

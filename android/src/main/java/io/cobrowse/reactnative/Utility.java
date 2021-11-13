@@ -36,13 +36,13 @@ final class Utility {
 
     static String remoteControl (RemoteControlState state) {
         switch (state) {
-            case RemoteControlState.On:
+            case On:
                 return "on";
-            case RemoteControlState.Requested:
+            case Requested:
                 return "requested";
-            case RemoteControlState.Rejected:
+            case Rejected:
                 return "rejected";
-            case RemoteControlState.Off:
+            case Off:
                 return "off";
         }
 
