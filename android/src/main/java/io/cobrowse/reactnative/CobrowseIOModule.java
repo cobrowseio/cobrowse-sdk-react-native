@@ -136,14 +136,14 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @ReactMethod
-    public void loadSession(final String idOrCode, final Promise promise) {
+    public void getSession(final String idOrCode, final Promise promise) {
         Handler handler = new Handler(getReactApplicationContext().getMainLooper());
         handler.post(new Runnable() {
             public void run() {
                 CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.Callback<Error, Session>() {
                     @Override
                     public void call(Error error, Session session) {
-                        if (error != null) promise.reject("cbio_load_session_failed", error);
+                        if (error != null) promise.reject("cbio_get_session_failed", error);
                         else promise.resolve(Utility.convert(session));
                     }
                 });
