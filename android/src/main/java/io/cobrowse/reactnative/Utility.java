@@ -5,6 +5,7 @@ import com.facebook.react.bridge.WritableMap;
 
 import io.cobrowse.Agent;
 import io.cobrowse.Session;
+import io.cobrowse.Session.RemoteControlState;
 
 final class Utility {
 
@@ -30,6 +31,21 @@ final class Utility {
     static String convert(Error error) {
         if (error == null) return null;
         return error.getMessage();
+    }
+
+    static RemoteControlState remoteControl (String state) {
+        switch (state) {
+            case "on":
+                return RemoteControlState.On;
+            case "requested":
+                return RemoteControlState.Requested;
+            case "rejected":
+                return RemoteControlState.Rejected;
+            case "off":
+                return RemoteControlState.Off;
+        }
+
+        return RemoteControlState.Off;
     }
 
 }
