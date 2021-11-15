@@ -16,6 +16,7 @@ final class Utility {
         map.putString("state", session.state());
         map.putString("id", session.id());
         map.putBoolean("full_device", session.fullDevice());
+        map.putString("remote_control", Utility.remoteControl(session.remoteControl()));
 
         Agent agent = session.agent();
         if (agent != null) {
@@ -31,6 +32,21 @@ final class Utility {
     static String convert(Error error) {
         if (error == null) return null;
         return error.getMessage();
+    }
+
+    static String remoteControl (RemoteControlState state) {
+        switch (state) {
+            case On:
+                return "on";
+            case Requested:
+                return "requested";
+            case Rejected:
+                return "rejected";
+            case Off:
+                return "off";
+        }
+
+        return "off";
     }
 
     static RemoteControlState remoteControl (String state) {
