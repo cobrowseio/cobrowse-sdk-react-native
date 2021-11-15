@@ -1,36 +1,39 @@
-import { Alert, EventEmitter } from 'react-native'
+import { Alert } from 'react-native'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
 
-class Session extends EventEmitter {
+class Session {
   constructor (session) {
     this._session = session || {}
     this._listen()
   }
 
+  _update (session, onEnd) {
+    if (this._session.id === undefined || (session && this._session.id === session.id)) {
+      this._session = session
+      if (typeof onEnd === 'function') onEnd()
+    }
+  }
+
   _listen () {
-    const requests = emitter.addListener(CobrowseIONative.SESSION_REQUESTED, (session) => {
-      if (this._session.id === undefined || (session && this._session.id === session.id)) {
-        this._session = session
-        this.emit(CobrowseIONative.SESSION_REQUESTED, this)
-      }
-    })
-    const updates = emitter.addListener(CobrowseIONative.SESSION_UPDATED, (session) => {
-      if (this._session.id === undefined || (session && this._session.id === session.id)) {
-        this._session = session
-        this.emit(CobrowseIONative.SESSION_UPDATED, this)
-      }
-    })
+    const requests = emitter.addListener(CobrowseIONative.SESSION_REQUESTED, (session) => this._update(session))
+    const updates = emitter.addListener(CobrowseIONative.SESSION_UPDATED, (session) => this._update(session))
     const ended = emitter.addListener(CobrowseIONative.SESSION_ENDED, (session) => {
-      if (this._session.id === undefined || (session && this._session.id === session.id)) {
-        this._session = session
+      this._update(session, () => {
         requests.remove()
         updates.remove()
         ended.remove()
-        this.emit(CobrowseIONative.SESSION_ENDED, this)
-      }
+      })
+    })
+  }
+
+  addListener (eventType, listener) {
+    return emitter.addListener(eventType, (session) => {
+      this._update(session, () => {
+        listener(this)
+      })
     })
   }
 
