@@ -20,6 +20,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import io.cobrowse.CobrowseIO;
 import io.cobrowse.Session;
+import io.cobrowse.CobrowseAccessibilityService;
 
 public class CobrowseIOModule extends ReactContextBaseJavaModule implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate, CobrowseIO.RedactionDelegate {
 
@@ -193,4 +194,14 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
         });
     }
 
+    @ReactMethod
+    public void accessibilityServiceShowSetup (final Promise promise) {
+        CobrowseAccessibilityService.showSetup(getReactApplicationContext());
+        promise.resolve(null);
+    }
+
+    @ReactMethod
+    public void accessibilityServiceIsRunning(final Promise promise) {
+        promise.resolve(CobrowseAccessibilityService.isRunning(getReactApplicationContext()));
+    }
 }
