@@ -4,6 +4,17 @@ const NativeEventEmitter = require('react-native').NativeEventEmitter
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
 
+
+class CobrowseAccessibilityService {
+  static showSetup () {
+    return CobrowseIONative.accessibilityServiceShowSetup()
+  }
+
+  static isRunning () {
+    return CobrowseIONative.accessibilityServiceIsRunning()
+  }
+}
+
 export default class CobrowseIO {
   static get SESSION_UPDATED () {
     return CobrowseIONative.SESSION_UPDATED
@@ -15,6 +26,10 @@ export default class CobrowseIO {
 
   static get SESSION_REQUESTED () {
     return CobrowseIONative.SESSION_REQUESTED
+  }
+
+  static get accessibilityService () {
+    return CobrowseAccessibilityService
   }
 
   static handleSessionRequest (session) {

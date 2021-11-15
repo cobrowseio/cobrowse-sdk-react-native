@@ -14,12 +14,20 @@ export interface Session {
   agent: Agent | null
 }
 
+interface CobrowseAccessibilityService {
+  showSetup (): Promise<void>
+
+  isRunning (): Promise<boolean>
+}
+
 export default class CobrowseIO {
   static get SESSION_UPDATED (): 'session_updated'
 
   static get SESSION_ENDED (): 'session_ended'
 
   static get SESSION_REQUESTED (): 'session_requested'
+
+  static get accessibilityService (): CobrowseAccessibilityService
 
   static handleSessionRequest (session?: Session): void
 
