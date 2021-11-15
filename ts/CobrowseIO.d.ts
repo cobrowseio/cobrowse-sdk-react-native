@@ -1,9 +1,48 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,accessor-pairs */
 import type { EmitterSubscription } from 'react-native'
 
-interface Agent {
+export interface Agent {
   id: string
   name: string
+}
+
+export type SessionEvent = 'session_updated' | 'session_ended' | 'session_requested'
+
+export type SessionState = 'active' | 'authorizing' | 'ended' | 'pending'
+
+export type RemoteControlState = 'on' | 'requested' | 'rejected' | 'off'
+
+
+export interface Session extends EventEmitter {
+  get id (): string
+
+  get code (): string
+
+  get state (): SessionState
+
+  get full_device (): boolean
+
+  get remote_control (): RemoteControlState
+
+  get agent (): Agent
+
+  activate (): Promise<void>
+
+  end (): Promise<void>
+
+  hasAgent (): boolean
+
+  isActive (): boolean
+
+  isAuthorizing (): boolean
+
+  isPending (): boolean
+
+  isEnded (): boolean
+
+  setFullDevice (state: boolean): Promise<void>
+
+  setRemoteControl (state: RemoteControlState): Promise<void>
 }
 
 export interface Session {
@@ -31,7 +70,7 @@ export default class CobrowseIO {
 
   static handleSessionRequest (session?: Session): void
 
-  static addListener (eventType: string, listener: (event: any) => void, context?: any): EmitterSubscription
+  static addListener (eventType: SessionEvent, listener: (session: Session) => void): EmitterSubscription
 
   static start (): void
 
@@ -49,9 +88,11 @@ export default class CobrowseIO {
 
   static createSession (): Promise<Session>
 
-  static activateSession (): Promise<Session>
-
   static getSession (codeOrId: string): Promise<Session>
 
+  /** @deprecated */
+  static activateSession (): Promise<Session>
+
+  /** @deprecated */
   static endSession (): Promise<void>
 }
