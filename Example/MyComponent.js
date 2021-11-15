@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
-import { redact } from 'cobrowse-sdk-react-native'
 
 class MyComponent extends Component {
 
@@ -18,4 +17,4 @@ class MyComponent extends Component {
   }
 }
 
-export default redact(MyComponent)
+export default MyComponent

@@ -30,7 +30,6 @@ export default class App extends Component<Props> {
           </Redacted>
           <Text style={styles.welcome}>
             <Text>This is the parent text</Text>
-            <Redacted style={{fontWeight: 'bold'}}><Text>This is the child text</Text></Redacted>
           </Text>
           <MyComponent>
             <Redacted><Text>Redacted inner text</Text></Redacted>
