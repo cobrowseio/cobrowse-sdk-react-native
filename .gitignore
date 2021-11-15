@@ -22,6 +22,8 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+local.properties
+
 # Cocoapods
 #
 Pods/
