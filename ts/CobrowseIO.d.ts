@@ -1,65 +1,9 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,accessor-pairs */
 import type { EmitterSubscription } from 'react-native'
+import Session from './Session'
+import CobrowseAccessibilityService from './CobrowseAccessibilityService'
 
-export interface Agent {
-  id: string
-  name: string
-}
-
-export type SessionEvent = 'session_updated' | 'session_ended' | 'session_requested'
-
-export type SessionState = 'active' | 'authorizing' | 'ended' | 'pending'
-
-export type RemoteControlState = 'on' | 'requested' | 'rejected' | 'off'
-
-
-export interface Session {
-  addListener (eventType: SessionEvent, listener: (session: Session) => void): EmitterSubscription
-
-  get id (): string
-
-  get code (): string
-
-  get state (): SessionState
-
-  get full_device (): boolean
-
-  get remote_control (): RemoteControlState
-
-  get agent (): Agent
-
-  activate (): Promise<void>
-
-  end (): Promise<void>
-
-  hasAgent (): boolean
-
-  isActive (): boolean
-
-  isAuthorizing (): boolean
-
-  isPending (): boolean
-
-  isEnded (): boolean
-
-  setFullDevice (state: boolean): Promise<void>
-
-  setRemoteControl (state: RemoteControlState): Promise<void>
-}
-
-export interface Session {
-  id: string | null
-  code: string | null
-  state: string | null
-  full_device: boolean
-  agent: Agent | null
-}
-
-interface CobrowseAccessibilityService {
-  showSetup (): Promise<void>
-
-  isRunning (): Promise<boolean>
-}
+export type NativeSessionEvent = 'session_updated' | 'session_ended' | 'session_requested'
 
 export default class CobrowseIO {
   static get SESSION_UPDATED (): 'session_updated'
@@ -72,7 +16,7 @@ export default class CobrowseIO {
 
   static handleSessionRequest (session?: Session): void
 
-  static addListener (eventType: SessionEvent, listener: (session: Session) => void): EmitterSubscription
+  static addListener (eventType: NativeSessionEvent, listener: (session: Session) => void): EmitterSubscription
 
   static start (): void
 
