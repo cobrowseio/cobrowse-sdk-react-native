@@ -28,6 +28,13 @@ export default class Session {
   }
 
   addListener (eventType, listener) {
+    switch (eventType) {
+      case 'ended':
+        eventType = CobrowseIONative.SESSION_ENDED
+      case 'updated':
+        eventType = CobrowseIONative.SESSION_UPDATED
+    }
+
     return emitter.addListener(eventType, (session) => {
       this._update(session, () => {
         listener(this)
