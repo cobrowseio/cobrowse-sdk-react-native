@@ -13,7 +13,9 @@ export type SessionState = 'active' | 'authorizing' | 'ended' | 'pending'
 export type RemoteControlState = 'on' | 'requested' | 'rejected' | 'off'
 
 
-export interface Session extends EventEmitter {
+export interface Session {
+  addListener (eventType: SessionEvent, listener: (session: Session) => void): EmitterSubscription
+
   get id (): string
 
   get code (): string
