@@ -20,7 +20,6 @@ export default class Session {
     const updates = emitter.addListener(CobrowseIONative.SESSION_UPDATED, (session) => this._update(session))
     const ended = emitter.addListener(CobrowseIONative.SESSION_ENDED, (session) => {
       this._update(session, () => {
-        requests.remove()
         updates.remove()
         ended.remove()
       })
