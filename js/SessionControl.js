@@ -19,7 +19,8 @@ export default class SessionControl extends React.Component {
   }
 
   render () {
-    if (this.state.session && this.state.session.state === 'active') return this.props.children
+    const { session } = this.state
+    if (session && session.isActive()) return this.props.children
     else return null
   }
 }

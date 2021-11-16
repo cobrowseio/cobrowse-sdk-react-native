@@ -70,7 +70,8 @@ export default class CobrowseView extends Component {
 
   async endSession () {
     try {
-      await CobrowseIO.endSession()
+      const { session } = this.state
+      await session.end()
       this.setState({ session: null })
     } catch (error) {
       this.setState({ error })
