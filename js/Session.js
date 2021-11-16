@@ -69,10 +69,6 @@ export default class Session {
     return CobrowseIONative.endSession()
   }
 
-  hasAgent () {
-    return !!(this._session.agent)
-  }
-
   isActive () {
     return this._session.state === 'active'
   }
