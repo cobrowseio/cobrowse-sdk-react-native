@@ -17,7 +17,6 @@ export default class Session {
   }
 
   _listen () {
-    const requests = emitter.addListener(CobrowseIONative.SESSION_REQUESTED, (session) => this._update(session))
     const updates = emitter.addListener(CobrowseIONative.SESSION_UPDATED, (session) => this._update(session))
     const ended = emitter.addListener(CobrowseIONative.SESSION_ENDED, (session) => {
       this._update(session, () => {
