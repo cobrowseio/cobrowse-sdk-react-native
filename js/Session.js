@@ -60,9 +60,7 @@ export default class Session {
   }
 
   activate () {
-    return CobrowseIONative.activateSession().then((session) => {
-      this._session = session
-    })
+    return CobrowseIONative.activateSession().then(() => {})
   }
 
   end () {
