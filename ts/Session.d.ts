@@ -42,8 +42,6 @@ export default class Session {
 
   end (): Promise<void>
 
-  hasAgent (): boolean
-
   isActive (): boolean
 
   isAuthorizing (): boolean
