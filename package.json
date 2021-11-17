@@ -4,19 +4,6 @@
   "description": "Cobrowse SDK for React Native",
   "main": "js/index.js",
   "types": "ts/index.d.ts",
-  "files": [
-    "android",
-    "!android/.gradle",
-    "!android/gradle",
-    "!android/.idea",
-    "!android/build",
-    "!android/local.properties",
-    "ios",
-    "js",
-    "ts",
-    "CHANGELOG.md",
-    "cobrowse-sdk-react-native.podspec"
-  ],
   "scripts": {
     "lint-fix": "ts-standard ts/*.d.ts --fix",
     "watch": "node scripts/watch.mjs",
