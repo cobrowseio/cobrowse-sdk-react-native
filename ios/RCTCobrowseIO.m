@@ -7,9 +7,9 @@
 #import <React/RCTBridge.h>
 #import "RCTCobrowseIO.h"
 
-#define SESSION_UPDATED "session_updated"
-#define SESSION_ENDED "session_ended"
-#define SESSION_REQUESTED "session_requested"
+#define SESSION_UPDATED "session.updated"
+#define SESSION_ENDED "session.ended"
+#define SESSION_REQUESTED "session.requested"
 
 @import CobrowseIO;
 

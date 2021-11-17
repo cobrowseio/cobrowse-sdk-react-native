@@ -3,14 +3,14 @@ import type { EmitterSubscription } from 'react-native'
 import Session from './Session'
 import CobrowseAccessibilityService from './CobrowseAccessibilityService'
 
-export type NativeSessionEvent = 'session_updated' | 'session_ended' | 'session_requested'
+export type NativeSessionEvent = 'session.updated' | 'session.ended' | 'session.requested'
 
 export default class CobrowseIO {
-  static get SESSION_UPDATED (): 'session_updated'
+  static get SESSION_UPDATED (): 'session.updated'
 
-  static get SESSION_ENDED (): 'session_ended'
+  static get SESSION_ENDED (): 'session.ended'
 
-  static get SESSION_REQUESTED (): 'session_requested'
+  static get SESSION_REQUESTED (): 'session.requested'
 
   static get accessibilityService (): CobrowseAccessibilityService
 

@@ -24,9 +24,9 @@ import io.cobrowse.CobrowseAccessibilityService;
 
 public class CobrowseIOModule extends ReactContextBaseJavaModule implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate, CobrowseIO.RedactionDelegate {
 
-    private static final String SESSION_UPDATED = "session_updated";
-    private static final String SESSION_ENDED = "session_ended";
-    private static final String SESSION_REQUESTED = "session_requested";
+    private static final String SESSION_UPDATED = "session.updated";
+    private static final String SESSION_ENDED = "session.ended";
+    private static final String SESSION_REQUESTED = "session.requested";
 
     CobrowseIOModule(ReactApplicationContext reactContext) {
         super(reactContext);
