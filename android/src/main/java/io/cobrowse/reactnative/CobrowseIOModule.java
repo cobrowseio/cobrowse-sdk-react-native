@@ -20,6 +20,7 @@ import java.util.Map;
 import androidx.annotation.NonNull;
 import io.cobrowse.CobrowseIO;
 import io.cobrowse.Session;
+import io.cobrowse.CobrowseAccessibilityService;
 
 public class CobrowseIOModule extends ReactContextBaseJavaModule implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate, CobrowseIO.RedactionDelegate {
 
@@ -136,14 +137,14 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @ReactMethod
-    public void loadSession(final String idOrCode, final Promise promise) {
+    public void getSession(final String idOrCode, final Promise promise) {
         Handler handler = new Handler(getReactApplicationContext().getMainLooper());
         handler.post(new Runnable() {
             public void run() {
                 CobrowseIO.instance().getSession(idOrCode, new io.cobrowse.Callback<Error, Session>() {
                     @Override
                     public void call(Error error, Session session) {
-                        if (error != null) promise.reject("cbio_load_session_failed", error);
+                        if (error != null) promise.reject("cbio_get_session_failed", error);
                         else promise.resolve(Utility.convert(session));
                     }
                 });
@@ -193,4 +194,55 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
         });
     }
 
+    @ReactMethod
+    public void updateSession (final ReadableMap options, final Promise promise) {
+        Handler handler = new Handler(getReactApplicationContext().getMainLooper());
+        handler.post(new Runnable() {
+            public void run() {
+                Session current = CobrowseIO.instance().currentSession();
+
+                if (current == null) {
+                    promise.resolve(null);
+                    return;
+                }
+
+                if (options.hasKey("full_device")) {
+                    boolean fullDevice = options.getBoolean("full_device");
+
+                    current.setFullDevice(fullDevice, new io.cobrowse.Callback<Error, Session>() {
+                        @Override
+                        public void call(Error error, Session session) {
+                            if (error != null) promise.reject("cbio_full_device_failed", error);
+                            else promise.resolve(null);
+                        }
+                    });
+
+                    return;
+                }
+
+                if (options.hasKey("remote_control")) {
+                    String remoteControl = options.getString("remote_control");
+
+                    current.setRemoteControl(Utility.remoteControl(remoteControl), new io.cobrowse.Callback<Error, Session>() {
+                        @Override
+                        public void call(Error error, Session session) {
+                            if (error != null) promise.reject("cbio_remote_control_failed", error);
+                            else promise.resolve(null);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @ReactMethod
+    public void accessibilityServiceShowSetup (final Promise promise) {
+        CobrowseAccessibilityService.showSetup(getReactApplicationContext());
+        promise.resolve(null);
+    }
+
+    @ReactMethod
+    public void accessibilityServiceIsRunning(final Promise promise) {
+        promise.resolve(CobrowseAccessibilityService.isRunning(getReactApplicationContext()));
+    }
 }

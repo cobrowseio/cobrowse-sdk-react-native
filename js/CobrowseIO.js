@@ -1,4 +1,6 @@
 import { Alert } from 'react-native'
+import Session from './Session'
+import CobrowseAccessibilityService from './CobrowseAccessibilityService'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
 
@@ -17,6 +19,10 @@ export default class CobrowseIO {
     return CobrowseIONative.SESSION_REQUESTED
   }
 
+  static get accessibilityService () {
+    return CobrowseAccessibilityService
+  }
+
   static handleSessionRequest (session) {
     Alert.alert(
       'Support Request',
@@ -32,7 +38,7 @@ export default class CobrowseIO {
   }
 
   static addListener (event, cb) {
-    return emitter.addListener(event, cb)
+    return emitter.addListener(event, (session) => cb(new Session(session)))
   }
 
   static start () {
@@ -60,21 +66,23 @@ export default class CobrowseIO {
   }
 
   static currentSession () {
-    return CobrowseIONative.currentSession()
+    return CobrowseIONative.currentSession().then((session) => session ? new Session(session) : null)
   }
 
   static createSession () {
-    return CobrowseIONative.createSession()
-  }
-
-  static activateSession () {
-    return CobrowseIONative.activateSession()
+    return CobrowseIONative.createSession().then((session) => session ? new Session(session) : null)
   }
 
   static getSession (codeOrId) {
-    return CobrowseIONative.getSession(codeOrId)
+    return CobrowseIONative.getSession(codeOrId).then((session) => session ? new Session(session) : null)
   }
 
+  /** @deprecated */
+  static activateSession () {
+    return CobrowseIONative.activateSession().then((session) => session ? new Session(session) : null)
+  }
+
+  /** @deprecated */
   static endSession () {
     return CobrowseIONative.endSession()
   }
