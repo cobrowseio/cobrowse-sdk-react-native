@@ -9,17 +9,12 @@ const emitter = new NativeEventEmitter(CobrowseIONative)
 export default class CobrowseIO {
   /** @deprecated */
   static get SESSION_UPDATED () {
-    return CobrowseIONative.SESSION_UPDATED
+    return 'session.updated'
   }
 
   /** @deprecated */
   static get SESSION_ENDED () {
-    return CobrowseIONative.SESSION_ENDED
-  }
-
-  /** @deprecated */
-  static get SESSION_REQUESTED () {
-    return CobrowseIONative.SESSION_REQUESTED
+    return 'session.ended'
   }
 
   static get accessibilityService () {
@@ -91,6 +86,8 @@ export default class CobrowseIO {
   }
 }
 
-CobrowseIO.addListener(CobrowseIO.SESSION_REQUESTED, (session) => {
+// the session.requested event is considered internal, it should
+// not be used outside these bindings
+CobrowseIO.addListener('session.requested', (session) => {
   CobrowseIO.handleSessionRequest(session)
 })

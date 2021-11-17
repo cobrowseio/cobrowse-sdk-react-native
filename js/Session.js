@@ -9,16 +9,16 @@ export default class Session {
     this._listen()
   }
 
-  _update (session, onEnd) {
+  _update (session, onMatch) {
     if (this._session.id === undefined || (session && this._session.id === session.id)) {
       this._session = session
-      if (typeof onEnd === 'function') onEnd()
+      if (typeof onMatch === 'function') onMatch()
     }
   }
 
   _listen () {
-    const updates = emitter.addListener(CobrowseIONative.SESSION_UPDATED, (session) => this._update(session))
-    const ended = emitter.addListener(CobrowseIONative.SESSION_ENDED, (session) => {
+    const updates = emitter.addListener('session.updated', (session) => this._update(session))
+    const ended = emitter.addListener('session.ended', (session) => {
       this._update(session, () => {
         updates.remove()
         ended.remove()
@@ -27,11 +27,15 @@ export default class Session {
   }
 
   addListener (eventType, listener) {
+    // TODO: this class should extend EventEmitter and forward
+    //       on the non-namespaced versions of these events
     switch (eventType) {
       case 'ended':
-        eventType = CobrowseIONative.SESSION_ENDED
+        eventType = 'session.updated'
+        break
       case 'updated':
-        eventType = CobrowseIONative.SESSION_UPDATED
+        eventType = 'session.ended'
+        break
     }
 
     return emitter.addListener(eventType, (session) => {

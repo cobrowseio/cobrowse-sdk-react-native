@@ -39,15 +39,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
     }
 
     @Override
-    public Map<String, Object> getConstants() {
-        final Map<String, Object> constants = new HashMap<>();
-        constants.put("SESSION_UPDATED", SESSION_UPDATED);
-        constants.put("SESSION_ENDED", SESSION_ENDED);
-        constants.put("SESSION_REQUESTED", SESSION_REQUESTED);
-        return constants;
-    }
-
-    @Override
     public void sessionDidUpdate(@NonNull Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)

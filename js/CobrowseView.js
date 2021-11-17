@@ -55,10 +55,10 @@ export default class CobrowseView extends Component {
       this.setState({ error })
     }
 
-    this.updateListener = CobrowseIO.addListener(CobrowseIO.SESSION_UPDATED, (session) => {
+    this.updateListener = CobrowseIO.addListener('session.updated', (session) => {
       this.setState({ session })
     })
-    this.endListener = CobrowseIO.addListener(CobrowseIO.SESSION_ENDED, (session) => {
+    this.endListener = CobrowseIO.addListener('session.ended', (session) => {
       if (this.props.onEnded) this.props.onEnded()
     })
   }

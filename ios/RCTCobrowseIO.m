@@ -35,14 +35,6 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
--(NSDictionary *)constantsToExport {
-    return @{
-        @"SESSION_UPDATED": @SESSION_UPDATED,
-        @"SESSION_ENDED": @SESSION_ENDED,
-        @"SESSION_REQUESTED": @SESSION_REQUESTED
-    };
-}
-
 -(void)startObserving {
     hasListeners = YES;
 }
@@ -52,7 +44,7 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<NSString *> *)supportedEvents {
-    return self.constantsToExport.allValues;
+    return @[@SESSION_UPDATED, @SESSION_ENDED, @SESSION_REQUESTED];
 }
 
 -(void)cobrowseSessionDidUpdate:(CBIOSession *)session {
@@ -134,7 +126,7 @@ RCT_REMAP_METHOD(getSession,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject) {
     [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
-        if (err) return reject(@"cbio_load_session_failed", err.localizedDescription, err);
+        if (err) return reject(@"cbio_get_session_failed", err.localizedDescription, err);
         return resolve([session toDict]);
     }];
 }
