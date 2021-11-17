@@ -1,9 +1,9 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - cobrowse-sdk-react-native (2.6.0):
-    - CobrowseIO/Framework (= 2.14.1)
+  - cobrowse-sdk-react-native (2.7.1-23):
+    - CobrowseIO/Framework (= 2.16.0)
     - React
-  - CobrowseIO/Framework (2.14.1):
+  - CobrowseIO/Framework (2.16.0):
     - Starscream (~> 3.1.1)
     - SwiftCBOR (~> 0.4.3)
   - DoubleConversion (1.1.6)
@@ -274,7 +274,7 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - Starscream (3.1.1)
-  - SwiftCBOR (0.4.3)
+  - SwiftCBOR (0.4.4)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -379,8 +379,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  cobrowse-sdk-react-native: 7c11342e12e32e22c638b0dcdd2ec0f53a52bdc4
-  CobrowseIO: e75b86909d757bc9b2d98386d3a3bfa2ce7014bc
+  cobrowse-sdk-react-native: 6210efd41c900e07ae043c35d0faa7b2166f2b79
+  CobrowseIO: 403893b779abf9670fe064a3b90faa3845cfc6d7
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
   FBReactNativeSpec: 4261e14597fd1035b5e9238b4a097e37d53242b9
@@ -409,7 +409,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9904c6d0218fb9f8b19d6dd88607225927668f9
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
-  SwiftCBOR: c7d740966575e0fd5d971466de2b6776db3f10c3
+  SwiftCBOR: ce5354ec8b660da2d6fc754462881119dbe1f963
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
 PODFILE CHECKSUM: 3090b4263c3fd0fa3f7a3b06a32283f444275559
