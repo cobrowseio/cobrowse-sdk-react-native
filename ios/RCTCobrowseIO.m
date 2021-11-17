@@ -153,4 +153,16 @@ RCT_REMAP_METHOD(endSession,
     }];
 }
 
+RCT_REMAP_METHOD(updateSession,
+                 updaetSession: (NSDictionary*) state
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    CBIOSession* current = CobrowseIO.instance.currentSession;
+    if (!current) return resolve(nil);
+    [current update: state callback: ^(NSError *err, CBIOSession *session) {
+        if (err) return reject(@"cbio_update_session_failed", err.localizedDescription, err);
+        return resolve([session toDict]);
+    }];
+}
+
 @end
