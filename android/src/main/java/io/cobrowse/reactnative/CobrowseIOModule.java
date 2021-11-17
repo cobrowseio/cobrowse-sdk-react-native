@@ -22,7 +22,9 @@ import io.cobrowse.CobrowseIO;
 import io.cobrowse.Session;
 import io.cobrowse.CobrowseAccessibilityService;
 
-public class CobrowseIOModule extends ReactContextBaseJavaModule implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate, CobrowseIO.RedactionDelegate {
+public class CobrowseIOModule extends ReactContextBaseJavaModule
+  implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate,
+    CobrowseIO.RedactionDelegate, CobrowseIO.RemoteControlRequestDelegate {
 
     private static final String SESSION_UPDATED = "session.updated";
     private static final String SESSION_ENDED = "session.ended";
@@ -57,6 +59,12 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule implements Cobr
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(SESSION_REQUESTED, Utility.convert(session));
+    }
+
+    @Override
+    public void handleRemoteControlRequest(@NonNull Activity activity, @NonNull Session session) {
+      // no-op, this will be handed on the JS side via an "updated" event handler
+      // this stub just disables the default native prompt in the SDK
     }
 
     @Override

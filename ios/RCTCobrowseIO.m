@@ -59,6 +59,11 @@ RCT_EXPORT_MODULE();
     if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
 }
 
+- (void)cobrowseHandleRemoteControlRequest:(CBIOSession *)session {
+    // no-op, this will be handed on the JS side via an "updated" event handler
+    // this stub just disables the default native prompt in the SDK
+}
+
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
     NSMutableArray* views = [NSMutableArray array];
     for (UIView* v in CBIOCobrowseRedactedManager.redactedViews.allObjects) {

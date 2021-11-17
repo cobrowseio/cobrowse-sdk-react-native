@@ -22,17 +22,47 @@ export default class CobrowseIO {
   }
 
   static handleSessionRequest (session) {
+    if (this._sessionRequestShown) return
+    this._sessionRequestShown = true
     Alert.alert(
       'Support Request',
       'A support agent would like to use this app with you. Do you accept?',
       [{
         text: 'Reject',
-        onPress: () => session.end(),
+        onPress: () => {
+          this._sessionRequestShown = false
+          session.end()
+        },
         style: 'cancel'
       }, {
         text: 'Accept',
-        onPress: () => session.activate()
-      }], { cancelable: true })
+        onPress: () => {
+          this._sessionRequestShown = false
+          session.activate()
+        }
+      }], { cancelable: false })
+  }
+
+  static handleRemoteControlRequest (session) {
+    if (this._remoteControlRequestShown) return
+    this._remoteControlRequestShown = true
+    Alert.alert(
+      'Remote Control Request',
+      'A support agent would like to take remote control of this app. Do you accept?',
+      [{
+        text: 'Reject',
+        onPress: () => {
+          this._remoteControlRequestShown = false
+          session.setRemoteControl('rejected')
+        },
+        style: 'cancel'
+      }, {
+        text: 'Accept',
+        onPress: () => {
+          this._remoteControlRequestShown = false
+          session.setRemoteControl('on')
+        }
+      }], { cancelable: false })
   }
 
   static addListener (event, cb) {
@@ -90,4 +120,10 @@ export default class CobrowseIO {
 // not be used outside these bindings
 CobrowseIO.addListener('session.requested', (session) => {
   CobrowseIO.handleSessionRequest(session)
+})
+
+CobrowseIO.addListener('session.updated', (session) => {
+  if (session.isActive() && session.remote_control === 'requested') {
+    CobrowseIO.handleRemoteControlRequest(session)
+  }
 })
