@@ -1,6 +1,5 @@
 import { Alert } from 'react-native'
 import Session from './Session'
-import CobrowseAccessibilityService from './CobrowseAccessibilityService'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
 
@@ -15,10 +14,6 @@ export default class CobrowseIO {
   /** @deprecated */
   static get SESSION_ENDED () {
     return 'session.ended'
-  }
-
-  static get accessibilityService () {
-    return CobrowseAccessibilityService
   }
 
   static handleSessionRequest (session) {
