@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.8.0...v2.9.0) (2021-11-17)
+
+
+### Features
+
+* Add support for custom remote control consent prompts ([95e1f36](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/95e1f361e5c18f8f1ffb7ae6477525aab055cd7c))
+
 ## [2.8.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.6.0...v2.8.0) (2021-11-17)
 
 ### Features
