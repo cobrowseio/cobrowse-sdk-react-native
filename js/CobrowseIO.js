@@ -27,11 +27,11 @@ export default class CobrowseIO {
       'A support agent would like to use this app with you. Do you accept?',
       [{
         text: 'Reject',
-        onPress: () => this.endSession(),
+        onPress: () => session.end(),
         style: 'cancel'
       }, {
         text: 'Accept',
-        onPress: () => this.activateSession()
+        onPress: () => session.activate()
       }], { cancelable: true })
   }
 
