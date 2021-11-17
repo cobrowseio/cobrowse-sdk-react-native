@@ -7,14 +7,17 @@ const NativeEventEmitter = require('react-native').NativeEventEmitter
 const emitter = new NativeEventEmitter(CobrowseIONative)
 
 export default class CobrowseIO {
+  /** @deprecated */
   static get SESSION_UPDATED () {
     return CobrowseIONative.SESSION_UPDATED
   }
 
+  /** @deprecated */
   static get SESSION_ENDED () {
     return CobrowseIONative.SESSION_ENDED
   }
 
+  /** @deprecated */
   static get SESSION_REQUESTED () {
     return CobrowseIONative.SESSION_REQUESTED
   }
