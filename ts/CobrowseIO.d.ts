@@ -1,13 +1,10 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,accessor-pairs */
 import type { EmitterSubscription } from 'react-native'
 import Session from './Session'
-import CobrowseAccessibilityService from './CobrowseAccessibilityService'
 
 export type NativeSessionEvent = 'session.updated' | 'session.ended'
 
 export default class CobrowseIO {
-  static get accessibilityService (): CobrowseAccessibilityService
-
   static handleSessionRequest (session?: Session): void
 
   static addListener (eventType: NativeSessionEvent, listener: (session: Session) => void): EmitterSubscription
