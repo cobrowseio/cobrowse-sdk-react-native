@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* update Cobrowse native SDKs. Note on Android there is an extra consideration for this upgrade: https://github.com/cobrowseio/cobrowse-sdk-android-binary/blob/master/CHANGELOG.md[#2160](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/2160)-2021-12-08 ([756d305](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/756d3054eeb352c5545d09dc48833703c7193c53)), closes [/github.com/cobrowseio/cobrowse-sdk-android-binary/blob/master/CHANGELOG.md#2160-2021-12-08](https://github.com/cobrowseio//github.com/cobrowseio/cobrowse-sdk-android-binary/blob/master/CHANGELOG.md/issues/2160-2021-12-08)
+* update Cobrowse native SDKs. Note on Android there is an extra consideration for this upgrade: https://github.com/cobrowseio/cobrowse-sdk-android-binary/blob/master/CHANGELOG.md#2160-2021-12-08
 
 
 ### Bug Fixes
