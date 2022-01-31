@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
   package="com.example">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,6 +11,10 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <service
+        android:name="io.cobrowse.CobrowseAccessibilityService"
+        android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:node="merge" />
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
