@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "cobrowse-sdk-react-native": "^2.10.0",
+    "cobrowse-sdk-react-native": "^2.10.1",
     "react": "17.0.1",
     "react-native": "0.64.2"
   },
