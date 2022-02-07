@@ -7,6 +7,7 @@
 #import <React/RCTBridge.h>
 #import "RCTCobrowseIO.h"
 
+#define SESSION_LOADED "session.loaded"
 #define SESSION_UPDATED "session.updated"
 #define SESSION_ENDED "session.ended"
 #define SESSION_REQUESTED "session.requested"
@@ -44,7 +45,11 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<NSString *> *)supportedEvents {
-    return @[@SESSION_UPDATED, @SESSION_ENDED, @SESSION_REQUESTED];
+    return @[@SESSION_LOADED, @SESSION_UPDATED, @SESSION_ENDED, @SESSION_REQUESTED];
+}
+
+-(void)cobrowseSessionDidLoad:(CBIOSession *)session {
+    if (hasListeners) [self sendEventWithName:@SESSION_LOADED body:[session toDict]];
 }
 
 -(void)cobrowseSessionDidUpdate:(CBIOSession *)session {

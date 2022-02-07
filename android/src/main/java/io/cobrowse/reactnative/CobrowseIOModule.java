@@ -24,8 +24,10 @@ import io.cobrowse.CobrowseAccessibilityService;
 
 public class CobrowseIOModule extends ReactContextBaseJavaModule
   implements CobrowseIO.Delegate, CobrowseIO.SessionRequestDelegate,
-    CobrowseIO.RedactionDelegate, CobrowseIO.RemoteControlRequestDelegate {
+    CobrowseIO.SessionLoadDelegate, CobrowseIO.RedactionDelegate,
+    CobrowseIO.RemoteControlRequestDelegate {
 
+    private static final String SESSION_LOADED = "session.loaded";
     private static final String SESSION_UPDATED = "session.updated";
     private static final String SESSION_ENDED = "session.ended";
     private static final String SESSION_REQUESTED = "session.requested";
@@ -38,6 +40,13 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
     @NonNull
     public String getName() {
         return "CobrowseIO";
+    }
+
+    @Override
+    public void sessionDidLoad(@NonNull Session session) {
+        getReactApplicationContext()
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(SESSION_LOADED, Utility.convert(session));
     }
 
     @Override
