@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.10.1...v2.11.0) (2022-02-07)
+
+
+### Features
+
+* add event that's called the first time a session is fetched from the server ([645da52](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/645da52ec3158ab8ec9dd697a32e211f73a94738))
+
 ### [2.10.1](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.10.0...v2.10.1) (2022-01-31)
 
 
