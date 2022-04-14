@@ -69,7 +69,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
     public void sessionDidLoad(@NonNull Session session) {
         getReactApplicationContext()
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(SESSION_LOADED, Utility.convert(session));
+                .emit(SESSION_LOADED, Conversion.convert(session));
     }
 
     @Override
@@ -327,7 +327,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
                 if (options.hasKey("remote_control")) {
                     String remoteControl = options.getString("remote_control");
 
-                    current.setRemoteControl(Utility.remoteControl(remoteControl), new io.cobrowse.Callback<Error, Session>() {
+                    current.setRemoteControl(Conversion.remoteControl(remoteControl), new io.cobrowse.Callback<Error, Session>() {
                         @Override
                         public void call(Error error, Session session) {
                             if (error != null) promise.reject("cbio_remote_control_failed", error);
