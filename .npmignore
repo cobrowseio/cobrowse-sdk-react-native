@@ -7,3 +7,9 @@ android/local.properties
 CHANGELOG.md
 README.md
 *.xcuserdata*
+.DS_Store
+.editorconfig
+tsconfig.eslint.json
+*.log
+DEVELOPMENT.md
+scripts/*

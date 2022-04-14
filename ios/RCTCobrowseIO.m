@@ -9,9 +9,10 @@
 #import "RCTCobrowseIO.h"
 #import "RCTCBIOTreeUtils.h"
 
-#define SESSION_UPDATED "session_updated"
-#define SESSION_ENDED "session_ended"
-#define SESSION_REQUESTED "session_requested"
+#define SESSION_LOADED "session.loaded"
+#define SESSION_UPDATED "session.updated"
+#define SESSION_ENDED "session.ended"
+#define SESSION_REQUESTED "session.requested"
 
 @import CobrowseIO;
 
@@ -39,14 +40,6 @@ RCT_EXPORT_MODULE();
   return dispatch_get_main_queue();
 }
 
--(NSDictionary *)constantsToExport {
-    return @{
-        @"SESSION_UPDATED": @SESSION_UPDATED,
-        @"SESSION_ENDED": @SESSION_ENDED,
-        @"SESSION_REQUESTED": @SESSION_REQUESTED
-    };
-}
-
 -(void)startObserving {
     hasListeners = YES;
 }
@@ -56,7 +49,11 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<NSString *> *)supportedEvents {
-    return self.constantsToExport.allValues;
+    return @[@SESSION_LOADED, @SESSION_UPDATED, @SESSION_ENDED, @SESSION_REQUESTED];
+}
+
+-(void)cobrowseSessionDidLoad:(CBIOSession *)session {
+    if (hasListeners) [self sendEventWithName:@SESSION_LOADED body:[session toDict]];
 }
 
 -(NSSet<UIView*>*) unredactedViews {
@@ -80,6 +77,11 @@ RCT_EXPORT_MODULE();
 
 -(void)cobrowseHandleSessionRequest:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
+}
+
+- (void)cobrowseHandleRemoteControlRequest:(CBIOSession *)session {
+    // no-op, this will be handed on the JS side via an "updated" event handler
+    // this stub just disables the default native prompt in the SDK
 }
 
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
@@ -215,7 +217,7 @@ RCT_REMAP_METHOD(getSession,
                  resolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject) {
     [CobrowseIO.instance getSession:idOrCode callback:^(NSError *err, CBIOSession *session) {
-        if (err) return reject(@"cbio_load_session_failed", err.localizedDescription, err);
+        if (err) return reject(@"cbio_get_session_failed", err.localizedDescription, err);
         return resolve([session toDict]);
     }];
 }
@@ -238,6 +240,18 @@ RCT_REMAP_METHOD(endSession,
     if (!current) return resolve(nil);
     [current end:^(NSError *err, CBIOSession *session) {
         if (err) return reject(@"cbio_end_session_failed", err.localizedDescription, err);
+        return resolve([session toDict]);
+    }];
+}
+
+RCT_REMAP_METHOD(updateSession,
+                 updaetSession: (NSDictionary*) state
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject) {
+    CBIOSession* current = CobrowseIO.instance.currentSession;
+    if (!current) return resolve(nil);
+    [current update: state callback: ^(NSError *err, CBIOSession *session) {
+        if (err) return reject(@"cbio_update_session_failed", err.localizedDescription, err);
         return resolve([session toDict]);
     }];
 }

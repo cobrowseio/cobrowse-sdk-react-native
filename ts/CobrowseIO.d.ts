@@ -1,29 +1,13 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class,accessor-pairs */
 import type { EmitterSubscription } from 'react-native'
+import Session from './Session'
 
-interface Agent {
-  id: string
-  name: string
-}
-
-export interface Session {
-  id: string | null
-  code: string | null
-  state: string | null
-  full_device: boolean
-  agent: Agent | null
-}
+export type NativeSessionEvent = 'session.updated' | 'session.ended'
 
 export default class CobrowseIO {
-  static get SESSION_UPDATED (): 'session_updated'
-
-  static get SESSION_ENDED (): 'session_ended'
-
-  static get SESSION_REQUESTED (): 'session_requested'
-
   static handleSessionRequest (session?: Session): void
 
-  static addListener (eventType: string, listener: (event: any) => void, context?: any): EmitterSubscription
+  static addListener (eventType: NativeSessionEvent, listener: (session: Session) => void): EmitterSubscription
 
   static start (): void
 
@@ -41,9 +25,5 @@ export default class CobrowseIO {
 
   static createSession (): Promise<Session>
 
-  static activateSession (): Promise<Session>
-
   static getSession (codeOrId: string): Promise<Session>
-
-  static endSession (): Promise<void>
 }

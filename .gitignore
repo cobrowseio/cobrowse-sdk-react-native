@@ -22,6 +22,8 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+local.properties
+
 # Cocoapods
 #
 Pods/
@@ -36,3 +38,5 @@ node_modules/
 npm-debug.log
 Example/ios/Carthage
 *.tgz
+*.log
+*.tmp

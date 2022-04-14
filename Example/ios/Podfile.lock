@@ -1,9 +1,9 @@
 PODS:
   - boost-for-react-native (1.63.0)
-  - cobrowse-sdk-react-native (2.6.0):
-    - CobrowseIO/Framework (= 2.14.3)
+  - cobrowse-sdk-react-native (2.10.1):
+    - CobrowseIO/Framework (= 2.17.1)
     - React
-  - CobrowseIO/Framework (2.14.3):
+  - CobrowseIO/Framework (2.17.1):
     - Starscream (~> 3.1.1)
     - SwiftCBOR (~> 0.4.3)
   - DoubleConversion (1.1.6)
@@ -274,7 +274,7 @@ PODS:
     - React-jsi (= 0.64.2)
     - React-perflogger (= 0.64.2)
   - Starscream (3.1.1)
-  - SwiftCBOR (0.4.3)
+  - SwiftCBOR (0.4.4)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -409,9 +409,9 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: a9904c6d0218fb9f8b19d6dd88607225927668f9
   ReactCommon: 149906e01aa51142707a10665185db879898e966
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
-  SwiftCBOR: c7d740966575e0fd5d971466de2b6776db3f10c3
+  SwiftCBOR: ce5354ec8b660da2d6fc754462881119dbe1f963
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
 PODFILE CHECKSUM: 3090b4263c3fd0fa3f7a3b06a32283f444275559
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
