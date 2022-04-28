@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback, useMemo } from 'react'
 import { View, findNodeHandle } from 'react-native'
 import { throttle } from 'lodash'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 
 function mergeRefs (refs) {
-  return value => {
-    refs.forEach(ref => {
+  return (value) => {
+    refs.forEach((ref) => {
       if (typeof ref === 'function') {
         ref(value)
       } else if (ref != null) {
@@ -20,26 +20,60 @@ const sendUnredactionUpdates = throttle(() => {
   CobrowseIONative.setUnredactedTags([...unredactedTags])
 }, 50, { leading: false })
 
-// HOC for adding unredaction to a whole component class
-export function unredact (Component) {
-  return React.forwardRef(function Redacted (props, ref) {
-    const localRef = useRef()
-    useEffect(() => {
-      const view = findNodeHandle(localRef.current)
+const removeUnredactedView = (view) => {
+  if (view) {
+    unredactedTags.delete(view)
+    sendUnredactionUpdates()
+  }
+}
+
+export const useUnredaction = (shouldWarnUnhandledRefs = true, componentName = '') => {
+  const ref = useRef(null)
+
+  const setRef = useCallback((node) => {
+    let hasRemovedRef = false
+    if (ref.current) {
+      hasRemovedRef = true
+      removeUnredactedView(ref.current)
+    }
+
+    if (node) {
+      const view = findNodeHandle(node)
+
       if (view) {
         unredactedTags.add(view)
         sendUnredactionUpdates()
+
+        ref.current = view
       } else {
-        console.warn(`Failed to apply unredact() to ${Component?.name} due to null node handle – make sure you are forwarding refs`)
+        console.warn(`Failed to apply unredact() to ${componentName} due to view not found`)
       }
-      return () => {
-        if (view) {
-          unredactedTags.delete(view)
-          sendUnredactionUpdates()
-        }
-      }
-    }, [])
-    return <Component {...props} collapsable={false} ref={mergeRefs([localRef, ref])} />
+    } else if (!hasRemovedRef) {
+      console.warn(
+        `Failed to apply unredact() to ${componentName} due to null node handle – make sure you are forwarding refs`
+      )
+    }
+  }, [])
+
+  useEffect(() => {
+    if (shouldWarnUnhandledRefs && !ref.current) {
+      console.warn(
+        `Failed to apply unredact() to ${componentName} due to null node handle – make sure the setRef function is called with the ref`
+      )
+    }
+
+    return () => removeUnredactedView(ref.current)
+  }, [])
+
+  return setRef
+}
+
+// HOC for adding unredaction to a whole component class
+export function unredact(Component) {
+  return React.forwardRef(function Redacted(props, ref) {
+    const localRef = useUnredaction(true, Component?.name)
+    const refs = useMemo(() => mergeRefs([localRef, ref]), [localRef, ref])
+    return <Component {...props} collapsable={false} ref={refs} />
   })
 }
 
