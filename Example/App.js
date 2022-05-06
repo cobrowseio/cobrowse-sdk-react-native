@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, Platform, StyleSheet, Text, View, TextInput } from 'react-native'
+import { TouchableOpacity, Platform, StyleSheet, Text, View, TextInput, ScrollView } from 'react-native'
 import { CobrowseView, Redacted, SessionControl, unredact } from 'cobrowse-sdk-react-native'
 import MyComponent from './MyComponent'
 
@@ -46,6 +46,33 @@ export default class App extends Component<Props> {
             <Text>Floating</Text>
           </Redacted>
           <UnredactedText>An unredacted text component</UnredactedText>
+          <ScrollView style={{height: 50}}>
+            <Text>1</Text>
+            <Text>2</Text>
+            <Text>3</Text>
+            <Text>4</Text>
+            <Text>5</Text>
+            <Text>6</Text>
+            <Text>7</Text>
+            <Text>8</Text>
+            <Text>9</Text>
+            <Text>10</Text>
+            <Text>11</Text>
+            <Text>12</Text>
+            <Text>13</Text>
+            <Text>14</Text>
+            <Text>15</Text>
+            <Text>16</Text>
+            <Text>17</Text>
+            <Text>18</Text>
+            <Text>19</Text>
+            <Text>20</Text>
+            <Text>21</Text>
+            <Text>22</Text>
+            <Text>23</Text>
+            <Text>24</Text>
+            <Text>25</Text>
+          </ScrollView>
           <TextInput style={{width: 100}} defaultValue={'Hello!'} onChange={() => {}} />
           <Text style={styles.instructions}>{instructions}</Text>
           <SessionControl><Text>Session is active</Text></SessionControl>
