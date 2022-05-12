@@ -46,6 +46,9 @@ export default class App extends Component<Props> {
             <Text>Floating</Text>
           </Redacted>
           <UnredactedText>An unredacted text component</UnredactedText>
+          <ScrollView horizontal={true} style={{height: 50}}>
+            <Text>123456789012345678901§23456789012345678902345678901234567890123456789012345678901234567890</Text>
+          </ScrollView>
           <ScrollView style={{height: 50}}>
             <Text>1</Text>
             <Text>2</Text>
@@ -104,11 +107,11 @@ const styles = StyleSheet.create({
   },
   floating: {
     zIndex: 500,
-    bottom: 155,
+    bottom: 10,
     position: 'absolute',
     left: 10,
     right: 10,
-    height: 60,
+    height: 30,
     backgroundColor: '#00ff00',
   },
 })
