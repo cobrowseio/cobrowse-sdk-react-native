@@ -1,9 +1,9 @@
 PODS:
   - boost-for-react-native (1.63.0)
   - cobrowse-sdk-react-native (2.10.1):
-    - CobrowseIO/XCFramework (= 2.19.0)
+    - CobrowseIO/XCFramework (= 2.20.0)
     - React
-  - CobrowseIO/XCFramework (2.19.0):
+  - CobrowseIO/XCFramework (2.20.0):
     - Starscream (~> 3.1.1)
     - SwiftCBOR (~> 0.4.3)
   - DoubleConversion (1.1.6)
@@ -379,8 +379,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  cobrowse-sdk-react-native: df786a5b3c741bdc9b2aa2c94192c91d628c1d3b
-  CobrowseIO: 93e296ceb2bf494c30f3b1bc79d445ddba57d8c5
+  cobrowse-sdk-react-native: 7ff6c5b2042c88975a9d2a69cb9b63aae23b0d8d
+  CobrowseIO: d2f5d43d644b2a857021b039c6d3075d780c490e
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
   FBLazyVector: e686045572151edef46010a6f819ade377dfeb4b
   FBReactNativeSpec: 4261e14597fd1035b5e9238b4a097e37d53242b9
