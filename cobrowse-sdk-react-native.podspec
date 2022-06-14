@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.homepage      = package["homepage"]
   s.source        = { :git => 'https://github.com/cobrowseio/cobrowse-sdk-react-native.git' }
   s.platform      = :ios, '9.0'
-  s.dependency      'CobrowseIO/XCFramework', '2.19.0'
+  s.dependency      'CobrowseIO/XCFramework', '2.20.0'
   s.dependency      'React'
   s.source_files =  'ios/*.{h,m}'
 end
