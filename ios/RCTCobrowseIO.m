@@ -87,7 +87,7 @@ RCT_EXPORT_MODULE();
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
     NSMutableSet* redacted = [NSMutableSet set];
     NSSet* unredacted = self.unredactedViews;
-    
+
     // By default everything managed by react is redacted for view controllers
     // that contain react views. If we were to always redact vc.view this would lead
     // to instances where windows that do not contain a RN context could
@@ -122,8 +122,13 @@ RCT_EXPORT_MODULE();
     // Finally we can subtract the set of unredacted views to get the minimal
     // set of redactions that will redact everything that's not explicitly unredacted
     // whilst allowing the unredacted views to be visible
-    for (id v in unredacted) [redacted removeObject:v];
-    
+    for (UIView* v in unredacted) {
+        [redacted removeObject:v];
+        // remove all the children of unredacted nodes (to handle directly
+        // nested unredacted views)
+        for (id c in v.subviews) [redacted removeObject: c];
+    }
+
     // Remove any empty RCTViews from the redacted set, they're often used for wrapping
     // or sizing other elements, and do not usually need to be redacted
     // If it's absolutely necessary they are redacted, they can always be replaced with
@@ -134,7 +139,7 @@ RCT_EXPORT_MODULE();
     // Any explicitly redacted views surroudned by <Redacted> tags take precedence, so
     // re-add any tagged as such that the process above might have removed
     for (id v in CBIOCobrowseRedactedManager.redactedViews.allObjects) [redacted addObject: v];
-    
+
     return redacted.allObjects;;
 }
 

@@ -160,6 +160,9 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
         // set of redactions that will redact everything that's not explicitly unredacted
         // whilst allowing the unredacted views to be visible
         redacted.removeAll(unredactedViews());
+        // Remove all the children of unredacted nodes (to handle directly
+        // nested unredacted views)
+        for (View v : unredactedViews()) redacted.removeAll(TreeUtils.directChildren(v));
 
         // Remove any empty ReactViewGroup from the redacted set, they're often used for wrapping
         // or sizing other elements, and do not usually need to be redacted
