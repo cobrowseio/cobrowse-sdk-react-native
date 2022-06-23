@@ -39,4 +39,9 @@
     return [view isKindOfClass:RCTRootView.class] || [view isKindOfClass: RCTView.class];
 }
 
++(bool) hasAnyParent: (UIView*) view matches: (NSSet*) matches {
+    NSSet* parents = [NSSet setWithArray: [self allParents:view]];
+    return [parents intersectsSet: matches];
+}
+
 @end

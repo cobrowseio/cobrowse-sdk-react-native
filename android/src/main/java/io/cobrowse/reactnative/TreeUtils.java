@@ -8,6 +8,7 @@ import com.facebook.react.ReactRootView;
 import com.facebook.react.views.view.ReactViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,5 +61,9 @@ class TreeUtils {
 
     public static boolean isReactView(View view) {
       return view instanceof ReactRootView || view instanceof ReactViewGroup;
+    }
+
+    public static boolean hasAnyParent(View node, Set<View> matches) {
+      return !Collections.disjoint(TreeUtils.allParents(node), matches);
     }
 }

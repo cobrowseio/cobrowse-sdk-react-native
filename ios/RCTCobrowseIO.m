@@ -106,10 +106,12 @@ RCT_EXPORT_MODULE();
 
     // Now we can actually start working out what should be unredacted
     // First work out the set of all parents of unredact()'ed nodes
-    // that are inside a react view
+    // that are inside a react view (ignoring any nested unredaction)
     NSMutableSet* unredactedParents = [NSMutableSet set];
-    for (id view in unredacted) [unredactedParents addObjectsFromArray: [RCTCBIOTreeUtils reactParents: view]];
-
+    for (id view in unredacted) {
+        if (![RCTCBIOTreeUtils hasAnyParent:view matches:unredacted])
+            [unredactedParents addObjectsFromArray: [RCTCBIOTreeUtils reactParents: view]];
+    }
     // Then work out the set of all direct children of any unredacted parents
     // This should give us the set including unredacted nodes, their siblings,
     // and all their parents.
@@ -122,12 +124,7 @@ RCT_EXPORT_MODULE();
     // Finally we can subtract the set of unredacted views to get the minimal
     // set of redactions that will redact everything that's not explicitly unredacted
     // whilst allowing the unredacted views to be visible
-    for (UIView* v in unredacted) {
-        [redacted removeObject:v];
-        // remove all the children of unredacted nodes (to handle directly
-        // nested unredacted views)
-        for (id c in v.subviews) [redacted removeObject: c];
-    }
+    for (UIView* v in unredacted) [redacted removeObject:v];
 
     // Remove any empty RCTViews from the redacted set, they're often used for wrapping
     // or sizing other elements, and do not usually need to be redacted

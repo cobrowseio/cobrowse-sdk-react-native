@@ -126,6 +126,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
     @Override
     public List<View> redactedViews(@NonNull final Activity activity) {
         HashSet<View> redacted = new HashSet<>();
+        Set<View> unredacted = unredactedViews();
         // By default everything is redacted for Activities that contain
         // a ReactRootView.
         Set<View> rootViews = TreeUtils.findAllClosest(
@@ -140,17 +141,17 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
 
         // Now we can actually start working out what should be unredacted
         // First work out the set of all parents of unredact()'ed nodes
+        // Ignores nested unredacted nodes
         HashSet<View> unredactedParents = new HashSet<>();
-        for (View unredacted : unredactedViews()) {
-            unredactedParents.addAll(TreeUtils.reactParents(unredacted));
+        for (View v : unredacted) {
+            if (!TreeUtils.hasAnyParent(v, unredacted))
+              unredactedParents.addAll(TreeUtils.reactParents(v));
         }
 
         // Then work out the set of all direct children of any unredacted parents
         // This should give us the set including unredacted nodes, their siblings,
         // and all their parents.
-        for (View parent : unredactedParents) {
-            redacted.addAll(TreeUtils.directChildren(parent));
-        }
+        for (View parent : unredactedParents) redacted.addAll(TreeUtils.directChildren(parent));
 
         // Then we can subtract the set of unredacted parents to find just the
         // set of unredacted nodes that are leaves of the parent subtree
@@ -159,10 +160,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
         // Finally we can subtract the set of unredacted views to get the minimal
         // set of redactions that will redact everything that's not explicitly unredacted
         // whilst allowing the unredacted views to be visible
-        redacted.removeAll(unredactedViews());
-        // Remove all the children of unredacted nodes (to handle directly
-        // nested unredacted views)
-        for (View v : unredactedViews()) redacted.removeAll(TreeUtils.directChildren(v));
+        redacted.removeAll(unredacted);
 
         // Remove any empty ReactViewGroup from the redacted set, they're often used for wrapping
         // or sizing other elements, and do not usually need to be redacted

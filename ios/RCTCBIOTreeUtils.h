@@ -10,4 +10,6 @@
 
 +(bool) isReactView: (UIView*) view;
 
++(bool) hasAnyParent: (UIView*) view matches: (NSSet*) matches;
+
 @end
