@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -93,6 +95,11 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
                 .emit(SESSION_REQUESTED, Conversion.convert(session));
     }
 
+    @Override
+    public void handleRemoteControlRequest(@NonNull Activity activity, @NonNull Session session) {
+        // no-op, this will be handed on the JS side via an "updated" event handler
+        // this stub just disables the default native prompt in the SDK
+    }
     @ReactMethod
     public void setUnredactedTags(final ReadableArray reactTags, final Promise promise) {
         synchronized (unredactedTags) {
@@ -103,7 +110,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
         }
     }
 
-    private Set<View> unredactedViews() {
+    private Set<View> getUnredactedViews(@NonNull final Activity activity) {
         synchronized (unredactedTags) {
             HashSet<View> unredacted = new HashSet<>();
             for (Integer i : unredactedTags) {
@@ -117,64 +124,76 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
         }
     }
 
-    @Override
-    public void handleRemoteControlRequest(@NonNull Activity activity, @NonNull Session session) {
-      // no-op, this will be handed on the JS side via an "updated" event handler
-      // this stub just disables the default native prompt in the SDK
+    private Set<View> getRedactedViews(@NonNull final Activity activity) {
+      HashSet<View> redacted = new HashSet<>();
+      redacted.addAll(RedactedViewManager.redactedViews.keySet());
+      return redacted;
     }
 
     @Override
-    public List<View> redactedViews(@NonNull final Activity activity) {
-        HashSet<View> redacted = new HashSet<>();
-        Set<View> unredacted = unredactedViews();
-        // By default everything is redacted for Activities that contain
-        // a ReactRootView.
-        Set<View> rootViews = TreeUtils.findAllClosest(
-          activity.getWindow().getDecorView().getRootView(),
-          new Predicate<View>() {
-            @Override
-            public boolean test(View view) {
-              return TreeUtils.isReactView(view);
-            }
-          });
-        for (View root : rootViews) redacted.addAll(TreeUtils.directChildren(root));
+    public List<View> redactedViews(@NonNull final Activity activity)  {
+      final Set<View> redacted = this.getRedactedViews(activity);
+      final Set<View> unredacted = this.getUnredactedViews(activity);
 
-        // Now we can actually start working out what should be unredacted
-        // First work out the set of all parents of unredact()'ed nodes
-        // Ignores nested unredacted nodes
-        HashSet<View> unredactedParents = new HashSet<>();
-        for (View v : unredacted) {
-            if (!TreeUtils.hasAnyParent(v, unredacted))
-              unredactedParents.addAll(TreeUtils.reactParents(v));
+      // Project all unredactions to the root to get the full set of unredacted nodes
+      HashSet<View> projectedUnredacted = new HashSet<>();
+      for (View view : unredacted) {
+          projectedUnredacted.add(view);
+          projectedUnredacted.addAll(TreeUtils.allParents(view));
+      }
+
+      // Work out which nodes are explicitly redacted but need to be unredacted
+      // due to a nested unredaction tag (these redactions will be moved towards the
+      // leaves of the view hierarchy instead)
+      HashSet<View> redactedProjectedUnredactions = new HashSet<>(redacted);
+      redactedProjectedUnredactions.retainAll(projectedUnredacted);
+
+      // Start to build the set of redactions we should actually apply. We start off with
+      // the set of explicitly redacted nodes
+      HashSet<View> toRedact = new HashSet<>(redacted);
+
+      // remove any redactions that have unredacted decendants (i.e. any that appear in the
+      // projection of the unredaction). These are the redacted nodes we need to move towards
+      // the leaves of the tree
+      toRedact.removeAll(redactedProjectedUnredactions);
+
+      // Work out the set of all nodes that are siblings of any projected unredacted node
+      HashSet<View> projectedUnredactionSiblings = new HashSet<>();
+      for (View view : projectedUnredacted) {
+          ViewParent parent = view.getParent();
+          if (parent instanceof ViewGroup)
+            projectedUnredactionSiblings.addAll(TreeUtils.directChildren((ViewGroup) parent));
+      }
+
+      // Subtract the projected unredactions from the set of all siblings of projected
+      // unredactions. i.e. subtract things that should be definitely unredacted to leave
+      // a set we're not sure yet whether to redact or not
+      HashSet<View> potentiallyRedactedUnredactedSiblings = new HashSet<View>(projectedUnredactionSiblings);
+      potentiallyRedactedUnredactedSiblings.removeAll(projectedUnredacted);
+
+      // for each node we're not sure about yet, check if the closest redacted or unredacted ancestor
+      // is a redacted node, if so this descendant should also be redacted
+      for (View view : potentiallyRedactedUnredactedSiblings) {
+      View closest = TreeUtils.closest(view, new Predicate<View>() {
+          @Override
+          public boolean test(View view) {
+            return redacted.contains(view) || unredacted.contains(view);
+          }
+        });
+        if (redacted.contains(closest)) toRedact.add(view);
+      }
+
+      // Remove any empty ViewGroup from the redacted set, they're often used for wrapping
+      // or sizing other elements, and do not usually need to be redacted
+      // If it's absolutely necessary they are redacted, they can always be replaced with
+      // a <Redacted> tag instead
+      for (View v : new HashSet<>(toRedact)) {
+        if (v instanceof ViewGroup && ((ViewGroup) v).getChildCount() == 0) {
+          toRedact.remove(v);
         }
+      }
 
-        // Then work out the set of all direct children of any unredacted parents
-        // This should give us the set including unredacted nodes, their siblings,
-        // and all their parents.
-        for (View parent : unredactedParents) redacted.addAll(TreeUtils.directChildren(parent));
-
-        // Then we can subtract the set of unredacted parents to find just the
-        // set of unredacted nodes that are leaves of the parent subtree
-        redacted.removeAll(unredactedParents);
-
-        // Finally we can subtract the set of unredacted views to get the minimal
-        // set of redactions that will redact everything that's not explicitly unredacted
-        // whilst allowing the unredacted views to be visible
-        redacted.removeAll(unredacted);
-
-        // Remove any empty ReactViewGroup from the redacted set, they're often used for wrapping
-        // or sizing other elements, and do not usually need to be redacted
-        // If it's absolutely necessary they are redacted, they can always be replaced with
-        // a <Redacted> tag instead
-        for (View v : new HashSet<>(redacted))
-            if (v instanceof ReactViewGroup && ((ReactViewGroup) v).getChildCount() == 0)
-                redacted.remove(v);
-
-        // Any explicitly redacted views surrounded by <Redacted> tags take precedence, so
-        // re-add any tagged as such that the process above might have removed
-        redacted.addAll(RedactedViewManager.redactedViews.keySet());
-
-        return new ArrayList<>(redacted);
+      return new ArrayList<>(toRedact);
     }
 
     @ReactMethod
