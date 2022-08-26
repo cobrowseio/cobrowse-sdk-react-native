@@ -17,13 +17,10 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
-import com.facebook.react.views.view.ReactViewGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -37,7 +34,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
     CobrowseIO.SessionLoadDelegate, CobrowseIO.RedactionDelegate,
     CobrowseIO.RemoteControlRequestDelegate {
 
-    private static final String SESSION_LOADED = "session.loaded";
+  private static final String SESSION_LOADED = "session.loaded";
     private static final String SESSION_UPDATED = "session.updated";
     private static final String SESSION_ENDED = "session.ended";
     private static final String SESSION_REQUESTED = "session.requested";
@@ -61,6 +58,8 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
             }
         });
     }
+
+    public static io.cobrowse.reactnative.CobrowseIO.Delegate delegate;
 
     @NonNull
     public String getName() {
@@ -120,13 +119,20 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
                    Log.i("CobrowseIO", "Failed to find unredacted view for tag " + i + ", error = " + e.getMessage());
                 }
             }
+            if (delegate instanceof io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) {
+              List<View> views = ((io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) delegate).unredactedViews(activity);
+              if (views != null) unredacted.addAll(views);
+            }
             return unredacted;
         }
     }
 
     private Set<View> getRedactedViews(@NonNull final Activity activity) {
-      HashSet<View> redacted = new HashSet<>();
-      redacted.addAll(RedactedViewManager.redactedViews.keySet());
+      HashSet<View> redacted = new HashSet<>(RedactedViewManager.redactedViews.keySet());
+      if (delegate instanceof io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) {
+        List<View> views = ((io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) delegate).redactedViews(activity);
+        if (views != null) redacted.addAll(views);
+      }
       return redacted;
     }
 
@@ -369,4 +375,5 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
     public void accessibilityServiceIsRunning(final Promise promise) {
         promise.resolve(CobrowseAccessibilityService.isRunning(getReactApplicationContext()));
     }
+
 }
