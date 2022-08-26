@@ -14,6 +14,8 @@
 #define SESSION_ENDED "session.ended"
 #define SESSION_REQUESTED "session.requested"
 
+static id<RCTCobrowseIODelegate> _Nullable _delegate;
+
 @import CobrowseIO;
 
 @implementation RCTCobrowseIO {
@@ -30,6 +32,14 @@ RCT_EXPORT_MODULE();
         unredactedTags = [NSMutableSet set];
     }
     return self;
+}
+
++(id<RCTCobrowseIODelegate>)delegate {
+    return _delegate;
+}
+
++(void)setDelegate:(id<RCTCobrowseIODelegate>)delegate {
+    _delegate = delegate;
 }
 
 + (BOOL)requiresMainQueueSetup {
@@ -56,13 +66,24 @@ RCT_EXPORT_MODULE();
     if (hasListeners) [self sendEventWithName:@SESSION_LOADED body:[session toDict]];
 }
 
--(NSSet<UIView*>*) unredactedViews {
+-(NSSet<UIView*>*) redactedViews: (UIViewController*) vc {
+    NSMutableSet* views = [CBIOCobrowseRedactedManager.redactedViews mutableCopy];
+    if ([RCTCobrowseIO.delegate respondsToSelector:@selector(cobrowseRedactedViewsForViewController:)]) {
+        [views addObjectsFromArray: [RCTCobrowseIO.delegate cobrowseRedactedViewsForViewController:vc]];
+    }
+    return views;
+}
+
+-(NSSet<UIView*>*) unredactedViews: (UIViewController*) vc {
     NSMutableSet* views = [NSMutableSet set];
     @synchronized(unredactedTags) {
         for (id tag in unredactedTags) {
             UIView* v = [self.bridge.uiManager viewForReactTag: tag];
             if (v != nil) [views addObject:v];
         }
+    }
+    if ([RCTCobrowseIO.delegate respondsToSelector:@selector(cobrowseUnredactedViewsForViewController:)]) {
+        [views addObjectsFromArray: [RCTCobrowseIO.delegate cobrowseUnredactedViewsForViewController:vc]];
     }
     return views;
 }
@@ -85,8 +106,8 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
-    NSSet* redacted = CBIOCobrowseRedactedManager.redactedViews;
-    NSSet* unredacted = self.unredactedViews;
+    NSSet* redacted = [self redactedViews: vc];
+    NSSet* unredacted = [self unredactedViews: vc];
     
     // Project all unredactions to the root to get the full set of unredacted nodes
     NSMutableSet* projectedUnredacted = [NSMutableSet set];

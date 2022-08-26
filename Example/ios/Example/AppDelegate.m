@@ -42,6 +42,8 @@ static void InitializeFlipper(UIApplication *application) {
       rootView.backgroundColor = [UIColor whiteColor];
   }
 
+  RCTCobrowseIO.delegate = self;
+
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
@@ -57,6 +59,14 @@ static void InitializeFlipper(UIApplication *application) {
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+-(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
+  return @[self.window.rootViewController.view];
+}
+
+-(NSArray<UIView *> *)cobrowseUnredactedViewsForViewController:(UIViewController *)vc {
+  return @[];
 }
 
 @end
