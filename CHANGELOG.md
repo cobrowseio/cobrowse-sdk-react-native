@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.11.2-unredaction.0...v2.12.0) (2022-09-07)
+
+
+### Features
+
+* add support for redacting/unredacting views not managed by react native ([db4ed8a](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/db4ed8a57da53c2acc0310975f5eeda914db05f7))
+* add support for redacting/unredacting views not managed by react native on Android ([00e3036](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/00e3036c2247b8a20ed705543ca9df4aa54218f6))
+* support nested redaction/unredaction on Android ([f35bb82](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/f35bb821187489b03763c5f1732b9104666639bd))
+
+
+### Bug Fixes
+
+* allow nesting of redactions / unredactions (iOS only so far) ([8d598cf](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/8d598cf293def0551933588e6b11539583dffafc))
+* update native SDKs ([ea56fc1](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/ea56fc136f638afdeda9d4a5eff8f15fcf096a9a))
+
 ### [2.11.1](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.11.0...v2.11.1) (2022-03-15)
 
 
