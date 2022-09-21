@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.13.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.12.0...v2.13.0) (2022-09-21)
+
+
+### Features
+
+* Xcode 14 has dropped support for iOS versions below iOS 13, as such we have also dropped support for those versions in this release. ([152691c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/152691ce88a2b9559c6e4c14e1e8d4cfaf36dc47))
+
 ## [2.12.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.11.2-unredaction.0...v2.12.0) (2022-09-07)
 
 
