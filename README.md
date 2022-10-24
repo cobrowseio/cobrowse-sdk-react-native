@@ -1,30 +1,16 @@
 # Cobrowse.io - React Native SDK
 
-Cobrowse.io is 100% free and easy to try out in your own apps. Please see full documentation at [https://docs.cobrowse.io](https://docs.cobrowse.io).
+Cobrowse.io is 100% free and easy to try out in your own apps.
 
-Try our **online demo** at the bottom of our homepage at <https://cobrowse.io/#tryit>.
+Register an account at [https://cobrowse.io/register](https://cobrowse.io/register).
+
+Please see **full documentation** at [https://docs.cobrowse.io](https://docs.cobrowse.io).
+
+Try our **online demo** at <https://cobrowse.io/demo>.
 
 ## Installation
 
-```bash
-npm install --save cobrowse-sdk-react-native
-react-native link
-```
-**Note:** For iOS you need to be using Pods to manage dependencies for `react-native link` to work out of the box (and also remember to run `pod install` after the link step).
-
-### Add your License Key
-
-Please register an account and generate your free License Key at <https://cobrowse.io/dashboard/settings>.
-
-This will associate sessions from your mobile app with your Cobrowse account.
-
-```javascript
-import CobrowseIO from 'cobrowse-sdk-react-native';
-
-CobrowseIO.license = "put your license key here";
-CobrowseIO.start();
-
-```
+See the [installation documentation](https://docs.cobrowse.io/sdk-installation/react-native) to get started.
 
 ## Try it out
 
@@ -48,16 +34,3 @@ Once you have your app running in the iOS Simulator or on a physical device, nav
 
 ## Questions?
 Any questions at all? Please email us directly at [hello@cobrowse.io](mailto:hello@cobrowse.io).
-
-## Requirements
-
-* iOS 9.0 or later
-* Android API version 19 (4.4 KitKat) or later
-
-## Deployment
-
-This SDK is only available via NPM. To deploy a new version:
-
-```
-npm publish
-```
