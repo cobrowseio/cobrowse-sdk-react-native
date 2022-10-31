@@ -124,7 +124,7 @@ public class MainApplication extends Application implements ReactApplication, Co
 
       for(int i=0; i < globalWindowViews.size(); i++){
         ArrayList<View> configureBundlerViews = new ArrayList<>();
-        globalWindowViews.get(i).findViewsWithText(configureBundlerViews, "Configure Bundler", View.FIND_VIEWS_WITH_TEXT);
+        globalWindowViews.get(i).findViewsWithText(configureBundlerViews, "Change Bundle Location", View.FIND_VIEWS_WITH_TEXT);
         if (configureBundlerViews.size() > 0) {
           for (int j = 0; j < configureBundlerViews.size(); j++) {
             unredacted.add((View) configureBundlerViews.get(j));
