@@ -8,9 +8,9 @@ Try our **online demo** at the bottom of our homepage at <https://cobrowse.io/#t
 
 ```bash
 npm install --save cobrowse-sdk-react-native
-react-native link
+(cd ios && pod install)
 ```
-**Note:** For iOS you need to be using Pods to manage dependencies for `react-native link` to work out of the box (and also remember to run `pod install` after the link step).
+**Note:** For older versions of React Native, you may need to run `react-native link` before running `pod install`. 
 
 ### Add your License Key
 
