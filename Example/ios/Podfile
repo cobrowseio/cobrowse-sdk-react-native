@@ -43,3 +43,7 @@ target 'Example' do
     end
   end
 end
+
+target 'Full-Device-Screen-Sharing' do
+    pod 'CobrowseIO/Extension', '~>2'
+end

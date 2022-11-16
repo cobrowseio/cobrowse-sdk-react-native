@@ -3,6 +3,9 @@ PODS:
   - cobrowse-sdk-react-native (2.13.0):
     - CobrowseIO/XCFramework (= 2.22.1)
     - React
+  - CobrowseIO/Extension (2.22.1):
+    - Starscream (~> 3.1.1)
+    - SwiftCBOR (~> 0.4.3)
   - CobrowseIO/XCFramework (2.22.1):
     - Starscream (~> 3.1.1)
     - SwiftCBOR (~> 0.4.3)
@@ -279,6 +282,7 @@ PODS:
 
 DEPENDENCIES:
   - cobrowse-sdk-react-native (from `../node_modules/cobrowse-sdk-react-native`)
+  - CobrowseIO/Extension (~> 2)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -412,6 +416,6 @@ SPEC CHECKSUMS:
   SwiftCBOR: ac340b74d3b2cf1f8884bb748bd09875848e3873
   Yoga: 575c581c63e0d35c9a83f4b46d01d63abc1100ac
 
-PODFILE CHECKSUM: b487f00a31e45b097ad58f5f636daa87a8a0729b
+PODFILE CHECKSUM: 0379630f549e650ece190904280e1b6c82f1067a
 
 COCOAPODS: 1.11.3

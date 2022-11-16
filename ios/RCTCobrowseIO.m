@@ -8,6 +8,7 @@
 #import <React/RCTUIManager.h>
 #import "RCTCobrowseIO.h"
 #import "RCTCBIOTreeUtils.h"
+#import <objc/runtime.h>
 
 #define SESSION_LOADED "session.loaded"
 #define SESSION_UPDATED "session.updated"
@@ -47,7 +48,7 @@ RCT_EXPORT_MODULE();
 }
 
 -(dispatch_queue_t) methodQueue {
-  return dispatch_get_main_queue();
+    return dispatch_get_main_queue();
 }
 
 -(void)startObserving {
@@ -115,7 +116,7 @@ RCT_EXPORT_MODULE();
         [projectedUnredacted addObject:view];
         [projectedUnredacted addObjectsFromArray: [RCTCBIOTreeUtils allParents: view]];
     }
-
+    
     // Work out which nodes are explicitly redacted but need to be unredacted
     // due to a nested unredaction tag (these redactions will be moved towards the
     // leaves of the view hierarchy instead)
@@ -158,7 +159,7 @@ RCT_EXPORT_MODULE();
     // a <Redacted> tag instead
     for (UIView* v in [toRedact copy])
         if ([v isKindOfClass:RCTView.class] && v.subviews.count == 0) [toRedact removeObject: v];
-
+    
     return toRedact.allObjects;
 }
 
@@ -278,6 +279,15 @@ RCT_REMAP_METHOD(updateSession,
         if (err) return reject(@"cbio_update_session_failed", err.localizedDescription, err);
         return resolve([session toDict]);
     }];
+}
+
+void handleFullDeviceOverwrite(id self, SEL _cmd, CBIOSession* session) {
+    // no-op function which will overwrite the default full device UI when enabled so
+    // it can be handled on RN side
+}
+
+RCT_EXPORT_METHOD(overwriteFullControlUI) {
+    BOOL success = class_addMethod([self class], @selector(cobrowseHandleFullDeviceRequest:), (IMP) handleFullDeviceOverwrite, "v@:");
 }
 
 @end

@@ -3,7 +3,7 @@ import { View, ScrollView, Text, Image, FlatList, SectionList } from 'react-nati
 
 export function useUnredaction<
   T = View | ScrollView | Text | Image | FlatList | SectionList
->(shouldWarnUnhandledRefs?: boolean , componentName?: string): (elem: T) => void
+>(shouldWarnUnhandledRefs?: boolean, componentName?: string): (elem: T) => void
 
 type ForwardedRefType<T, P> = typeof React.forwardRef
 

@@ -61,6 +61,10 @@ export default class Session {
     return this._session.full_device
   }
 
+  get full_device_state () {
+    return this._session.full_device_state
+  }
+
   get remote_control () {
     return this._session.remote_control
   }

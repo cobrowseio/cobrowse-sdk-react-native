@@ -7,6 +7,8 @@ export type SessionState = 'active' | 'authorizing' | 'ended' | 'pending'
 
 export type RemoteControlState = 'on' | 'requested' | 'rejected' | 'off'
 
+export type FullDeviceState = 'on' | 'requested' | 'rejected' | 'off'
+
 export interface Agent {
   id: string
   name: string
@@ -50,7 +52,7 @@ export default class Session {
 
   isEnded (): boolean
 
-  setFullDevice (state: boolean): Promise<void>
+  setFullDevice (state: boolean | FullDeviceState): Promise<void>
 
   setRemoteControl (state: RemoteControlState): Promise<void>
 }
