@@ -1,4 +1,5 @@
-import { Alert } from 'react-native'
+import React from 'react'
+import { Alert, requireNativeComponent, View, Text, AppRegistry } from 'react-native'
 import Session from './Session'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
@@ -117,8 +118,33 @@ CobrowseIO.addListener('session.requested', (session) => {
   CobrowseIO.handleSessionRequest(session)
 })
 
+// CobrowseIO.addListener('session.updated', (session) => {
+//   if (session.isActive() && session.remote_control === 'requested') {
+//     CobrowseIO.handleRemoteControlRequest(session)
+//   }
+// })
+
 CobrowseIO.addListener('session.updated', (session) => {
-  if (session.isActive() && session.remote_control === 'requested') {
-    CobrowseIO.handleRemoteControlRequest(session)
+  if (CobrowseIO.handleFullDeviceRequest) {
+    console.log("🚀 ~ file: CobrowseIO.js ~ line 129 ~ CobrowseIO.addListener ~ CobrowseIO.handleFullDeviceRequest", CobrowseIO.handleFullDeviceRequest)
+    CobrowseIONative.overwriteFullControlUI()
+    console.log("🚀 ~ file: CobrowseIO.js ~ line 131 ~ CobrowseIO.addListener ~ CobrowseIONative.overwriteFullControlUI", CobrowseIONative.overwriteFullControlUI)
   }
+  console.log("🚀 ~ file: CobrowseIO.js ~ line 131 ~ CobrowseIO.addListener ~ session", session.full_device, JSON.stringify(session))
+  if (session.isActive() && session.remote_control === 'requested') {
+    console.info('remote control requested')
+    CobrowseIO.handleRemoteControlRequest(session)
+  } else if (session.full_device_state === 'requested' && CobrowseIO.handleFullDeviceRequest) {
+    // console.info('rendering full device')
+    // load the full device prompt
+    CobrowseIO.handleFullDeviceRequest(session)
+  }
+
+
 })
+
+// function ChildrenWrapper(props) {
+//   return <>{props.children}</>;
+// }
+
+// AppRegistry.setWrapperComponentProvider((props) => <ChildrenWrapper {...props} />);

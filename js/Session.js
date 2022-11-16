@@ -1,7 +1,16 @@
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
+console.log("🚀 ~ file: Session.js ~ line 2 ~ CobrowseIONative", CobrowseIONative)
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
+
+export const FULL_DEVICE_STATES = {
+  OFF: CobrowseIONative.kCBIOFullDeviceStateOff,
+  ON: CobrowseIONative.kCBIOFullDeviceStateOn,
+  REQUESTED: CobrowseIONative.kCBIOFullDeviceStateRequested,
+  REJECTED: CobrowseIONative.kCBIOFullDeviceStateRejected
+}
+console.log("🚀 ~ file: Session.js ~ line 13 ~ FULL_DEVICE_STATES", FULL_DEVICE_STATES)
 
 export default class Session {
   constructor (session) {
@@ -61,6 +70,10 @@ export default class Session {
     return this._session.full_device
   }
 
+  get full_device_state () {
+    return this._session.full_device_state
+  }
+
   get remote_control () {
     return this._session.remote_control
   }
@@ -95,6 +108,14 @@ export default class Session {
 
   setFullDevice (state) {
     return CobrowseIONative.updateSession({ full_device: state })
+  }
+
+  setFullDeviceState (state) {
+    console.log("🚀 ~ file: Session.js ~ line 114 ~ Session ~ setFullDeviceState ~ state", state)
+    // if (!Object.values(FULL_DEVICE_STATES).includes(state)) {
+    //   throw new Error('Invalid state passed to `setFullDeviceState`. Please use values defined under `FULL_DEVICE_STATES`')
+    // }
+    return CobrowseIONative.updateSession({ full_device: "off" })
   }
 
   setRemoteControl (state) {

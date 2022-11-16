@@ -8,6 +8,7 @@
 #import <React/RCTUIManager.h>
 #import "RCTCobrowseIO.h"
 #import "RCTCBIOTreeUtils.h"
+#import <objc/runtime.h>
 
 #define SESSION_LOADED "session.loaded"
 #define SESSION_UPDATED "session.updated"
@@ -96,8 +97,18 @@ RCT_EXPORT_MODULE();
     if (hasListeners) [self sendEventWithName:@SESSION_ENDED body:[session toDict]];
 }
 
+
+// -(void) cobrowseHandleSessionRequest: (nonnull CBIOSession*) session;
 -(void)cobrowseHandleSessionRequest:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
+}
+
+//-(void)myMethodIMP:(id)self (SEL)_cmd (CBIOSession *)session {
+//    // if (hasListeners) [self sendEventWithName:@SESSION_REQUESTED body:[session toDict]];
+//}
+
+void myMethodIMP(id self, SEL _cmd, CBIOSession* session) {
+    
 }
 
 - (void)cobrowseHandleRemoteControlRequest:(CBIOSession *)session {
@@ -279,5 +290,19 @@ RCT_REMAP_METHOD(updateSession,
         return resolve([session toDict]);
     }];
 }
+
+RCT_EXPORT_METHOD(overwriteFullControlUI) {
+    BOOL success = class_addMethod([self class], @selector(cobrowseHandleFullDeviceRequest:), (IMP) myMethodIMP, "v@:");
+    NSLog(@"Add Class result %d", success);
+}
+
+- (NSDictionary *)constantsToExport
+{
+  return @{ @"kCBIOFullDeviceStateOn" : @(kCBIOFullDeviceStateOn),
+            @"kCBIOFullDeviceStateOff" : @(kCBIOFullDeviceStateOff),
+            @"kCBIOFullDeviceStateRejected" : @(kCBIOFullDeviceStateRejected),
+            @"kCBIOFullDeviceStateRequested" : @(kCBIOFullDeviceStateRequested)
+  };
+};
 
 @end

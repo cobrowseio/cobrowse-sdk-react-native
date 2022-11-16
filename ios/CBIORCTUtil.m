@@ -12,4 +12,14 @@
     }
 }
 
++ (NSString *)fullDeviceState:(CBIOFullDeviceState)state {
+    switch(state) {
+        case kCBIOFullDeviceStateOn: return @"on";
+        case kCBIOFullDeviceStateOff: return @"off";
+        case kCBIOFullDeviceStateRejected: return @"rejected";
+        case kCBIOFullDeviceStateRequested: return @"requested";
+        default: return @"off";
+    }
+}
+
 @end
