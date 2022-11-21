@@ -360,7 +360,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule
             });
           } catch (UnexpectedNativeTypeException ref) {
             boolean fullDeviceBool = options.getBoolean("full_device");
-            ;
 
             current.setFullDevice(fullDeviceBool, new io.cobrowse.Callback<Error, Session>() {
               @Override
