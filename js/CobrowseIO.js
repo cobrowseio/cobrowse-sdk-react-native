@@ -1,5 +1,4 @@
-import { Platform } from 'react-native'
-import { Alert } from 'react-native'
+import { Platform, Alert } from 'react-native'
 import Session from './Session'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
@@ -128,10 +127,9 @@ CobrowseIO.addListener('session.updated', (session) => {
   } else if (session.isActive() && session.full_device_state === 'requested') {
     if (CobrowseIO.handleFullDeviceRequest) {
       CobrowseIO.handleFullDeviceRequest(session)
-    }
-    else if (Platform.OS === 'android') {
+    } else if (Platform.OS === 'android') {
       // accept the incoming connection by default
-      session.setFullDevice("on")
+      session.setFullDevice('on')
     }
   }
 })
