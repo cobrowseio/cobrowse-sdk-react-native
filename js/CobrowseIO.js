@@ -114,6 +114,10 @@ export default class CobrowseIO {
 // the session.requested event is considered internal, it should
 // not be used outside these bindings
 CobrowseIO.addListener('session.requested', (session) => {
+  if (CobrowseIO.handleSessionControls) {
+    CobrowseIONative.overwriteSessionIndicator()
+  }
+
   if (Platform.OS === 'ios' && CobrowseIO.handleFullDeviceRequest) {
     CobrowseIONative.overwriteFullControlUI()
   }
@@ -134,4 +138,8 @@ CobrowseIO.addListener('session.updated', (session) => {
       session.setFullDevice('on')
     }
   }
+})
+
+CobrowseIO.addListener('session.started', (session) => {
+  CobrowseIO.handleSessionControls?.(session)
 })

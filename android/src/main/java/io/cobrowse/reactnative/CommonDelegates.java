@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.util.Predicate;
 
 import com.facebook.react.bridge.Promise;
@@ -30,6 +31,7 @@ public class CommonDelegates implements CobrowseIOCommonDelegates {
   private static final String SESSION_UPDATED = "session.updated";
   private static final String SESSION_ENDED = "session.ended";
   private static final String SESSION_REQUESTED = "session.requested";
+  private static final String SESSION_STARTED = "session.started";
 
   private final HashSet<Integer> unredactedTags = new HashSet<>();
   private ReactApplicationContext reactApplicationContext;
@@ -191,5 +193,11 @@ public class CommonDelegates implements CobrowseIOCommonDelegates {
         unredactedTags.add(reactTags.getInt(i));
       promise.resolve(null);
     }
+  }
+
+  public void sessionDidStart(@Nullable final Activity activity, @NonNull final Session session) {
+    reactApplicationContext
+      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+      .emit(SESSION_STARTED, Conversion.convert(session));
   }
 }

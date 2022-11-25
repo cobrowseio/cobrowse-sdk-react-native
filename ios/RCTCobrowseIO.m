@@ -11,6 +11,7 @@
 #import <objc/runtime.h>
 
 #define SESSION_LOADED "session.loaded"
+#define SESSION_STARTED "session.started"
 #define SESSION_UPDATED "session.updated"
 #define SESSION_ENDED "session.ended"
 #define SESSION_REQUESTED "session.requested"
@@ -59,8 +60,12 @@ RCT_EXPORT_MODULE();
     hasListeners = NO;
 }
 
+-(BOOL)isObserving {
+    return hasListeners;
+}
+
 -(NSArray<NSString *> *)supportedEvents {
-    return @[@SESSION_LOADED, @SESSION_UPDATED, @SESSION_ENDED, @SESSION_REQUESTED];
+    return @[@SESSION_LOADED, @SESSION_STARTED, @SESSION_UPDATED, @SESSION_ENDED, @SESSION_REQUESTED];
 }
 
 -(void)cobrowseSessionDidLoad:(CBIOSession *)session {
@@ -281,13 +286,22 @@ RCT_REMAP_METHOD(updateSession,
     }];
 }
 
-void handleFullDeviceOverwrite(id self, SEL _cmd, CBIOSession* session) {
+void noopImplementation(id self, SEL _cmd, CBIOSession* session) {
     // no-op function which will overwrite the default full device UI when enabled so
     // it can be handled on RN side
 }
 
 RCT_EXPORT_METHOD(overwriteFullControlUI) {
-    BOOL success = class_addMethod([self class], @selector(cobrowseHandleFullDeviceRequest:), (IMP) handleFullDeviceOverwrite, "v@:");
+    class_addMethod([self class], @selector(cobrowseHandleFullDeviceRequest:), (IMP) noopImplementation, "v@:");
+}
+
+void showSessionControls(id self, SEL _cmd, CBIOSession* session) {
+    if ([self isObserving]) [self sendEventWithName:@SESSION_STARTED body:[session toDict]];
+}
+
+RCT_EXPORT_METHOD(overwriteSessionIndicator) {
+    class_addMethod([self class], @selector(cobrowseShowSessionControls:), (IMP) showSessionControls, "v@:");
+    class_addMethod([self class], @selector(cobrowseHideSessionControls:), (IMP) noopImplementation, "v@:");
 }
 
 @end

@@ -20,7 +20,12 @@ public class DynamicSessionControlInvocationHandler implements InvocationHandler
   @Override
   public Object invoke(Object proxy, Method method, Object[] args)
     throws Throwable {
-    if(method.getName() == "hideSessionControls" || method.getName() == "showSessionControls") {
+
+    if(method.getName() == "showSessionControls") {
+      return methods.get("sessionDidStart").invoke(delegates, args);
+    }
+
+    if(method.getName() == "hideSessionControls") {
       return null;
     }
 
