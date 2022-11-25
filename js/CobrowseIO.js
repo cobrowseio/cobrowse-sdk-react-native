@@ -124,7 +124,9 @@ CobrowseIO.addListener('session.requested', (session) => {
 CobrowseIO.addListener('session.updated', (session) => {
   if (session.isActive() && session.remote_control === 'requested') {
     CobrowseIO.handleRemoteControlRequest(session)
-  } else if (session.isActive() && session.full_device_state === 'requested') {
+  } 
+  
+  if (session.isActive() && session.full_device_state === 'requested') {
     if (CobrowseIO.handleFullDeviceRequest) {
       CobrowseIO.handleFullDeviceRequest(session)
     } else if (Platform.OS === 'android') {
