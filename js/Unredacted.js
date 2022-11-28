@@ -69,8 +69,8 @@ export const useUnredaction = (shouldWarnUnhandledRefs = true, componentName = '
 }
 
 // HOC for adding unredaction to a whole component class
-export function unredact(Component) {
-  return React.forwardRef(function Redacted(props, ref) {
+export function unredact (Component) {
+  return React.forwardRef(function Redacted (props, ref) {
     const localRef = useUnredaction(true, Component?.name)
     const refs = useMemo(() => mergeRefs([localRef, ref]), [localRef, ref])
     return <Component {...props} collapsable={false} ref={refs} />

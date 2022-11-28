@@ -1,4 +1,4 @@
-import { Alert } from 'react-native'
+import { Platform, Alert } from 'react-native'
 import Session from './Session'
 const CobrowseIONative = require('react-native').NativeModules.CobrowseIO
 const NativeEventEmitter = require('react-native').NativeEventEmitter
@@ -114,11 +114,24 @@ export default class CobrowseIO {
 // the session.requested event is considered internal, it should
 // not be used outside these bindings
 CobrowseIO.addListener('session.requested', (session) => {
+  if (Platform.OS === 'ios' && CobrowseIO.handleFullDeviceRequest) {
+    CobrowseIONative.overwriteFullControlUI()
+  }
+
   CobrowseIO.handleSessionRequest(session)
 })
 
 CobrowseIO.addListener('session.updated', (session) => {
   if (session.isActive() && session.remote_control === 'requested') {
     CobrowseIO.handleRemoteControlRequest(session)
+  } 
+  
+  if (session.isActive() && session.full_device_state === 'requested') {
+    if (CobrowseIO.handleFullDeviceRequest) {
+      CobrowseIO.handleFullDeviceRequest(session)
+    } else if (Platform.OS === 'android') {
+      // accept the incoming connection by default
+      session.setFullDevice('on')
+    }
   }
 })
