@@ -32,10 +32,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
     CobrowseIO.instance().setDelegate(delegates);
   }
 
-  public ReactApplicationContext getApplicationContext() {
-    return getReactApplicationContext();
-  }
-
   public static io.cobrowse.reactnative.CobrowseIO.Delegate delegate;
 
   @NonNull

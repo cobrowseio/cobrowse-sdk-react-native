@@ -19,7 +19,7 @@ import MyComponent from './MyComponent';
 import {FullDevicePrompt} from './FullDevicePrompt';
 import {SessionIndicator} from './SessionIndicator';
 
-CobrowseIO.handleSessionControls = () => {};
+CobrowseIO.showSessionControls = false;
 
 CobrowseIO.license = 'bOoR9JN8R3x1FA';
 CobrowseIO.start();

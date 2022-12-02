@@ -5,7 +5,7 @@ import com.facebook.react.bridge.ReadableArray;
 
 import io.cobrowse.CobrowseIO;
 
-public interface CobrowseIOCommonDelegates  extends io.cobrowse.CobrowseIO.Delegate, io.cobrowse.CobrowseIO.SessionRequestDelegate,
+interface CobrowseIOCommonDelegates  extends io.cobrowse.CobrowseIO.Delegate, io.cobrowse.CobrowseIO.SessionRequestDelegate,
   io.cobrowse.CobrowseIO.SessionLoadDelegate, io.cobrowse.CobrowseIO.RedactionDelegate,
   io.cobrowse.CobrowseIO.RemoteControlRequestDelegate, CobrowseIO.FullDeviceRequestDelegate {
 

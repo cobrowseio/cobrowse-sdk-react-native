@@ -5,11 +5,11 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DynamicSessionControlInvocationHandler implements InvocationHandler {
+class DynamicSessionControlInvocationHandler implements InvocationHandler {
   private CobrowseIOCommonDelegates delegates;
   private final Map<String, Method> methods = new HashMap<>();
 
-  public DynamicSessionControlInvocationHandler(CobrowseIOCommonDelegates delegates) {
+  DynamicSessionControlInvocationHandler(CobrowseIOCommonDelegates delegates) {
     this.delegates = delegates;
 
     for(Method method: delegates.getClass().getDeclaredMethods()) {
@@ -21,11 +21,7 @@ public class DynamicSessionControlInvocationHandler implements InvocationHandler
   public Object invoke(Object proxy, Method method, Object[] args)
     throws Throwable {
 
-    if(method.getName() == "showSessionControls") {
-      return methods.get("sessionDidStart").invoke(delegates, args);
-    }
-
-    if(method.getName() == "hideSessionControls") {
+    if (method.getName() == "showSessionControls" || method.getName() == "hideSessionControls") {
       return null;
     }
 
