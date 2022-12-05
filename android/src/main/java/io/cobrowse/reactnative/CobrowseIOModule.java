@@ -233,9 +233,9 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void overwriteSessionIndicator() {
-    CobrowseIODelegatesWithSessionControl delegatesWithSessionControls = (CobrowseIODelegatesWithSessionControl) Proxy.newProxyInstance(
+    CobrowseIOCommonDelegates delegatesWithSessionControls = (CobrowseIOCommonDelegates) Proxy.newProxyInstance(
       CobrowseIOCommonDelegates.class.getClassLoader(),
-      new Class[] { CobrowseIODelegatesWithSessionControl.class },
+      new Class[] { CobrowseIOCommonDelegates.class, CobrowseIO.SessionControlsDelegate.class },
       new DynamicSessionControlInvocationHandler(this.delegates));
 
     CobrowseIO.instance().setDelegate(delegatesWithSessionControls);
