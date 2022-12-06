@@ -281,13 +281,18 @@ RCT_REMAP_METHOD(updateSession,
     }];
 }
 
-void handleFullDeviceOverwrite(id self, SEL _cmd, CBIOSession* session) {
+void noopImplementation(id self, SEL _cmd, CBIOSession* session) {
     // no-op function which will overwrite the default full device UI when enabled so
     // it can be handled on RN side
 }
 
 RCT_EXPORT_METHOD(overwriteFullControlUI) {
-    BOOL success = class_addMethod([self class], @selector(cobrowseHandleFullDeviceRequest:), (IMP) handleFullDeviceOverwrite, "v@:");
+    class_addMethod([self class], @selector(cobrowseHandleFullDeviceRequest:), (IMP) noopImplementation, "v@:");
+}
+
+RCT_EXPORT_METHOD(overwriteSessionIndicator) {
+    class_addMethod([self class], @selector(cobrowseShowSessionControls:), (IMP) noopImplementation, "v@:");
+    class_addMethod([self class], @selector(cobrowseHideSessionControls:), (IMP) noopImplementation, "v@:");
 }
 
 @end
