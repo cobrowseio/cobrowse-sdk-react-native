@@ -5,7 +5,8 @@
   "main": "js/index.js",
   "types": "ts/index.d.ts",
   "scripts": {
-    "lint-fix": "ts-standard ts/*.d.ts --fix",
+    "lint": "ts-standard ts/*.d.ts",
+    "lint:fix": "ts-standard ts/*.d.ts --fix",
     "start:dev": "nodemon --exec ./scripts/copy.sh"
   },
   "author": {
