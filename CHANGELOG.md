@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.13.0...v2.14.0) (2023-03-20)
+
+
+### Features
+
+* Allow full device customization ([#19](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/19)) ([7370983](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/73709834f9035c2024f1c02f3175a4cb7c4bb2ac))
+* Allow session controls customization ([#20](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/20)) ([c441217](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/c441217f5e7dec7eda194d551017ec3523637d49))
+
 ## [2.13.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.12.0...v2.13.0) (2022-09-21)
 
 
