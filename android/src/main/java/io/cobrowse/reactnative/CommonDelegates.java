@@ -71,7 +71,7 @@ class CommonDelegates implements CobrowseIOCommonDelegates {
         List<View> views = ((io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) CobrowseIOModule.delegate).unredactedViews(activity);
         if (views != null) unredacted.addAll(views);
       }
-      
+
       return new ArrayList<>(unredacted);
     }
   }

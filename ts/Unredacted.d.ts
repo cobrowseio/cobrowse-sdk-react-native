@@ -5,6 +5,7 @@ export function useUnredaction<
   T = View | ScrollView | Text | Image | FlatList | SectionList
 > (shouldWarnUnhandledRefs?: boolean, componentName?: string): (elem: T) => void
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type ForwardedRefType<T, P> = typeof React.forwardRef
 
 // HOC for adding unredaction to a whole component class
