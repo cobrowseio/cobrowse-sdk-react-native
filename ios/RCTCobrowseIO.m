@@ -67,28 +67,6 @@ RCT_EXPORT_MODULE();
     if (hasListeners) [self sendEventWithName:@SESSION_LOADED body:[session toDict]];
 }
 
--(NSSet<UIView*>*) redactedViews: (UIViewController*) vc {
-    NSMutableSet* views = [CBIOCobrowseRedactedManager.redactedViews mutableCopy];
-    if ([RCTCobrowseIO.delegate respondsToSelector:@selector(cobrowseRedactedViewsForViewController:)]) {
-        [views addObjectsFromArray: [RCTCobrowseIO.delegate cobrowseRedactedViewsForViewController:vc]];
-    }
-    return views;
-}
-
--(NSSet<UIView*>*) unredactedViews: (UIViewController*) vc {
-    NSMutableSet* views = [NSMutableSet set];
-    @synchronized(unredactedTags) {
-        for (id tag in unredactedTags) {
-            UIView* v = [self.bridge.uiManager viewForReactTag: tag];
-            if (v != nil) [views addObject:v];
-        }
-    }
-    if ([RCTCobrowseIO.delegate respondsToSelector:@selector(cobrowseUnredactedViewsForViewController:)]) {
-        [views addObjectsFromArray: [RCTCobrowseIO.delegate cobrowseUnredactedViewsForViewController:vc]];
-    }
-    return views;
-}
-
 -(void)cobrowseSessionDidUpdate:(CBIOSession *)session {
     if (hasListeners) [self sendEventWithName:@SESSION_UPDATED body:[session toDict]];
 }
@@ -107,60 +85,27 @@ RCT_EXPORT_MODULE();
 }
 
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
-    NSSet* redacted = [self redactedViews: vc];
-    NSSet* unredacted = [self unredactedViews: vc];
-    
-    // Project all unredactions to the root to get the full set of unredacted nodes
-    NSMutableSet* projectedUnredacted = [NSMutableSet set];
-    for (id view in unredacted) {
-        [projectedUnredacted addObject:view];
-        [projectedUnredacted addObjectsFromArray: [RCTCBIOTreeUtils allParents: view]];
+    NSMutableSet* views = [CBIOCobrowseRedactedManager.redactedViews mutableCopy];
+    if ([RCTCobrowseIO.delegate respondsToSelector:@selector(cobrowseRedactedViewsForViewController:)]) {
+        [views addObjectsFromArray: [RCTCobrowseIO.delegate cobrowseRedactedViewsForViewController:vc]];
     }
     
-    // Work out which nodes are explicitly redacted but need to be unredacted
-    // due to a nested unredaction tag (these redactions will be moved towards the
-    // leaves of the view hierarchy instead)
-    NSMutableSet* redactedProjectedUnredactions = [redacted mutableCopy];
-    [redactedProjectedUnredactions intersectSet: projectedUnredacted];
-    
-    // Start to build the set of redactions we should actually apply. We start off with
-    // the set of explicitly redacted nodes
-    NSMutableSet* toRedact = [redacted mutableCopy];
-    
-    // remove any redactions that have unredacted decendants (i.e. any that appear in the
-    // projection of the unredaction). These are the redacted nodes we need to move towards
-    // the leaves of the tree
-    [toRedact minusSet: redactedProjectedUnredactions];
-    
-    // Work out the set of all nodes that are siblings of any projected unredacted node
-    NSMutableSet* projectedUnredactionSiblings = [NSMutableSet set];
-    for (UIView* view in projectedUnredacted) {
-        [projectedUnredactionSiblings addObjectsFromArray: view.superview.subviews];
+    return [views allObjects];
+}
+
+- (NSArray<UIView *> *)cobrowseUnredactedViewsForViewController:(UIViewController *)vc {
+    NSMutableSet* views = [NSMutableSet set];
+    @synchronized(unredactedTags) {
+        for (id tag in unredactedTags) {
+            UIView* v = [self.bridge.uiManager viewForReactTag: tag];
+            if (v != nil) [views addObject:v];
+        }
+    }
+    if ([RCTCobrowseIO.delegate respondsToSelector:@selector(cobrowseUnredactedViewsForViewController:)]) {
+        [views addObjectsFromArray: [RCTCobrowseIO.delegate cobrowseUnredactedViewsForViewController:vc]];
     }
     
-    // Subtract the projected unredactions from the set of all siblings of projected
-    // unredactions. i.e. subtract things that should be definitely unredacted to leave
-    // a set we're not sure yet whether to redact or not
-    NSMutableSet* potentiallyRedactedUnredactedSiblings = [projectedUnredactionSiblings mutableCopy];
-    [potentiallyRedactedUnredactedSiblings minusSet:projectedUnredacted];
-    
-    // for each node we're not sure about yet, check if the closest redacted or unredacted ancestor
-    // is a redacted node, if so this descendant should also be redacted
-    for (UIView* view in potentiallyRedactedUnredactedSiblings) {
-        UIView* closest = [RCTCBIOTreeUtils closest:^BOOL(UIView *v) {
-            return [redacted containsObject:v] || [unredacted containsObject:v];
-        } from: view];
-        if ([redacted containsObject: closest]) [toRedact addObject: view];
-    }
-    
-    // Remove any empty RCTViews from the redacted set, they're often used for wrapping
-    // or sizing other elements, and do not usually need to be redacted
-    // If it's absolutely necessary they are redacted, they can always be replaced with
-    // a <Redacted> tag instead
-    for (UIView* v in [toRedact copy])
-        if ([v isKindOfClass:RCTView.class] && v.subviews.count == 0) [toRedact removeObject: v];
-    
-    return toRedact.allObjects;
+    return [views allObjects];
 }
 
 - (bool) cobrowseShouldCaptureWindow:(UIWindow *)window {
