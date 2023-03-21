@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.util.Predicate;
 
 import com.facebook.react.bridge.Promise;
@@ -40,7 +39,25 @@ class CommonDelegates implements CobrowseIOCommonDelegates {
     this.reactApplicationContext = context;
   }
 
-  private Set<View> getUnredactedViews(@NonNull final Activity activity) {
+  @Override
+  public void handleFullDeviceRequest(@NonNull Activity activity, @NonNull Session session) {
+    // no-op, this will be handed on the JS side via an "updated" event handler
+    // this stub just disables the default native prompt in the SDK
+  }
+
+  @Override
+  public List<View> redactedViews(@NonNull Activity activity) {
+    HashSet<View> redacted = new HashSet<>(RedactedViewManager.redactedViews.keySet());
+    if (CobrowseIOModule.delegate instanceof io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) {
+      List<View> views = ((io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) CobrowseIOModule.delegate).redactedViews(activity);
+      if (views != null) redacted.addAll(views);
+    }
+
+    return new ArrayList<>(redacted);
+  }
+
+  @Override
+  public List<View> unredactedViews(@NonNull Activity activity) {
     synchronized (unredactedTags) {
       HashSet<View> unredacted = new HashSet<>();
       for (Integer i : unredactedTags) {
@@ -54,89 +71,9 @@ class CommonDelegates implements CobrowseIOCommonDelegates {
         List<View> views = ((io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) CobrowseIOModule.delegate).unredactedViews(activity);
         if (views != null) unredacted.addAll(views);
       }
-      return unredacted;
+
+      return new ArrayList<>(unredacted);
     }
-  }
-
-  private Set<View> getRedactedViews(@NonNull final Activity activity) {
-    HashSet<View> redacted = new HashSet<>(RedactedViewManager.redactedViews.keySet());
-    if (CobrowseIOModule.delegate instanceof io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) {
-      List<View> views = ((io.cobrowse.reactnative.CobrowseIO.RedactionDelegate) CobrowseIOModule.delegate).redactedViews(activity);
-      if (views != null) redacted.addAll(views);
-    }
-    return redacted;
-  }
-
-  @Override
-  public void handleFullDeviceRequest(@NonNull Activity activity, @NonNull Session session) {
-    // no-op, this will be handed on the JS side via an "updated" event handler
-    // this stub just disables the default native prompt in the SDK
-  }
-
-  @Override
-  public List<View> redactedViews(@NonNull Activity activity) {
-    final Set<View> redacted = this.getRedactedViews(activity);
-    final Set<View> unredacted = this.getUnredactedViews(activity);
-
-    // Project all unredactions to the root to get the full set of unredacted nodes
-    HashSet<View> projectedUnredacted = new HashSet<>();
-    for (View view : unredacted) {
-      projectedUnredacted.add(view);
-      projectedUnredacted.addAll(TreeUtils.allParents(view));
-    }
-
-    // Work out which nodes are explicitly redacted but need to be unredacted
-    // due to a nested unredaction tag (these redactions will be moved towards the
-    // leaves of the view hierarchy instead)
-    HashSet<View> redactedProjectedUnredactions = new HashSet<>(redacted);
-    redactedProjectedUnredactions.retainAll(projectedUnredacted);
-
-    // Start to build the set of redactions we should actually apply. We start off with
-    // the set of explicitly redacted nodes
-    HashSet<View> toRedact = new HashSet<>(redacted);
-
-    // remove any redactions that have unredacted decendants (i.e. any that appear in the
-    // projection of the unredaction). These are the redacted nodes we need to move towards
-    // the leaves of the tree
-    toRedact.removeAll(redactedProjectedUnredactions);
-
-    // Work out the set of all nodes that are siblings of any projected unredacted node
-    HashSet<View> projectedUnredactionSiblings = new HashSet<>();
-    for (View view : projectedUnredacted) {
-      ViewParent parent = view.getParent();
-      if (parent instanceof ViewGroup)
-        projectedUnredactionSiblings.addAll(TreeUtils.directChildren((ViewGroup) parent));
-    }
-
-    // Subtract the projected unredactions from the set of all siblings of projected
-    // unredactions. i.e. subtract things that should be definitely unredacted to leave
-    // a set we're not sure yet whether to redact or not
-    HashSet<View> potentiallyRedactedUnredactedSiblings = new HashSet<View>(projectedUnredactionSiblings);
-    potentiallyRedactedUnredactedSiblings.removeAll(projectedUnredacted);
-
-    // for each node we're not sure about yet, check if the closest redacted or unredacted ancestor
-    // is a redacted node, if so this descendant should also be redacted
-    for (View view : potentiallyRedactedUnredactedSiblings) {
-      View closest = TreeUtils.closest(view, new Predicate<View>() {
-        @Override
-        public boolean test(View view) {
-          return redacted.contains(view) || unredacted.contains(view);
-        }
-      });
-      if (redacted.contains(closest)) toRedact.add(view);
-    }
-
-    // Remove any empty ViewGroup from the redacted set, they're often used for wrapping
-    // or sizing other elements, and do not usually need to be redacted
-    // If it's absolutely necessary they are redacted, they can always be replaced with
-    // a <Redacted> tag instead
-    for (View v : new HashSet<>(toRedact)) {
-      if (v instanceof ViewGroup && ((ViewGroup) v).getChildCount() == 0) {
-        toRedact.remove(v);
-      }
-    }
-
-    return new ArrayList<>(toRedact);
   }
 
   @Override
