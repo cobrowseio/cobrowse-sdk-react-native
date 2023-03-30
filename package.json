@@ -5,8 +5,8 @@
   "main": "js/index.js",
   "types": "ts/index.d.ts",
   "scripts": {
-    "lint": "ts-standard ts/*.d.ts",
-    "lint:fix": "ts-standard ts/*.d.ts --fix",
+    "lint": "ts-standard",
+    "lint:fix": "npm run lint -- --fix",
     "start:dev": "nodemon --exec ./scripts/copy.sh"
   },
   "author": {
@@ -38,7 +38,13 @@
     "@types/react": "^18.0.24",
     "@types/react-native": "^0.70.6",
     "nodemon": "^2.0.20",
-    "ts-standard": "^12.0.1",
+    "ts-standard": "^12.0.2",
     "typescript": "^4.8.4"
+  },
+  "ts-standard": {
+    "project": "tsconfig.eslint.json",
+    "env": [
+      "jest"
+    ]
   }
 }
