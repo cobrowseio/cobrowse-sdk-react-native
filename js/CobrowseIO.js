@@ -72,18 +72,22 @@ export default class CobrowseIO {
     return CobrowseIONative.stop()
   }
 
+  // eslint-disable-next-line accessor-pairs
   static set api (api) {
     CobrowseIONative.api(api)
   }
 
+  // eslint-disable-next-line accessor-pairs
   static set license (license) {
     CobrowseIONative.license(license)
   }
 
+  // eslint-disable-next-line accessor-pairs
   static set customData (customData) {
     CobrowseIONative.customData(customData)
   }
 
+  // eslint-disable-next-line accessor-pairs
   static set deviceToken (token) {
     CobrowseIONative.deviceToken(token)
   }
@@ -128,8 +132,8 @@ CobrowseIO.addListener('session.requested', (session) => {
 CobrowseIO.addListener('session.updated', (session) => {
   if (session.isActive() && session.remote_control === 'requested') {
     CobrowseIO.handleRemoteControlRequest(session)
-  } 
-  
+  }
+
   if (session.isActive() && session.full_device_state === 'requested') {
     if (CobrowseIO.handleFullDeviceRequest) {
       CobrowseIO.handleFullDeviceRequest(session)

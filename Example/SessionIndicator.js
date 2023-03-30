@@ -1,15 +1,14 @@
-import React from 'react';
-import {StyleSheet, Text, Button} from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, Button, SafeAreaView } from 'react-native'
 import {
   Redacted,
   SessionControl,
   Unredacted,
-  useSession,
-} from 'cobrowse-sdk-react-native';
-import {SafeAreaView} from 'react-native';
+  useSession
+} from 'cobrowse-sdk-react-native'
 
-export function SessionIndicator() {
-  const session = useSession();
+export function SessionIndicator () {
+  const session = useSession()
 
   return (
     <SessionControl>
@@ -17,12 +16,12 @@ export function SessionIndicator() {
         <SafeAreaView style={styles.contentWrapper}>
           <Text style={styles.text}>Screen Sharing session is active</Text>
           <Redacted>
-            <Button title="Stop" onPress={() => session?.end()} />
+            <Button title='Stop' onPress={() => session?.end()} />
           </Redacted>
         </SafeAreaView>
       </Unredacted>
     </SessionControl>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -31,13 +30,13 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 16
   },
   contentWrapper: {
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
-  text: {fontSize: 16},
-});
+  text: { fontSize: 16 }
+})
