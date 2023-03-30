@@ -100,7 +100,7 @@ export default class CobrowseView extends Component {
   renderManageSession () {
     return (
       <View>
-        <Text style={[styles.text]}>You{"'"}re sharing screens from this app with a support agent.</Text>
+        <Text style={[styles.text]}>You're sharing screens from this app with a support agent.</Text>
         <TouchableOpacity onPress={() => this.endSession()}>
           <Text style={[styles.text, styles.button]}>End Session</Text>
         </TouchableOpacity>
