@@ -12,7 +12,7 @@
   "dependencies": {
     "cobrowse-sdk-react-native": "^2.14.0",
     "react": "18.2.0",
-    "react-native": "0.71.4"
+    "react-native": "0.71.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
