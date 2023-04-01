@@ -1,13 +1,9 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
+    "lib": ["ES2015"],
     "strict": true,
-    "types": [
-      "react",
-      "react-native",
-      "jest"
-    ]
+    "types": ["react-native"]
   },
-  "include": [
-    "./ts/**/*.d.ts"
-  ]
+  "include": ["./ts/**/*.d.ts"]
 }
