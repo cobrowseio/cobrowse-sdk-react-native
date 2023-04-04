@@ -1,5 +1,5 @@
-import type { Component } from 'react'
-import type { View, Text } from 'react-native'
+import type { Component, ReactElement } from 'react'
+import type { ViewProps, TextProps } from 'react-native'
 
 export default class CobrowseView extends Component {
   componentDidMount (): Promise<void>
@@ -8,13 +8,13 @@ export default class CobrowseView extends Component {
 
   endSession (): Promise<void>
 
-  renderError (): Text
+  renderError (): ReactElement<TextProps>
 
-  renderCode (): View
+  renderCode (): ReactElement<ViewProps>
 
-  renderManageSession (): View
+  renderManageSession (): ReactElement<ViewProps>
 
-  renderContent (): Text | View
+  renderContent (): ReactElement<TextProps | ViewProps>
 
-  render (): View
+  render (): ReactElement<ViewProps>
 }
