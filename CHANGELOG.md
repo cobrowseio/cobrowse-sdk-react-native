@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.15.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.14.0...v2.15.0) (2023-04-10)
+
+
+### Features
+
+* Update Redaction/Unredaction ([#25](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/25)) ([105e01e](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/105e01e17c50dc11b069ec19c781edcde1962041))
+
+
+### Bug Fixes
+
+* CobrowseView methods return elements not components ([#27](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/27)) ([4a3131c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/4a3131c41dfdac35d99bb0e56709255db0207393))
+
 ## [2.14.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.13.0...v2.14.0) (2023-03-20)
 
 
