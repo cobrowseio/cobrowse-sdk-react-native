@@ -9,7 +9,6 @@ import {
 
 export function SessionIndicator (): JSX.Element {
   const session = useSession()
-  console.log('🚀 ~ file: SessionIndicator.tsx:12 ~ SessionIndicator ~ session:', session)
 
   return (
     <SessionControl>
