@@ -2,13 +2,15 @@
   "name": "cobrowse-sdk-react-native",
   "version": "2.15.0",
   "description": "Cobrowse SDK for React Native",
-  "main": "js/index.js",
-  "types": "ts/index.d.ts",
+  "main": "lib/module/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/index.d.ts",
+  "react-native": "js/index",
   "scripts": {
     "lint": "ts-standard",
     "lint:fix": "npm run lint -- --fix",
     "start:dev": "nodemon --exec ./scripts/copy.sh",
-    "test:types": "tsc -p tsconfig.eslint.json --noEmit"
+    "prepack": "bob build"
   },
   "author": {
     "name": "Andy Pritchard"
@@ -36,9 +38,11 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.194",
     "@types/react": "^18.0.24",
     "@types/react-native": "^0.70.6",
     "nodemon": "^2.0.20",
+    "react-native-builder-bob": "^0.20.4",
     "ts-standard": "^12.0.2",
     "typescript": "^4.8.4"
   },
@@ -46,6 +50,21 @@
     "project": "tsconfig.eslint.json",
     "env": [
       "jest"
+    ],
+    "ignore": ["lib"]
+  },
+  "react-native-builder-bob": {
+    "source": "js",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
     ]
   }
 }

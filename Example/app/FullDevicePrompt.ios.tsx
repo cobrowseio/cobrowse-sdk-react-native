@@ -8,26 +8,30 @@ import {
   Button
 } from 'react-native'
 import CobrowseIO, { CBIOBroadcastPickerView } from 'cobrowse-sdk-react-native'
+import Session from 'cobrowse-sdk-react-native/lib/typescript/Session'
 
 CobrowseIO.handleFullDeviceRequest = () => {}
 
-export function FullDevicePrompt () {
-  const [session, setSession] = useState(null)
+export function FullDevicePrompt (): JSX.Element {
+  const [session, setSession] = useState<Session | null>(null)
   const isDarkMode = useColorScheme() === 'dark'
 
   useEffect(() => {
-    const storeSession = session => setSession(session)
-
-    CobrowseIO.addListener('session.updated', storeSession)
+    const storeSession = (session: Session): void => setSession(session)
+    const listener = CobrowseIO.addListener('session.updated', storeSession)
 
     return () => {
-      CobrowseIO.removeListener('session.updated', storeSession)
+      listener.remove()
     }
   }, [])
 
   const isVisible = session?.full_device_state === 'requested'
 
-  const reject = () => session?.setFullDevice('off')
+  const reject = (): void => {
+    if (session != null) {
+      void session.setFullDevice('off')
+    }
+  }
 
   return (
     <Modal animationType='slide' visible={isVisible} onRequestClose={reject}>

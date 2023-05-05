@@ -7,7 +7,7 @@ import {
   useSession
 } from 'cobrowse-sdk-react-native'
 
-export function SessionIndicator () {
+export function SessionIndicator (): JSX.Element {
   const session = useSession()
 
   return (
