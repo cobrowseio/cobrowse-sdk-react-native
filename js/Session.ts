@@ -14,12 +14,22 @@ export interface Agent {
   name: string
 }
 
+export interface SessionLike {
+  id: string
+  code: string
+  state: SessionState
+  full_device: boolean
+  remote_control: RemoteControlState
+  agent: Agent
+  full_device_state: FullDeviceState
+}
+
 export default class Session {
-  constructor (private session: Session | Record<string, never> = {}) {
+  constructor (private session: SessionLike | Record<string, never> = {}) {
     this._listen()
   }
 
-  private _update (session: Session, onMatch?: () => void): void {
+  private _update (session: SessionLike, onMatch?: () => void): void {
     if (this.session.id === undefined || (session != null && this.session.id === session.id)) {
       this.session = session
       if (typeof onMatch === 'function') onMatch()
@@ -27,8 +37,8 @@ export default class Session {
   }
 
   _listen (): void {
-    const updates = emitter.addListener('session.updated', (session: Session) => this._update(session))
-    const ended = emitter.addListener('session.ended', (session: Session) => {
+    const updates = emitter.addListener('session.updated', (session: SessionLike) => this._update(session))
+    const ended = emitter.addListener('session.ended', (session: SessionLike) => {
       this._update(session, () => {
         updates.remove()
         ended.remove()
@@ -49,7 +59,7 @@ export default class Session {
         break
     }
 
-    return emitter.addListener(mappedEventsType ?? eventType, (session: Session) => {
+    return emitter.addListener(mappedEventsType ?? eventType, (session: SessionLike) => {
       this._update(session, () => {
         listener(this)
       })

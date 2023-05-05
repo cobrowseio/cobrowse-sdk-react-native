@@ -7,7 +7,6 @@ const CBIOBroadcastPickerViewNativeView = requireNativeComponent(
 
 type CBIOBroadcastPickerViewProps = {
   buttonColor: string
-  // @todo is this actually true? what props does the view accept?
 } & ViewProps
 
 export default function CBIOBroadcastPickerView (props: CBIOBroadcastPickerViewProps): JSX.Element | null {

@@ -9,6 +9,7 @@ import {
 
 export function SessionIndicator (): JSX.Element {
   const session = useSession()
+  console.log('🚀 ~ file: SessionIndicator.tsx:12 ~ SessionIndicator ~ session:', session)
 
   return (
     <SessionControl>
@@ -16,7 +17,7 @@ export function SessionIndicator (): JSX.Element {
         <SafeAreaView style={styles.contentWrapper}>
           <Text style={styles.text}>Screen Sharing session is active</Text>
           <Redacted>
-            <Button title='Stop' onPress={() => session?.end()} />
+            <Button title='Stop' onPress={() => { void session?.end() }} />
           </Redacted>
         </SafeAreaView>
       </Unredacted>

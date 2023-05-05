@@ -1,5 +1,5 @@
 import { Platform, Alert, NativeEventEmitter, EmitterSubscription, NativeModules } from 'react-native'
-import Session, { CobrowseSessionEvents } from './Session'
+import Session, { type CobrowseSessionEvents, type SessionLike } from './Session'
 const CobrowseIONative = NativeModules.CobrowseIO
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
@@ -64,7 +64,7 @@ export default class CobrowseIO {
   }
 
   static addListener (event: CobrowseSessionEvents | 'session.requested', cb: (session: Session) => void): EmitterSubscription {
-    return emitter.addListener(event, (session: Session) => cb(new Session(session)))
+    return emitter.addListener(event, (session: SessionLike) => cb(new Session(session)))
   }
 
   static start (): void {
@@ -96,20 +96,20 @@ export default class CobrowseIO {
   }
 
   static currentSession (): Session | null {
-    return CobrowseIONative.currentSession().then((session: Session | null) => (session != null) ? new Session(session) : null)
+    return CobrowseIONative.currentSession().then((session: SessionLike | null) => (session != null) ? new Session(session) : null)
   }
 
   static createSession (): Session | null {
-    return CobrowseIONative.createSession().then((session: Session | null) => (session != null) ? new Session(session) : null)
+    return CobrowseIONative.createSession().then((session: SessionLike | null) => (session != null) ? new Session(session) : null)
   }
 
   static getSession (codeOrId: string): Session | null {
-    return CobrowseIONative.getSession(codeOrId).then((session: Session | null) => (session != null) ? new Session(session) : null)
+    return CobrowseIONative.getSession(codeOrId).then((session: SessionLike | null) => (session != null) ? new Session(session) : null)
   }
 
   /** @deprecated */
   static activateSession (): Session | null {
-    return CobrowseIONative.activateSession().then((session: Session | null) => (session != null) ? new Session(session) : null)
+    return CobrowseIONative.activateSession().then((session: SessionLike | null) => (session != null) ? new Session(session) : null)
   }
 
   /** @deprecated */
