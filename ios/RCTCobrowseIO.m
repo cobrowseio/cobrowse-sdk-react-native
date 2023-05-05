@@ -161,6 +161,10 @@ RCT_EXPORT_METHOD(customData: (NSDictionary*) customData) {
     CobrowseIO.instance.customData = customData;
 }
 
+RCT_EXPORT_METHOD(capabilities: (NSArray*) capabilities) {
+    CobrowseIO.instance.capabilities = capabilities;
+}
+
 RCT_EXPORT_METHOD(deviceToken: (NSString*) token) {
     CobrowseIO.instance.device.token = [token dataUsingEncoding:NSUTF16StringEncoding];
 }
