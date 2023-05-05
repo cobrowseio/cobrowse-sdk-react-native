@@ -80,6 +80,19 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void capabilities(ReadableArray capabilities) {
+    String[] capabilitiesArray = new String[capabilities.size()];
+    for (int i = 0; i < capabilities.size(); i++) {
+      try {
+        capabilitiesArray[i] = capabilities.getString(i);
+      } catch (UnexpectedNativeTypeException e) {
+        Log.w("CobrowseIO", "Failed to process capabilities: " + e.getMessage());
+      }
+    }
+    CobrowseIO.instance().capabilities(capabilitiesArray);
+  }
+
+  @ReactMethod
   public void deviceToken(String token) {
     if (getReactApplicationContext().getCurrentActivity() != null)
       CobrowseIO.instance().setDeviceToken(
