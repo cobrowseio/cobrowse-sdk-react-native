@@ -104,22 +104,3 @@ export function unredact<T, P extends {}> (
 
 const Unredacted = unredact(View)
 export default Unredacted
-
-// also expose a basic Component based on a View
-// const Unredacted = unredact(View)
-// const UnredactedText = unredact(Text)
-
-// const customUnredact = unredact(forwardRef<View, {}>((props, ref) => {
-//   return <View {...props} ref={ref} />
-// }))
-
-// // @ts-expect-error
-// const componentWithoutRef = unredact(function (props: any) {
-//   return <View {...props} />
-// })
-
-// function MyComponent() {
-//   const ref = useUnredaction<View>(true, 'MyComponent')
-
-//   return <View ref={ref} />
-// }

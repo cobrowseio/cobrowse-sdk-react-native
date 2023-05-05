@@ -1,5 +1,5 @@
 import { Platform, Alert, NativeEventEmitter, EmitterSubscription, NativeModules } from 'react-native'
-import Session from './Session'
+import Session, { CobrowseSessionEvents } from './Session'
 const CobrowseIONative = NativeModules.CobrowseIO
 
 const emitter = new NativeEventEmitter(CobrowseIONative)
@@ -29,14 +29,14 @@ export default class CobrowseIO {
         text: 'Reject',
         onPress: () => {
           this.sessionRequestShown = false
-          session.end()
+          void session.end()
         },
         style: 'cancel'
       }, {
         text: 'Accept',
         onPress: () => {
           this.sessionRequestShown = false
-          session.activate()
+          void session.activate()
         }
       }], { cancelable: false })
   }
@@ -63,16 +63,16 @@ export default class CobrowseIO {
       }], { cancelable: false })
   }
 
-  static addListener (event: any, cb: (session: Session) => void): EmitterSubscription {
+  static addListener (event: CobrowseSessionEvents | 'session.requested', cb: (session: Session) => void): EmitterSubscription {
     return emitter.addListener(event, (session: Session) => cb(new Session(session)))
   }
 
-  static start (): any {
-    return CobrowseIONative.start()
+  static start (): void {
+    CobrowseIONative.start()
   }
 
-  static stop (): any {
-    return CobrowseIONative.stop()
+  static stop (): void {
+    CobrowseIONative.stop()
   }
 
   // eslint-disable-next-line accessor-pairs

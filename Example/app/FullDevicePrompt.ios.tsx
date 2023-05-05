@@ -7,8 +7,7 @@ import {
   Modal,
   Button
 } from 'react-native'
-import CobrowseIO, { CBIOBroadcastPickerView } from 'cobrowse-sdk-react-native'
-import Session from 'cobrowse-sdk-react-native/lib/typescript/Session'
+import CobrowseIO, { CBIOBroadcastPickerView, type Session } from 'cobrowse-sdk-react-native'
 
 CobrowseIO.handleFullDeviceRequest = () => {}
 

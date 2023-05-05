@@ -4,6 +4,7 @@ const CobrowseIONative = NativeModules.CobrowseIO
 const emitter = new NativeEventEmitter(CobrowseIONative)
 
 export type SessionEvent = 'updated' | 'ended'
+export type CobrowseSessionEvents = `session.${SessionEvent}`
 export type SessionState = 'active' | 'authorizing' | 'ended' | 'pending'
 export type RemoteControlState = 'on' | 'requested' | 'rejected' | 'off'
 export type FullDeviceState = 'on' | 'requested' | 'rejected' | 'off'
@@ -39,7 +40,7 @@ export default class Session {
   }
 
   addListener (eventType: SessionEvent, listener: (session: Session) => void): EmitterSubscription {
-    let mappedEventsType: `session.${SessionEvent}`
+    let mappedEventsType: CobrowseSessionEvents
     // TODO: this class should extend EventEmitter and forward
     //       on the non-namespaced versions of these events
     switch (eventType) {
@@ -59,7 +60,7 @@ export default class Session {
   }
 
   get id (): string | null {
-    return this.session.id ?? null
+    return this.session.id
   }
 
   get code (): string | null {
@@ -86,11 +87,11 @@ export default class Session {
     return this.session.agent
   }
 
-  activate (): any {
+  async activate (): Promise<void> {
     return CobrowseIONative.activateSession().then(() => {})
   }
 
-  end (): any {
+  async end (): Promise<void> {
     return CobrowseIONative.endSession()
   }
 

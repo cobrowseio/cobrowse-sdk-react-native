@@ -8,8 +8,7 @@ import {
   Button,
   TouchableNativeFeedback
 } from 'react-native'
-import CobrowseIO from 'cobrowse-sdk-react-native'
-import Session from 'cobrowse-sdk-react-native/lib/typescript/Session'
+import CobrowseIO, { type Session } from 'cobrowse-sdk-react-native'
 
 // tell cobrowse SDK that the app will be handling the full device prompt
 CobrowseIO.handleFullDeviceRequest = () => {}
