@@ -15,10 +15,7 @@ export interface Agent {
 }
 
 export default class Session {
-  // private session: Session | null = null
-
   constructor (private session: Session | Record<string, never> = {}) {
-    // this.session = session || {}
     this._listen()
   }
 
