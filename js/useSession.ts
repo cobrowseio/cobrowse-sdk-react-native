@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import CobrowseIO from './CobrowseIO'
+import type Session from './Session'
 
-export function useSession () {
-  const [session, setSession] = useState(null)
+export function useSession (): Session | null {
+  const [session, setSession] = useState<Session | null>(null)
 
   // initial value
   useEffect(() => {
     let isMounted = true
-    const getSession = async () => {
+    async function getSession (): Promise<void> {
       const session = await CobrowseIO.currentSession()
 
       if (isMounted) {
@@ -15,7 +16,7 @@ export function useSession () {
       }
     }
 
-    getSession()
+    void getSession()
 
     return () => {
       isMounted = false

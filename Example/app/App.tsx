@@ -21,7 +21,7 @@ import { SessionIndicator } from './SessionIndicator'
 
 CobrowseIO.showSessionControls = false
 
-CobrowseIO.license = 'bOoR9JN8R3x1FA'
+CobrowseIO.license = 'trial'
 CobrowseIO.start()
 
 const UnredactedText = unredact(Text)
@@ -32,13 +32,18 @@ const instructions = Platform.select({
     'Double tap R on your keyboard to reload,\n' +
     'Shake or press menu button for dev menu'
 })
-export default class App extends Component {
-  constructor () {
-    super()
+
+interface AppState {
+  show: number
+}
+
+export default class App extends Component<{}, AppState> {
+  constructor (props: {}) {
+    super(props)
     this.state = { show: 1 }
   }
 
-  render () {
+  render (): JSX.Element {
     return (
       <>
         <SessionIndicator />
@@ -53,7 +58,7 @@ export default class App extends Component {
               >
                 <Text>Welcome to React Native!</Text>
               </TouchableOpacity>
-              {this.state.show % 3
+              {this.state.show % 3 > 0
                 ? (
                   <View style={styles.container}>
                     <Redacted>
@@ -62,7 +67,7 @@ export default class App extends Component {
                           To get started, edit App.js
                         </Text>
                       </View>
-                      {this.state.show % 2
+                      {this.state.show % 2 > 0
                         ? (
                           <View>
                             <Text>This is a sibling!</Text>
@@ -73,8 +78,8 @@ export default class App extends Component {
                     <Text style={styles.welcome}>
                       <Text>This is the parent text</Text>
                       <View>
-                        <Redacted style={{ fontWeight: 'bold' }}>
-                          <Text>This is the child text</Text>
+                        <Redacted>
+                          <Text style={{ fontWeight: 'bold' }}>This is the child text</Text>
                         </Redacted>
                       </View>
                     </Text>

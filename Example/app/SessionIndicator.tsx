@@ -7,7 +7,7 @@ import {
   useSession
 } from 'cobrowse-sdk-react-native'
 
-export function SessionIndicator () {
+export function SessionIndicator (): JSX.Element {
   const session = useSession()
 
   return (
@@ -16,7 +16,7 @@ export function SessionIndicator () {
         <SafeAreaView style={styles.contentWrapper}>
           <Text style={styles.text}>Screen Sharing session is active</Text>
           <Redacted>
-            <Button title='Stop' onPress={() => session?.end()} />
+            <Button title='Stop' onPress={() => { void session?.end() }} />
           </Redacted>
         </SafeAreaView>
       </Unredacted>

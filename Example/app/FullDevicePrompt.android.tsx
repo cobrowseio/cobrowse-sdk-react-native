@@ -8,29 +8,37 @@ import {
   Button,
   TouchableNativeFeedback
 } from 'react-native'
-import CobrowseIO from 'cobrowse-sdk-react-native'
+import CobrowseIO, { type Session } from 'cobrowse-sdk-react-native'
 
 // tell cobrowse SDK that the app will be handling the full device prompt
 CobrowseIO.handleFullDeviceRequest = () => {}
 
-export function FullDevicePrompt () {
-  const [session, setSession] = useState(null)
+export function FullDevicePrompt (): JSX.Element {
+  const [session, setSession] = useState<Session | null>(null)
   const isDarkMode = useColorScheme() === 'dark'
 
   useEffect(() => {
-    const storeSession = session => setSession(session)
+    const storeSession = (session: Session): void => setSession(session)
 
-    CobrowseIO.addListener('session.updated', storeSession)
+    const listener = CobrowseIO.addListener('session.updated', storeSession)
 
     return () => {
-      CobrowseIO.removeListener('session.updated', storeSession)
+      listener.remove()
     }
   }, [])
 
   const isVisible = session?.full_device_state === 'requested'
 
-  const reject = () => session?.setFullDevice('off')
-  const displaySystemPrompt = () => session?.setFullDevice('on')
+  const reject = (): void => {
+    if (session != null) {
+      void session.setFullDevice('off')
+    }
+  }
+  const displaySystemPrompt = (): void => {
+    if (session != null) {
+      void session.setFullDevice('on')
+    }
+  }
 
   return (
     <Modal animationType='slide' visible={isVisible} onRequestClose={reject}>

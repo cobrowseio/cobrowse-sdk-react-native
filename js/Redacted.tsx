@@ -1,7 +1,8 @@
 import React from 'react'
-import { requireNativeComponent } from 'react-native'
+import { requireNativeComponent, type ViewProps } from 'react-native'
+
 const CBIOCobrowseRedacted = requireNativeComponent('CBIOCobrowseRedacted')
 
-module.exports = function (props) {
+export default function Redacted (props: ViewProps): JSX.Element {
   return <CBIOCobrowseRedacted {...props}>{props.children}</CBIOCobrowseRedacted>
 }

@@ -40,3 +40,6 @@ Example/ios/Carthage
 *.tgz
 *.log
 *.tmp
+
+# build
+lib/
