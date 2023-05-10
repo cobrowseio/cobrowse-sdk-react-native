@@ -91,6 +91,11 @@ export default class CobrowseIO {
   }
 
   // eslint-disable-next-line accessor-pairs
+  static set capabilities (capabilities: Array<'drawing' | 'full_device' | 'keypress' | 'laser' | 'pointer'>) {
+    CobrowseIONative.capabilities(capabilities)
+  }
+
+  // eslint-disable-next-line accessor-pairs
   static set deviceToken (token: string) {
     CobrowseIONative.deviceToken(token)
   }

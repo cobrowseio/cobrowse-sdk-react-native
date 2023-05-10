@@ -22,6 +22,7 @@ import { SessionIndicator } from './SessionIndicator'
 CobrowseIO.showSessionControls = false
 
 CobrowseIO.license = 'trial'
+CobrowseIO.capabilities = ['drawing', 'full_device', 'keypress', 'laser', 'pointer']
 CobrowseIO.start()
 
 const UnredactedText = unredact(Text)
