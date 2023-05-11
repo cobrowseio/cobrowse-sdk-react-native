@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.16.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.15.0...v2.16.0) (2023-05-11)
+
+
+### Features
+
+* Add support for specifying the device capabilities ([#30](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/30)) ([5f409fa](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/5f409fab2a9d9c5e6902ce36887f3d4021493b36))
+
 ## [2.15.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.14.0...v2.15.0) (2023-04-10)
 
 

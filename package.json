@@ -1,6 +1,6 @@
 {
   "name": "cobrowse-sdk-react-native",
-  "version": "2.15.0",
+  "version": "2.16.0",
   "description": "Cobrowse SDK for React Native",
   "main": "lib/module/index",
   "module": "lib/module/index",
@@ -51,7 +51,9 @@
     "env": [
       "jest"
     ],
-    "ignore": ["lib"]
+    "ignore": [
+      "lib"
+    ]
   },
   "react-native-builder-bob": {
     "source": "js",
