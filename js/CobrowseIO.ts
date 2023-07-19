@@ -96,6 +96,11 @@ export default class CobrowseIO {
   }
 
   // eslint-disable-next-line accessor-pairs
+  static set webviewRedactedViews (redactionSelectors: string[]) {
+    CobrowseIONative.webviewRedactedViews(redactionSelectors)
+  }
+
+  // eslint-disable-next-line accessor-pairs
   static set deviceToken (token: string) {
     CobrowseIONative.deviceToken(token)
   }

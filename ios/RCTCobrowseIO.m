@@ -165,6 +165,10 @@ RCT_EXPORT_METHOD(capabilities: (NSArray*) capabilities) {
     CobrowseIO.instance.capabilities = capabilities;
 }
 
+RCT_EXPORT_METHOD(webviewRedactedViews: (NSArray*) redactionSelectors) {
+    CobrowseIO.instance.webviewRedactedViews = redactionSelectors;
+}
+
 RCT_EXPORT_METHOD(deviceToken: (NSString*) token) {
     CobrowseIO.instance.device.token = [token dataUsingEncoding:NSUTF16StringEncoding];
 }
