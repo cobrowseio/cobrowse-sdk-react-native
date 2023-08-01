@@ -93,6 +93,19 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void webviewRedactedViews(ReadableArray redactionSelectors) {
+    String[] redactionSelectorsArray = new String[redactionSelectors.size()];
+    for (int i = 0; i < redactionSelectors.size(); i++) {
+      try {
+        redactionSelectorsArray[i] = redactionSelectors.getString(i);
+      } catch (UnexpectedNativeTypeException e) {
+        Log.w("CobrowseIO", "Failed to process webviewRedactedViews: " + e.getMessage());
+      }
+    }
+    CobrowseIO.instance().webviewRedactedViews(redactionSelectorsArray);
+  }
+
+  @ReactMethod
   public void deviceToken(String token) {
     if (getReactApplicationContext().getCurrentActivity() != null)
       CobrowseIO.instance().setDeviceToken(

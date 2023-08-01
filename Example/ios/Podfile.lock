@@ -1,10 +1,10 @@
 PODS:
   - boost (1.76.0)
-  - cobrowse-sdk-react-native (2.15.0):
-    - CobrowseIO/XCFramework (= 2.25.0)
+  - cobrowse-sdk-react-native (2.16.0):
+    - CobrowseIO/XCFramework (= 2.28.1)
     - React
-  - CobrowseIO/Extension (2.25.0)
-  - CobrowseIO/XCFramework (2.25.0)
+  - CobrowseIO/Extension (2.28.1)
+  - CobrowseIO/XCFramework (2.28.1)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.71.6)
@@ -78,9 +78,9 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - hermes-engine (0.71.4):
-    - hermes-engine/Pre-built (= 0.71.4)
-  - hermes-engine/Pre-built (0.71.4)
+  - hermes-engine (0.71.6):
+    - hermes-engine/Pre-built (= 0.71.6)
+  - hermes-engine/Pre-built (0.71.6)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.07.22.00):
@@ -334,6 +334,8 @@ PODS:
   - React-jsinspector (0.71.6)
   - React-logger (0.71.6):
     - glog
+  - react-native-webview (13.2.3):
+    - React-Core
   - React-perflogger (0.71.6)
   - React-RCTActionSheet (0.71.6):
     - React-Core/RCTActionSheetHeaders (= 0.71.6)
@@ -418,7 +420,7 @@ PODS:
     - React-jsi (= 0.71.6)
     - React-logger (= 0.71.6)
     - React-perflogger (= 0.71.6)
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -471,6 +473,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -548,6 +551,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -579,10 +584,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  cobrowse-sdk-react-native: cf5529dae002ee30d4a5581db10b248bbb850edf
-  CobrowseIO: bb47a12f2c751273aeef6ad4d1b59520499c9811
+  cobrowse-sdk-react-native: 8e95f07d67398146a585d0dbc08fa6ac8fb83cf9
+  CobrowseIO: 79b761784c89062303b3f2a3867faa5c76ee242c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
+  DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: a83ceaa8a8581003a623facdb3c44f6d4f342ac5
   FBReactNativeSpec: 85eee79837cb797ab6176f0243a2b40511c09158
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -595,8 +600,8 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
-  hermes-engine: a1f157c49ea579c28b0296bda8530e980c45bdb3
+  glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  hermes-engine: b434cea529ad0152c56c7cb6486b0c4c0b23b5de
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
@@ -613,6 +618,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 7894956638ff3e00819dd3f9f6f4a84da38f2409
   React-jsinspector: d5ce2ef3eb8fd30c28389d0bc577918c70821bd6
   React-logger: 9332c3e7b4ef007a0211c0a9868253aac3e1da82
+  react-native-webview: b85dfe0bf95bef83e82fc354d6987c80fed5e7ad
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
   React-RCTActionSheet: c7b67c125bebeda9fb19fc7b200d85cb9d6899c4
   React-RCTAnimation: c2de79906f607986633a7114bee44854e4c7e2f5
@@ -626,10 +632,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: 73d201599a64ea14b4e0b8f91b64970979fd92e6
   React-runtimeexecutor: 8692ac548bec648fa121980ccb4304afd136d584
   ReactCommon: 0c43eaeaaee231d7d8dc24fc5a6e4cf2b75bf196
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 624171ec38050eee82eb0e001779a586060b0c52
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1

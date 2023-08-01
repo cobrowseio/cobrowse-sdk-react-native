@@ -16,6 +16,7 @@ import CobrowseIO, {
   unredact
 } from 'cobrowse-sdk-react-native'
 import MyComponent from './MyComponent'
+import MyWebView from './MyWebView'
 import { FullDevicePrompt } from './FullDevicePrompt'
 import { SessionIndicator } from './SessionIndicator'
 
@@ -23,6 +24,7 @@ CobrowseIO.showSessionControls = false
 
 CobrowseIO.license = 'trial'
 CobrowseIO.capabilities = ['drawing', 'full_device', 'keypress', 'laser', 'pointer']
+CobrowseIO.webviewRedactedViews = ['.redact-me', 'input[type=text]']
 CobrowseIO.start()
 
 const UnredactedText = unredact(Text)
@@ -90,6 +92,7 @@ export default class App extends Component<{}, AppState> {
                       </Redacted>
                       <Text>Some children</Text>
                     </MyComponent>
+                    <MyWebView />
                     <Redacted
                       style={{
                         position: 'absolute',
