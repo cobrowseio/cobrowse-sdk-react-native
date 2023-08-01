@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.17.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.16.0...v2.17.0) (2023-08-01)
+
+
+### Features
+
+* add support for webview redaction ([#36](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/36)) ([92c1f2c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/92c1f2c71274f57797cd1c3ce543b09fd0b2424f))
+
 ## [2.16.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.15.0...v2.16.0) (2023-05-11)
 
 
