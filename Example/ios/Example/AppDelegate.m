@@ -82,21 +82,11 @@ static void InitializeFlipper(UIApplication *application) {
 }
 
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
-  UIView *devMenu = [self findViewByAccessibilityLabel:self.window:@"React Native Debug Menu"];
-  
-  if (devMenu) {
-    return @[self.window.rootViewController.view, devMenu];
-  }
-
   return @[self.window.rootViewController.view];
 }
 
 -(NSArray<UIView *> *)cobrowseUnredactedViewsForViewController:(UIViewController *)vc {
-  UIView *bundlerConfig = [self findViewByAccessibilityLabel:self.window:@"Configure Bundler"];
-  
-  if (bundlerConfig) {
-    return @[bundlerConfig];
-  }
+  // return a list of views to be unredacted
   return @[];
 }
 
