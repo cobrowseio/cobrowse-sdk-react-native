@@ -61,42 +61,12 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 }
 
--(UIView *)findViewByAccessibilityLabel:(UIView *)parent :(NSString *)accessibilityLabel {
-  if (parent.subviews.count > 0) {
-    for (UIView *subView in parent.subviews) {
-      NSLog(@"View:::: Class:%@, Tag: %ld, Description:%@, Hash:%lu", [subView class], [subView tag], [subView accessibilityLabel], [subView hash]);
-
-      if ([subView.accessibilityLabel isEqualToString:accessibilityLabel] == YES) {
-        NSLog(@"Found UIAlertController! with Class:%@, Tag: %ld, Description:%@, Hash:%lu", [subView class], [subView tag], [subView description], [subView hash]);
-        return subView;
-      }
-      
-      UIView *result = [self findViewByAccessibilityLabel:subView:accessibilityLabel];
-      if (result) {
-        return result;
-      }
-    }
-  }
-  
-  return nil;
-}
-
 -(NSArray<UIView *> *)cobrowseRedactedViewsForViewController:(UIViewController *)vc {
-  UIView *devMenu = [self findViewByAccessibilityLabel:self.window:@"React Native Debug Menu"];
-  
-  if (devMenu) {
-    return @[self.window.rootViewController.view, devMenu];
-  }
-
   return @[self.window.rootViewController.view];
 }
 
 -(NSArray<UIView *> *)cobrowseUnredactedViewsForViewController:(UIViewController *)vc {
-  UIView *bundlerConfig = [self findViewByAccessibilityLabel:self.window:@"Configure Bundler"];
-  
-  if (bundlerConfig) {
-    return @[bundlerConfig];
-  }
+  // return a list of views to be unredacted
   return @[];
 }
 
