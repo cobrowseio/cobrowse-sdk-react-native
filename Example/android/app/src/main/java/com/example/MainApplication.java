@@ -2,9 +2,7 @@ package com.example;
 
 import android.app.Activity;
 import android.app.Application;
-import android.os.Build;
 import android.view.View;
-import android.view.inspector.WindowInspector;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,43 +80,12 @@ public class MainApplication extends Application implements ReactApplication, Co
       add(activity.getWindow().getDecorView());
     }};
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      List<View> globalWindowViews = WindowInspector.getGlobalWindowViews();
-
-      for(int i=0; i < globalWindowViews.size(); i++){
-        ArrayList<View> changeLocationViews = new ArrayList<>();
-        globalWindowViews.get(i).findViewsWithText(changeLocationViews, "Change Bundle Location", View.FIND_VIEWS_WITH_TEXT);
-        if (changeLocationViews.size() > 0) {
-          for (int j = 0; j < changeLocationViews.size(); j++) {
-            redacted.add((View) changeLocationViews.get(j).getParent());
-          }
-        }
-      }
-    }
-
     return redacted;
   }
 
   @Nullable
   @Override
   public List<View> unredactedViews(@NonNull Activity activity) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      List<View> globalWindowViews = WindowInspector.getGlobalWindowViews();
-      ArrayList<View> unredacted = new ArrayList<>();
-
-      for(int i=0; i < globalWindowViews.size(); i++){
-        ArrayList<View> configureBundlerViews = new ArrayList<>();
-        globalWindowViews.get(i).findViewsWithText(configureBundlerViews, "Change Bundle Location", View.FIND_VIEWS_WITH_TEXT);
-        if (configureBundlerViews.size() > 0) {
-          for (int j = 0; j < configureBundlerViews.size(); j++) {
-            unredacted.add((View) configureBundlerViews.get(j));
-          }
-        }
-      }
-
-      return unredacted;
-    }
-
     return null;
   }
 }
