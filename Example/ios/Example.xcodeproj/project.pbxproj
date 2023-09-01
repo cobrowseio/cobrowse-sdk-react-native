@@ -247,6 +247,7 @@
 				41FF0F6765E274145F5A6D45 /* [CP] Embed Pods Frameworks */,
 				EFF8D637291461D200457B13 /* Embed Foundation Extensions */,
 				1BC7F206A992D5F2513810E8 /* [CP] Copy Pods Resources */,
+				EF77A7A92AA10E7E0035FCA6 /* Copy Cobrowse.io broadcast extension framework */,
 			);
 			buildRules = (
 			);
@@ -492,6 +493,26 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EF77A7A92AA10E7E0035FCA6 /* Copy Cobrowse.io broadcast extension framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Cobrowse.io broadcast extension framework";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "# Ensure the CobrowseIOExtension.framework extension dependency is \n# copied into the resulting IPA builds to make full device work\n\nrequire 'fileutils'\n\ncbioExt = \"CobrowseIOAppExtension.framework\"\ncbioExtFrameworkSource = \"#{ENV['TARGET_BUILD_DIR']}/#{cbioExt}\"\ncbioExtFramework = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['FRAMEWORKS_FOLDER_PATH']}/#{cbioExt}\"\n\nif (!Dir.exist?(cbioExtFramework))\n    FileUtils.copy_entry cbioExtFrameworkSource, cbioExtFramework\n    FileUtils.rm_rf \"#{cbioExtFramework}/Headers\"\n    FileUtils.rm_rf \"#{cbioExtFramework}/Modules\"\nend\n\nif (ENV['PLATFORM_NAME'] == 'iphoneos')\n    codeSignIdentityForItems = ENV['EXPANDED_CODE_SIGN_IDENTITY_NAME']\n    if (!codeSignIdentityForItems || codeSignIdentityForItems.length == 0)\n        codeSignIdentityForItems = ENV['CODE_SIGN_IDENTITY']\n    end\n\n    `codesign --force --verbose --sign \"#{codeSignIdentityForItems}\" \"#{cbioExtFramework}\"`\nend\n";
+			showEnvVarsInLog = 0;
+		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -725,6 +746,8 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -783,6 +806,8 @@
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
