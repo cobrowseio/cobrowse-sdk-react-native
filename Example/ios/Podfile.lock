@@ -1,10 +1,10 @@
 PODS:
   - boost (1.76.0)
   - cobrowse-sdk-react-native (2.17.1):
-    - CobrowseIO/XCFramework (= 2.28.4)
+    - CobrowseIO/XCFramework (= 2.28.6)
     - React
-  - CobrowseIO/Extension (2.28.4)
-  - CobrowseIO/XCFramework (2.28.4)
+  - CobrowseIO/Extension (2.28.6)
+  - CobrowseIO/XCFramework (2.28.6)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.72.4)
@@ -670,8 +670,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
-  cobrowse-sdk-react-native: e377894c73033ace2a5247f7e754ea740ceebf93
-  CobrowseIO: 05af4003d737c3c2dd02b5f652fff3780e381080
+  cobrowse-sdk-react-native: 00083dacf7e28b4ae7a7dd6d8cf43ebe7058c8c5
+  CobrowseIO: 9736851d97ad91712711de40a8efd695b39725e3
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 5d4a3b7f411219a45a6d952f77d2c0a6c9989da5
@@ -726,6 +726,6 @@ SPEC CHECKSUMS:
   Yoga: 3efc43e0d48686ce2e8c60f99d4e6bd349aff981
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 624171ec38050eee82eb0e001779a586060b0c52
+PODFILE CHECKSUM: 1b88f50bbb768d49e4e09a31ffaa79a49dbfbc3f
 
 COCOAPODS: 1.12.0
