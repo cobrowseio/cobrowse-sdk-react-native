@@ -2,8 +2,7 @@
 #import <React/RCTEventEmitter.h>
 #import <React/RCTUtils.h>
 
-@import CobrowseIO;
-
+#import "CobrowseIO/CobrowseIODelegate.h"
 
 @protocol RCTCobrowseIODelegate <NSObject>
 

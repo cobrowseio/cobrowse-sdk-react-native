@@ -1,11 +1,10 @@
 #import "CBIOCobrowseRedacted.h"
-@import React;
+#import "React/RCTView.h"
 
 @interface CBIORedactedView : RCTView
 @end
 @implementation CBIORedactedView
 @end
-
 
 @implementation CBIOCobrowseRedactedManager
 

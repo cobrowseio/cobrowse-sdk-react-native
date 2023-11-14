@@ -1,6 +1,5 @@
-@import CobrowseIO;
 #import "CBIORCTUtil.h"
-
+#import "CobrowseIO/CBIOAgent.h"
 
 @implementation CBIOSession (Bridging)
 

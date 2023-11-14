@@ -1,4 +1,4 @@
-@import CobrowseIO;
+#import "CobrowseIO/CBIOSession.h"
 
 @interface CBIOSession (Bridging)
 
