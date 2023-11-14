@@ -10,14 +10,14 @@
 #import "RCTCBIOTreeUtils.h"
 #import <objc/runtime.h>
 
+#import "CobrowseIO/CobrowseIO.h"
+
 #define SESSION_LOADED "session.loaded"
 #define SESSION_UPDATED "session.updated"
 #define SESSION_ENDED "session.ended"
 #define SESSION_REQUESTED "session.requested"
 
 static id<RCTCobrowseIODelegate> _Nullable _delegate;
-
-@import CobrowseIO;
 
 @implementation RCTCobrowseIO {
     bool hasListeners;

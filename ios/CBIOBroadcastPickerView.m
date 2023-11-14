@@ -1,8 +1,6 @@
 #import <ReplayKit/ReplayKit.h>
 #import "CBIOBroadcastPickerView.h"
 
-@import CobrowseIO;
-
 @implementation CBIOBroadcastPickerView
 
 RCT_EXPORT_MODULE(CBIOBroadcastPickerView)
