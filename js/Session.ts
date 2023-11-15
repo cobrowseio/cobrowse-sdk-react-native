@@ -125,4 +125,8 @@ export default class Session {
   async setRemoteControl (state: RemoteControlState): Promise<void> {
     return CobrowseIONative.updateSession({ remote_control: state })
   }
+
+  async setCapabilities (capabilities: Array<'drawing' | 'full_device' | 'keypress' | 'laser' | 'pointer'>): Promise<void> {
+    return CobrowseIONative.updateSession({ capabilities: capabilities })
+  }
 }
