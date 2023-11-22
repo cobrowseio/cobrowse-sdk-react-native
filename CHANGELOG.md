@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.18.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.17.3...v2.18.0) (2023-11-22)
+
+
+### Features
+
+* reflect the new session capabilities API ([#45](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/45)) ([6d5ff4c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/6d5ff4cdf8f33d2912cefce2a9790debde7318b7))
+
 ### [2.17.3](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.17.2...v2.17.3) (2023-11-14)
 
 
