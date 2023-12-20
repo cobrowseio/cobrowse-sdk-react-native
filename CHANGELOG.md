@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.18.2](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.18.1...v2.18.2) (2023-12-20)
+
 ### [2.18.1](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.18.0...v2.18.1) (2023-11-25)
 
 ## [2.18.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.17.3...v2.18.0) (2023-11-22)
