@@ -1,6 +1,6 @@
 {
   "name": "cobrowse-sdk-react-native",
-  "version": "2.18.2",
+  "version": "2.18.3",
   "description": "Cobrowse SDK for React Native",
   "main": "lib/module/index",
   "module": "lib/module/index",
