@@ -37,7 +37,7 @@ jobs:
           echo "COBROWSE_VERSION=${COBROWSE_VERSION}" >> $GITHUB_ENV
 
       - name: Update build.gradle file
-        run: sed -i "s/\(io\.cobrowse\:cobrowse-sdk-android\:\).*/\\1${COBROWSE_VERSION}'/" sample/build.gradle
+        run: sed -i "s/\(io\.cobrowse\:cobrowse-sdk-android\:\).*/\\1${COBROWSE_VERSION}'/" android/build.gradle
 
       # If the SDK was updated, commit the changes and open a new pull request
       - name: Create a new pull request
@@ -74,9 +74,6 @@ jobs:
         run: |
           COBROWSE_VERSION=$(wget -O - -o /dev/null https://raw.githubusercontent.com/cobrowseio/cobrowse-sdk-ios-binary/master/CobrowseIO.podspec | grep -Eo "s\.version\ +=\ +'[0-9]+\.[0-9]+\.[0-9]+'" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
           echo "COBROWSE_VERSION=${COBROWSE_VERSION}" >> $GITHUB_ENV
-
-      - name: Update build.gradle file
-        run: sed -i "s/\(io\.cobrowse\:cobrowse-sdk-android\:\).*/\\1${COBROWSE_VERSION}'/" sample/build.gradle
 
       - name: Update Podspec file
         run: sed -i '.bak' "s/\(s\.dependency\ *'CobrowseIO\/XCFramework'\,\ *'\).*/\\1${COBROWSE_VERSION}'/" cobrowse-sdk-react-native.podspec
