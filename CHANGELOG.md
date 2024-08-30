@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.20.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.19.0...v2.20.0) (2024-08-30)
+
+
+### Features
+
+* update Cobrowse.io SDK ([#61](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/61)) ([f958d88](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/f958d883a2731da8a754a789b72b3b119cbd3f59))
+* update Cobrowse.io SDK ([#62](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/62)) ([8233968](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/8233968869042d3101bff1f65acc0c4c2d60791e))
+
 ## [2.19.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.18.3...v2.19.0) (2024-08-14)
 
 
