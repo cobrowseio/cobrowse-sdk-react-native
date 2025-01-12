@@ -3,24 +3,19 @@ package io.cobrowse.reactnative;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Predicate;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.uimanager.NativeViewHierarchyManager;
-import com.facebook.react.uimanager.UIBlock;
-import com.facebook.react.uimanager.UIManagerModule;
+import com.facebook.react.uimanager.UIManagerHelper;
+import com.facebook.react.bridge.UIManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import io.cobrowse.Session;
 
@@ -33,7 +28,6 @@ class CommonDelegates implements CobrowseIOCommonDelegates {
 
   private final HashSet<Integer> unredactedTags = new HashSet<>();
   private ReactApplicationContext reactApplicationContext;
-  private NativeViewHierarchyManager nodeManager;
 
   CommonDelegates(ReactApplicationContext context) {
     this.reactApplicationContext = context;
@@ -62,7 +56,8 @@ class CommonDelegates implements CobrowseIOCommonDelegates {
       HashSet<View> unredacted = new HashSet<>();
       for (Integer i : unredactedTags) {
         try {
-          unredacted.add(nodeManager.resolveView(i));
+          UIManager uiManager = UIManagerHelper.getUIManagerForReactTag(reactApplicationContext, i);
+          if (uiManager != null) unredacted.add(uiManager.resolveView(i));
         } catch (Exception e) {
           Log.i("CobrowseIO", "Failed to find unredacted view for tag " + i + ", error = " + e.getMessage());
         }
@@ -108,18 +103,6 @@ class CommonDelegates implements CobrowseIOCommonDelegates {
     reactApplicationContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(SESSION_ENDED, Conversion.convert(session));
-  }
-
-  public void findNodeManager() {
-    if (nodeManager != null) return;
-    final UIManagerModule uiManager = reactApplicationContext.getNativeModule(UIManagerModule.class);
-    assert uiManager != null;
-    uiManager.prependUIBlock(new UIBlock() {
-      @Override
-      public void execute(NativeViewHierarchyManager nativeViewHierarchyManager) {
-        nodeManager = nativeViewHierarchyManager;
-      }
-    });
   }
 
   public void setUnredactedTags(final ReadableArray reactTags, final Promise promise) {

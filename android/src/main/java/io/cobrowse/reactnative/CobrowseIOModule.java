@@ -46,7 +46,6 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void start() {
-    delegates.findNodeManager();
     final Activity activity = getReactApplicationContext().getCurrentActivity();
     if (activity != null)
       activity.runOnUiThread(new Runnable() {
