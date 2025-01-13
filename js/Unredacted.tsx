@@ -87,6 +87,10 @@ export function useUnredaction<C extends ComponentClass | ReactComponentType = V
   return setRef
 }
 
+function isViewComponent (Component: any): Component is typeof View {
+  return Component === View
+}
+
 export function unredact<T, P extends {}> (
   Component: RefHandlingComponent<T, P>
 ): ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> {
@@ -94,9 +98,10 @@ export function unredact<T, P extends {}> (
     function ComponentFromHOC (props, ref) {
       const localRef = useUnredaction(true, Component?.displayName) as ForwardedRef<T>
       const refs = useMemo(() => mergeRefs([localRef, ref]), [localRef, ref])
+      const componentProps = isViewComponent(Component) ? { ...props, collapsable: false } : props
 
       return (
-        <Component {...(props)} ref={refs} />
+        <Component {...(componentProps)} ref={refs} />
       )
     }
   )

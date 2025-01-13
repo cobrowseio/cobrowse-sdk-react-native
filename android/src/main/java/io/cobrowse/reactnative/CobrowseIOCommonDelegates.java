@@ -9,6 +9,5 @@ interface CobrowseIOCommonDelegates  extends CobrowseIO.Delegate, CobrowseIO.Ses
   CobrowseIO.SessionLoadDelegate, CobrowseIO.RedactionDelegate, CobrowseIO.UnredactionDelegate,
   CobrowseIO.RemoteControlRequestDelegate, CobrowseIO.FullDeviceRequestDelegate {
 
-  public void findNodeManager();
   public void setUnredactedTags(final ReadableArray reactTags, final Promise promise);
 }
