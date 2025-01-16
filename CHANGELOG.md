@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.21.1](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.21.0...v2.21.1) (2025-01-16)
+
+
+### Bug Fixes
+
+* update method for accessing UIManager for unredaction ([#84](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/84)) ([be298f8](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/be298f822350f28af0014bd508a9efddef367bda))
+
 ## [2.21.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.20.0...v2.21.0) (2025-01-07)
 
 
