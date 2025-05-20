@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: Get the new Android version from the input parameter
         if: "${{ github.event.inputs.cobrowse_sdk_version != '' }}"
@@ -64,6 +66,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_REPO_TOKEN }}
 
       - name: Get the new iOS version from the input parameter
         if: "${{ github.event.inputs.cobrowse_sdk_version != '' }}"
