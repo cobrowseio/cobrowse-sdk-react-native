@@ -16,8 +16,8 @@ final class Conversion {
     map.putString("code", session.code());
     map.putString("state", session.state());
     map.putString("id", session.id());
-    map.putBoolean("full_device", session.fullDevice());
-    map.putString("full_device_state", Conversion.fullDeviceState(session.fullDeviceState()));
+    map.putBoolean("full_device", session.fullDevice() == FullDeviceState.On);
+    map.putString("full_device_state", Conversion.fullDeviceState(session.fullDevice()));
     map.putString("remote_control", Conversion.remoteControl(session.remoteControl()));
 
     Agent agent = session.agent();

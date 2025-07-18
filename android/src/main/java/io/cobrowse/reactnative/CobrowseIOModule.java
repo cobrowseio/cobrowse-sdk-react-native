@@ -51,7 +51,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
       activity.runOnUiThread(new Runnable() {
         @Override
         public void run() {
-          CobrowseIO.instance().start(activity);
+          CobrowseIO.instance().start();
         }
       });
     else
@@ -75,7 +75,11 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void customData(ReadableMap customData) {
-    CobrowseIO.instance().customData(customData.toHashMap());
+    java.util.Map<String, String> stringMap = new java.util.HashMap<>();
+    for (java.util.Map.Entry<String, Object> entry : customData.toHashMap().entrySet()) {
+      stringMap.put(entry.getKey(), entry.getValue() != null ? entry.getValue().toString() : null);
+    }
+    CobrowseIO.instance().customData(stringMap);
   }
 
   @ReactMethod
@@ -106,10 +110,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void deviceToken(String token) {
-    if (getReactApplicationContext().getCurrentActivity() != null)
-      CobrowseIO.instance().setDeviceToken(
-        getReactApplicationContext().getCurrentActivity().getApplication(),
-        token);
+    CobrowseIO.instance().setDeviceToken(token);
   }
 
   @ReactMethod
@@ -208,7 +209,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
             String fullDeviceStr = options.getString("full_device");
             FullDeviceState fullDeviceState = Conversion.fullDeviceState(fullDeviceStr);
 
-            current.setFullDeviceState(fullDeviceState, new io.cobrowse.Callback<Error, Session>() {
+            current.setFullDevice(fullDeviceState, new io.cobrowse.Callback<Error, Session>() {
               @Override
               public void call(Error error, Session session) {
                 if (error != null) promise.reject("cbio_full_device_failed", error);
@@ -218,7 +219,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
           } catch (UnexpectedNativeTypeException ref) {
             boolean fullDeviceBool = options.getBoolean("full_device");
 
-            current.setFullDevice(fullDeviceBool, new io.cobrowse.Callback<Error, Session>() {
+            current.setFullDevice(fullDeviceBool ? FullDeviceState.On : FullDeviceState.Off, new io.cobrowse.Callback<Error, Session>() {
               @Override
               public void call(Error error, Session session) {
                 if (error != null) promise.reject("cbio_full_device_failed", error);
@@ -253,7 +254,7 @@ public class CobrowseIOModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void accessibilityServiceIsRunning(final Promise promise) {
-    promise.resolve(CobrowseAccessibilityService.isRunning(getReactApplicationContext()));
+    promise.resolve(CobrowseAccessibilityService.isRunning());
   }
 
   @ReactMethod
