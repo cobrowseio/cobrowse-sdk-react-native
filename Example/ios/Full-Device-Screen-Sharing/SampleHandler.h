@@ -1,4 +1,4 @@
-@import CobrowseIOAppExtension;
+@import CobrowseSDK;
 
 @interface SampleHandler : CobrowseIOReplayKitExtension
 

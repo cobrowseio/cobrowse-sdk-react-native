@@ -1,5 +1,5 @@
-#import "CobrowseIO/CBIOTouch.h"
-#import "CobrowseIO/CBIOTouchEvent.h"
+#import "CobrowseSDK/CBIOTouch.h"
+#import "CobrowseSDK/CBIOTouchEvent.h"
 
 @interface RCTTouchHandler (Touch)
 
