@@ -18,10 +18,9 @@ export interface SessionLike {
   id: string
   code: string
   state: SessionState
-  full_device: boolean
+  full_device: FullDeviceState
   remote_control: RemoteControlState
   agent: Agent
-  full_device_state: FullDeviceState
 }
 
 export default class Session {
@@ -78,12 +77,8 @@ export default class Session {
     return this.session.state
   }
 
-  get full_device (): boolean {
-    return this.session.full_device ?? false
-  }
-
-  get full_device_state (): FullDeviceState {
-    return this.session.full_device_state ?? 'off'
+  get full_device (): FullDeviceState {
+    return this.session.full_device ?? 'off'
   }
 
   get remote_control (): RemoteControlState | null {
@@ -118,7 +113,7 @@ export default class Session {
     return this.session.state === 'ended'
   }
 
-  async setFullDevice (state: boolean | FullDeviceState): Promise<void> {
+  async setFullDevice (state: FullDeviceState): Promise<void> {
     return CobrowseIONative.updateSession({ full_device: state })
   }
 
