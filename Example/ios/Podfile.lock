@@ -1,6 +1,6 @@
 PODS:
   - boost (1.76.0)
-  - cobrowse-sdk-react-native (3.9.0):
+  - cobrowse-sdk-react-native (2.21.1):
     - CobrowseIO/XCFramework (= 3.9.0)
     - React
   - CobrowseIO/XCFramework (3.9.0)
@@ -573,7 +573,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 7dcd2de282d72e344012f7d6564d024930a6a440
-  cobrowse-sdk-react-native: b3b01a2db8245ce942eb2e2cf3d242fcba346c2e
+  cobrowse-sdk-react-native: c50bedcfffcf92da36f36d86f8123d39c8ede12f
   CobrowseIO: 9223d976445f4d63c3ead9d0a0f5f5c9993e958a
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: dc178b8748748c036ef9493a5d59d6d1f91a36ce
@@ -618,6 +618,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: eddf2bbe4a896454c248a8f23b4355891eb720a6
 
-PODFILE CHECKSUM: 2bd7c5cd426c4f5c818a7ff7e5a310bceab1adbe
+PODFILE CHECKSUM: c5205f865c1fa8cad0cf1d4a126254770bce81c0
 
 COCOAPODS: 1.16.2
