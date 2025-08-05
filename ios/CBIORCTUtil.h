@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "CobrowseIO/CBIOSession.h"
+#import "CobrowseSDK/CBIOSession.h"
 
 @interface CBIORCTUtil : NSObject
 

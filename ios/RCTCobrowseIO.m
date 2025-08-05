@@ -10,7 +10,7 @@
 #import "RCTCBIOTreeUtils.h"
 #import <objc/runtime.h>
 
-#import "CobrowseIO/CobrowseIO.h"
+#import "CobrowseSDK/CobrowseIO.h"
 
 #define SESSION_LOADED "session.loaded"
 #define SESSION_UPDATED "session.updated"

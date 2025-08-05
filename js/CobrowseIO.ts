@@ -86,7 +86,7 @@ export default class CobrowseIO {
   }
 
   // eslint-disable-next-line accessor-pairs
-  static set customData (customData: Record<string, unknown>) {
+  static set customData (customData: Record<string, string>) {
     CobrowseIONative.customData(customData)
   }
 
@@ -150,7 +150,7 @@ CobrowseIO.addListener('session.updated', (session) => {
     CobrowseIO.handleRemoteControlRequest(session)
   }
 
-  if (session.isActive() && session.full_device_state === 'requested') {
+  if (session.isActive() && session.full_device === 'requested') {
     if (CobrowseIO.handleFullDeviceRequest != null) {
       CobrowseIO.handleFullDeviceRequest(session)
     } else if (Platform.OS === 'android') {
