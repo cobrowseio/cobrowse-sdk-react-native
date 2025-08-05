@@ -7,7 +7,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### ⚠ BREAKING CHANGES
 
-* Update to v3 SDKs (#121)
+* Updated native SDKs to 3.x
+
+* Full device APIs now take enum values only, boolean support has been dropped
+
+* customData now only takes string values
+
+For more details on breaking changes please see the native SDK CHANGELOGs:
+iOS: https://github.com/cobrowseio/cobrowse-sdk-ios-binary/blob/master/CHANGELOG.md
+Android: https://github.com/cobrowseio/cobrowse-sdk-android-binary/blob/master/CHANGELOG.md
 
 ### Features
 
