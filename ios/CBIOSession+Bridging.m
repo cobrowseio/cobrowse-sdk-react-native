@@ -9,7 +9,6 @@
         @"code": self.code ? self.code : NSNull.null,
         @"state": self.state ? self.state : NSNull.null,
         @"full_device": @(self.fullDevice),
-        @"full_device_state": [CBIORCTUtil fullDeviceState: self.fullDevice],
         @"remote_control": [CBIORCTUtil remoteControl: self.remoteControl],
         @"agent": self.hasAgent ? @{
             @"name": self.agent.name,
