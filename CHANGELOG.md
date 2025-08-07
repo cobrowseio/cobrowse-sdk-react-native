@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.0.0...v3.0.1) (2025-08-07)
+
 ## [3.0.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v2.21.1...v3.0.0) (2025-08-05)
 
 
