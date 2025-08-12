@@ -1,6 +1,6 @@
 PODS:
   - boost (1.76.0)
-  - cobrowse-sdk-react-native (2.21.1):
+  - cobrowse-sdk-react-native (3.0.1):
     - CobrowseIO/XCFramework (= 3.9.0)
     - React
   - CobrowseIO/XCFramework (3.9.0)
@@ -319,7 +319,8 @@ PODS:
   - React-jsinspector (0.72.9)
   - React-logger (0.72.9):
     - glog
-  - react-native-webview (13.3.1):
+  - react-native-webview (13.15.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - React-NativeModulesApple (0.72.9):
     - hermes-engine
@@ -573,7 +574,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 7dcd2de282d72e344012f7d6564d024930a6a440
-  cobrowse-sdk-react-native: c50bedcfffcf92da36f36d86f8123d39c8ede12f
+  cobrowse-sdk-react-native: b3e544afe085824224a824492f736b98e2be1948
   CobrowseIO: 9223d976445f4d63c3ead9d0a0f5f5c9993e958a
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: dc178b8748748c036ef9493a5d59d6d1f91a36ce
@@ -597,7 +598,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d0e8687f75e16c63c2f5bbe51f58bdbebe9df4b2
   React-jsinspector: 54205b269da20c51417e0fc02c4cde9f29a4bf1a
   React-logger: 81785c91d2fcc517657ff456c106c6d8e9ec4110
-  react-native-webview: ee1d8f59bea24b506c1c3ced74156f53bc721e3c
+  react-native-webview: 3a78bae62f1c206cc9861e7a2a06f18040a1f27f
   React-NativeModulesApple: 6cc32bf0a8dc0a9de48878ccca14788bbe5e4fc6
   React-perflogger: cb433f318c6667060fc1f62e26eb58d6eb30a627
   React-RCTActionSheet: 0af3f8ac067e8a1dde902810b7ad169d0a0ec31e
