@@ -60,5 +60,5 @@ target 'Example' do
 end
 
 target 'Full-Device-Screen-Sharing' do
-   pod 'CobrowseIO/XCFramework', '3.9.1'
+   pod 'CobrowseIO/XCFramework', '3.10.0'
 end
