@@ -9,7 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "cobrowse-sdk-react-native": "^3.0.1",
+    "cobrowse-sdk-react-native": "^3.0.2",
     "react": "18.2.0",
     "react-native": "0.72.9",
     "react-native-webview": "^13.15.0"
