@@ -3,7 +3,10 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
-
+puts "Using platform: iOS #{min_ios_version_supported}"
+# Xcode enforces certain minimum deployment targets for projects, some pods in our dependencies still have an older min target than the min
+# if we encounter one of them, we need to bump it to our min
+xcode_min_ios_version = '12.0'
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
 # because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
 #
@@ -56,9 +59,32 @@ target 'Example' do
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
+    
+    installer.pods_project.targets.each do |target|
+      # Only inhibit warnings for pods NOT in your own workspace
+      
+      target.build_configurations.each do |config|
+        # Inhibit warnings for all pods except Cobrowse
+        if !target.name.include?('Cobrowse')
+          config.build_settings['GCC_WARN_INHIBIT_ALL_WARNINGS'] = "YES"
+          config.build_settings['SWIFT_SUPPRESS_WARNINGS'] = "YES"
+        end
+
+        # Bump the min deployment target of the pod if it's lower than xcode_min_ios_version
+        current_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        # Skip if there is no current target, or if the current one is higher
+        next if current_target.nil? || Gem::Version.new(current_target) >= Gem::Version.new(xcode_min_ios_version)
+        # Otherwise, update the deployment target to your specified minimum
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = xcode_min_ios_version
+
+      end
+      
+    end
+
   end
 end
 
 target 'Full-Device-Screen-Sharing' do
-   pod 'CobrowseIO/XCFramework', '3.10.0'
+   pod 'CobrowseIO/XCFramework', '3.11.1'
 end

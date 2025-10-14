@@ -1,9 +1,9 @@
 PODS:
   - boost (1.76.0)
-  - cobrowse-sdk-react-native (3.0.1):
-    - CobrowseIO/XCFramework (= 3.10.0)
+  - cobrowse-sdk-react-native (3.2.0):
+    - CobrowseIO/XCFramework (= 3.11.1)
     - React
-  - CobrowseIO/XCFramework (3.10.0)
+  - CobrowseIO/XCFramework (3.11.1)
   - DoubleConversion (1.1.6)
   - FBLazyVector (0.72.9)
   - FBReactNativeSpec (0.72.9):
@@ -438,7 +438,7 @@ PODS:
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - cobrowse-sdk-react-native (from `../node_modules/cobrowse-sdk-react-native`)
-  - CobrowseIO/XCFramework (= 3.10.0)
+  - CobrowseIO/XCFramework (= 3.11.1)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -574,8 +574,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: 7dcd2de282d72e344012f7d6564d024930a6a440
-  cobrowse-sdk-react-native: a675b1a1e97263d28465e7765ab836d1536320f9
-  CobrowseIO: 794e230a7a62316d6c9193d822e58cfa0792c4b6
+  cobrowse-sdk-react-native: 756afa551aaaac81adc44e5dc511c95eafe6142f
+  CobrowseIO: d0d3d07603f44edc0d48e07afe2effc9845930c2
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: dc178b8748748c036ef9493a5d59d6d1f91a36ce
   FBReactNativeSpec: d0aaae78e93c89dc2d691d8052a4d2aeb1b461ee
@@ -619,6 +619,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: eddf2bbe4a896454c248a8f23b4355891eb720a6
 
-PODFILE CHECKSUM: 555b3626cc3fb4fee369505a9c3c013c6217ffd8
+PODFILE CHECKSUM: 8449df58afdfa811c1e9f14294fbb66d178a130f
 
 COCOAPODS: 1.16.2
