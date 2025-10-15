@@ -122,6 +122,6 @@ export default class Session {
   }
 
   async setCapabilities (capabilities: Array<'drawing' | 'full_device' | 'keypress' | 'laser' | 'pointer'>): Promise<void> {
-    return CobrowseIONative.updateSession({ capabilities: capabilities })
+    return CobrowseIONative.updateSession({ capabilities })
   }
 }
