@@ -5,15 +5,14 @@
  * @format
  */
 
-
-const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
-const path = require('path');
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config')
+const path = require('path')
 
 // The project root is where your metro.config.js is located
-const projectRoot = path.resolve(__dirname);
+const projectRoot = path.resolve(__dirname)
 
-// The path to the `cobrowse-sdk-react-native` library at the root of this repo. 
-const libraryRoot = path.resolve(projectRoot, '..');
+// The path to the `cobrowse-sdk-react-native` library at the root of this repo.
+const libraryRoot = path.resolve(projectRoot, '..')
 
 const config = {
   // Add the watchFolders option to let Metro know it needs to watch the library's directory
@@ -26,22 +25,22 @@ const config = {
     extraNodeModules: new Proxy(
       {},
       {
-        get: (_, name) => path.join(projectRoot, 'node_modules', name),
+        get: (_, name) => path.join(projectRoot, 'node_modules', name)
       }
     ),
-    nodeModulesPaths: [path.join(projectRoot, 'node_modules')],
+    nodeModulesPaths: [path.join(projectRoot, 'node_modules')]
   },
 
   transformer: {
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
-  },
-};
+        inlineRequires: true
+      }
+    })
+  }
+}
 
-const defaultConfig = getDefaultConfig(projectRoot);
+const defaultConfig = getDefaultConfig(projectRoot)
 
-module.exports = mergeConfig(defaultConfig, config);
+module.exports = mergeConfig(defaultConfig, config)
