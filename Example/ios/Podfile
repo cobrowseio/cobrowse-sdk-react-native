@@ -85,6 +85,12 @@ target 'Example' do
   end
 end
 
+# Add the CobrowseIO/XCFramework dependency to the Full-Device-Screen-Sharing target
 target 'Full-Device-Screen-Sharing' do
-   pod 'CobrowseIO/XCFramework', '3.11.1'
+  # Production appplications should specify version of the CobrowseIO pod like normal
+  #pod 'CobrowseIO/XCFramework', '3.11.1'
+
+  # For when running the example app, match the SDK version to the version used by the `cobrowse-sdk-react-native` SDK at the root the repository
+  cobrowse_version = File.read(File.join(__dir__, '../../cobrowse-sdk-react-native.podspec')).match(/'CobrowseIO\/XCFramework'\s*,\s*'([\d\.]+)'/)[1].strip
+  pod 'CobrowseIO/XCFramework', cobrowse_version
 end
