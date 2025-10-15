@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.2.0...v3.3.0) (2025-10-15)
+
+
+### Features
+
+* update Cobrowse.io SDK ([#129](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/129)) ([6e7c681](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/6e7c6817f30c58db6f018d10ee8b480cd063ea7d))
+
+
+### Bug Fixes
+
+* Use strings instead of enum raw values for full_device ([#132](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/132)) ([76fc8b2](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/76fc8b228d2e968ef793b85ca163c7f2bd2d84ff))
+
 ## [3.2.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.1.0...v3.2.0) (2025-09-18)
 
 
