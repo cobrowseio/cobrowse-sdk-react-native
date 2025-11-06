@@ -11,7 +11,7 @@
   "dependencies": {
     "cobrowse-sdk-react-native": "file:../",
     "react": "18.2.0",
-    "react-native": "0.72.9",
+    "react-native": "0.82.1",
     "react-native-webview": "^13.15.0"
   },
   "devDependencies": {
