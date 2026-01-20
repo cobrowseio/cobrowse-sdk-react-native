@@ -3,13 +3,14 @@ package io.cobrowse.reactnative;
 import android.view.View;
 
 import com.facebook.react.uimanager.ThemedReactContext;
-import com.facebook.react.uimanager.ViewGroupManager;
+import com.facebook.react.views.view.ReactViewGroup;
+import com.facebook.react.views.view.ReactViewManager;
 
 import java.util.WeakHashMap;
 
 import androidx.annotation.NonNull;
 
-public class RedactedViewManager extends ViewGroupManager<RedactedView> {
+public class RedactedViewManager extends ReactViewManager {
 
     static WeakHashMap<View, String> redactedViews = new WeakHashMap<>();
 
@@ -19,18 +20,21 @@ public class RedactedViewManager extends ViewGroupManager<RedactedView> {
         return "CBIOCobrowseRedacted";
     }
 
+    @Override
     @NonNull
-    @Override
-    protected RedactedView createViewInstance(@NonNull ThemedReactContext reactContext) {
-        RedactedView view = new RedactedView(reactContext);
-        redactedViews.put(view, null);
-        return view;
+    public ReactViewGroup createViewInstance(@NonNull ThemedReactContext reactContext) {
+      RedactedView view = new RedactedView(reactContext);
+      redactedViews.put(view, null);
+      return view;
     }
 
     @Override
-    public void onDropViewInstance(@NonNull RedactedView view) {
-        super.onDropViewInstance(view);
-        redactedViews.remove(view);
-    }
+    public void onDropViewInstance(@NonNull ReactViewGroup view) {
+      if (view instanceof RedactedView) {
+        RedactedView redactedView = (RedactedView) view;
+        redactedViews.remove(redactedView);
+      }
 
+      super.onDropViewInstance(view);
+    }
 }
