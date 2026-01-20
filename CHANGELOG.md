@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.4.0...v3.5.0) (2026-01-20)
+
+
+### Features
+
+* update Cobrowse.io SDK ([#136](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/136)) ([bdb4184](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/bdb418410f3487cb410023778ba5cee8a9dc3d94))
+* update Cobrowse.io SDK ([#137](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/137)) ([6a1fadc](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/6a1fadc05a8e0f4db767399ec1e1208f89f33f1d))
+* update Cobrowse.io SDK ([#138](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/138)) ([d5f0731](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/d5f0731cf521de6729bf9163bdd5a0dfa2fee0f0))
+* update Cobrowse.io SDK ([#139](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/139)) ([25db56c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/25db56c9aa74321d377eee62f4b16837aacdb4ff))
+* update Cobrowse.io SDK ([#140](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/140)) ([e52722a](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/e52722aa42dfa56ca3747f86f4869a0c918033af))
+* update Cobrowse.io SDK ([#142](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/142)) ([4c5b030](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/4c5b030e842eec58d8a085f209b1a8637c1ba4f5))
+* update Cobrowse.io SDK ([#143](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/143)) ([9a80d77](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/9a80d77fbca8c71c56f6d23587b1650edf59ebe1))
+* update Cobrowse.io SDK ([#144](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/144)) ([a4d7aa9](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/a4d7aa9da17ac67444ca07ad9fea7e5c1417a9ae))
+* update Cobrowse.io SDK ([#145](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/145)) ([683ea2a](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/683ea2a61f5402003d9344ff77bee7310627fdfc))
+* update Cobrowse.io SDK ([#147](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/147)) ([e232953](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/e232953f9bad90ceb33c4ccde4b4c2f55f9a6feb))
+* update Cobrowse.io SDK ([#148](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/148)) ([5f2cfb7](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/5f2cfb7f0a50a964be06c638bad18353007f8769))
+* update Cobrowse.io SDK ([#149](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/149)) ([a00803b](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/a00803b1262df977ef752f98ea983cafaa039a09))
+* update Cobrowse.io SDK ([#151](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/151)) ([5d7297c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/5d7297c90fca134a2337bc778e25884c026ff995))
+* update Cobrowse.io SDK ([#152](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/152)) ([616066e](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/616066ebc16e153705e0a463b94807139147a32c))
+
+
+### Bug Fixes
+
+* ensure border radius is applied on Android ([#153](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/153)) ([86dea33](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/86dea3388e4c79dcfd44b8826ab97fa050c194d1))
+* ensure redacted views are not collapsed by RN ([#134](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/134)) ([aa1b01e](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/aa1b01ee20da76155daf36ea6205cada351cfe24))
+
 ## [3.4.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.3.0...v3.4.0) (2025-10-15)
 
 
