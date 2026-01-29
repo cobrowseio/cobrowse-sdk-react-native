@@ -45,7 +45,7 @@ android {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+' // support react-native-v0.22-rc+
-    implementation 'io.cobrowse:cobrowse-sdk-android:3.13.1'
+    implementation 'io.cobrowse:cobrowse-sdk-android:3.13.2'
     implementation 'androidx.webkit:webkit:1.4.0'
     implementation 'androidx.activity:activity:1.6.0'
 }
