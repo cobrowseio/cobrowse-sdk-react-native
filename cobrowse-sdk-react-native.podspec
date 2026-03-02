@@ -12,6 +12,11 @@ Pod::Spec.new do |s|
   s.source        = { :git => 'https://github.com/cobrowseio/cobrowse-sdk-react-native.git' }
   s.platform      = :ios, '12.0'
   s.dependency      'CobrowseIO/XCFramework', '3.13.7'
-  s.dependency      'React'
-  s.source_files =  'ios/*.{h,m}'
+  s.source_files  = 'ios/**/*.{h,m,mm}'
+  
+  if defined?(install_modules_dependencies)
+    install_modules_dependencies(s)
+  else
+    s.dependency 'React'
+  end
 end
