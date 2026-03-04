@@ -45,7 +45,23 @@ static void logSupportWarning(NSString *issue) {
 
 #pragma mark - Helper Functions
 
+typedef NS_ENUM(NSInteger, CBIOFabricTouchPhase) {
+    CBIOFabricTouchPhaseStart,
+    CBIOFabricTouchPhaseMove,
+    CBIOFabricTouchPhaseEnd,
+    CBIOFabricTouchPhaseCancel
+};
+
 #ifndef CBIO_NO_FABRIC_HEADERS
+
+static SEL getEmitterSelector(void) {
+  static SEL sel;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sel = NSSelectorFromString(@"touchEventEmitterAtPoint:");
+  });
+  return sel;
+}
 
 // Walk up from the hit-tested view to find the nearest ancestor that
 // responds to touchEventEmitterAtPoint: (the "provider").
@@ -58,22 +74,20 @@ static void logSupportWarning(NSString *issue) {
 // at all, so we warn if the emitter API has been removed or renamed in 
 // a future RN version.
 static UIView * _Nullable findProvider(UIView *startView, BOOL *outSawFabric) {
-    SEL sel = NSSelectorFromString(@"touchEventEmitterAtPoint:");
+    SEL sel = getEmitterSelector();
 
     static Protocol *componentViewProtocol = NSProtocolFromString(@"RCTComponentViewProtocol");
 
-    UIView *provider = nil;
     *outSawFabric = NO;
 
     for (UIView *v = startView; v; v = v.superview) {
         if (!*outSawFabric && componentViewProtocol && [v conformsToProtocol:componentViewProtocol]) *outSawFabric = YES;
-        if (!provider && [v respondsToSelector:sel]) {
-          provider = v;
-          break;
+        if ([v respondsToSelector:sel]) {
+          return v;
         }
     }
 
-    return provider;
+    return nil;
 }
 
 // Get the touch event emitter from a provider view.
@@ -81,18 +95,23 @@ static UIView * _Nullable findProvider(UIView *startView, BOOL *outSawFabric) {
 // parameter and simply returns the view's own emitter. We still
 // pass the point for forward-compatibility.
 static facebook::react::SharedTouchEventEmitter getEventEmitter(UIView *provider, CGPoint screenPoint) {
-    SEL sel = NSSelectorFromString(@"touchEventEmitterAtPoint:");
+    SEL sel = getEmitterSelector();
 
     CGPoint localPoint = [provider convertPoint:screenPoint fromView:nil];
+  
+    @try {
+        typedef facebook::react::SharedTouchEventEmitter (*GetEmitterIMP)(id, SEL, CGPoint);
+        GetEmitterIMP impl = (GetEmitterIMP)[provider methodForSelector:sel];
 
-    typedef facebook::react::SharedTouchEventEmitter (*GetEmitterIMP)(id, SEL, CGPoint);
-    GetEmitterIMP impl = (GetEmitterIMP)[provider methodForSelector:sel];
+        if (!impl) {
+            return nullptr;
+        }
 
-    if (!impl) {
+        return impl(provider, sel, localPoint);
+    } @catch (NSException *e) {
+        logSupportWarning([NSString stringWithFormat:@"Exception getting emitter: %@", e.reason]);
         return nullptr;
     }
-
-    return impl(provider, sel, localPoint);
 }
 
 static facebook::react::Touch createTouch(CGPoint screenPoint,
@@ -123,13 +142,6 @@ static facebook::react::Touch createTouch(CGPoint screenPoint,
     return touch;
 }
 
-typedef NS_ENUM(NSInteger, CBIOFabricTouchPhase) {
-    CBIOFabricTouchPhaseStart,
-    CBIOFabricTouchPhaseMove,
-    CBIOFabricTouchPhaseEnd,
-    CBIOFabricTouchPhaseCancel
-};
-
 #endif // !CBIO_NO_FABRIC_HEADERS
 
 #pragma mark - Category Implementation
@@ -158,19 +170,9 @@ typedef NS_ENUM(NSInteger, CBIOFabricTouchPhase) {
     }
 
     // Get the emitter. ObjC messaging is wrapped in @try/@catch.
-    facebook::react::SharedTouchEventEmitter emitter;
-    @try {
-        emitter = getEventEmitter(provider, screenPoint);
-    } @catch (NSException *e) {
-        logSupportWarning([NSString stringWithFormat:
-            @"Exception getting emitter: %@", e.reason]);
-        return NO;
-    }
-
-    if (!emitter) {
-        return NO;
-    }
-
+    facebook::react::SharedTouchEventEmitter emitter = getEventEmitter(provider, screenPoint);
+    if (!emitter) return NO;
+  
     NSInteger targetTag = provider.tag;
     CGPoint localPoint = [provider convertPoint:screenPoint fromView:nil];
 
