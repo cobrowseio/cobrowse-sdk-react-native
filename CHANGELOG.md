@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.5.0...v3.6.0) (2026-03-13)
+
+
+### Features
+
+* Add support for remote control events in Fabric apps ([#160](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/160)) ([bb9154c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/bb9154c16ea453a445f25fc019f2d482366f7e51))
+* update Cobrowse.io SDK ([#154](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/154)) ([c5f1c9c](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/c5f1c9cc3bb73715d95122b32857297fa8065759))
+* update Cobrowse.io SDK ([#156](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/156)) ([0d431b6](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/0d431b68437d0487804f98ee314692889feb0300))
+* update Cobrowse.io SDK ([#157](https://github.com/cobrowseio/cobrowse-sdk-react-native/issues/157)) ([11bb355](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/11bb35533a5600287db42519b7994a3313e3403d))
+
+
+### Bug Fixes
+
+* upgrade to node 24 ([008515f](https://github.com/cobrowseio/cobrowse-sdk-react-native/commit/008515f7c3a92185f398291299fef36597760cb8))
+
 ## [3.5.0](https://github.com/cobrowseio/cobrowse-sdk-react-native/compare/v3.4.0...v3.5.0) (2026-01-20)
 
 
